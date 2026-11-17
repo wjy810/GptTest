@@ -128,6 +128,20 @@ n = 年数 × 12
 
 最终截图：[1440px](../../artifacts/reviews/batch04-fintech-1440-after.png)、[390px](../../artifacts/reviews/batch04-fintech-390-after.png)、[320px](../../artifacts/reviews/batch04-fintech-320-after.png)。测试验证范围是本地示例，不代表已通过正式无障碍认证或真实金融数据校验。
 
+## 2026-11-17 手机阅读与触控优化
+
+本轮只调整 `styles.css`，保持原数据、计算公式、CSV、关注持久化与事件处理不变。桌面侧栏、四张摘要卡、曲线与配置并排、全宽资产表仍是主要结构。
+
+- 手机关注、图标、清除、周期按钮的点击区至少44×44；时间范围独占一行，表格单元格适当减小上下内边距，避免扩大星标按钮后每行过高。
+- 手机搜索与增长率选择框为16px字号、44px高。假设标签与选择框上下排列；两个滑块保留并排布局，用44px高的输入区域承载3px细轨道，兼顾手指操作和原有数据密度。
+- 数据来源、模拟边界与公式说明手机使用12px、桌面使用11px；手机配置金额为11px并移到类别下方，摘要说明为11px。表格仍在具名局部容器中横向浏览。
+- 手机SVG坐标文字扩大后，最初的320px截图出现末端日期靠得过近。最终CSS保留首枚、第三枚与末枚已有日期刻度，显示位置仍来自真实日期坐标；其余样本与日期完整保留在底表和CSV。对四周期逐一测量，320px相邻可见日期最小间距约19px，390px约24px。
+- `text-wrap: balance`用于窄屏开头说明，避免仅剩一两个汉字落在第二行。没有新增页面区块或业务功能。
+
+实际完成独立生产构建、TypeScript检查，以及本机Chromium的12组针对性验证：1440/390/320页面及面板边界；手机主要触控区和输入字号；四周期日期文字边界；实际1W CSV下载与底表逐项匹配；搜索、关注、清除后的焦点；滑块键盘增量、零增长与逐月台账复算；当前页参数标记；运行异常检查。另实看三尺寸最终截图。实体iOS设备不在本轮验证范围。
+
+证据：[优化前测量](../../artifacts/optimization/fintech-before.json)、[本轮结果](../../artifacts/optimization/fintech-results.json)、[可复跑脚本](../../artifacts/optimization/fintech-verify.mjs)、[实际1W CSV](../../artifacts/optimization/fintech-1W.csv)、[1440px后图](../../artifacts/optimization/fintech-1440-after.png)、[390px后图](../../artifacts/optimization/fintech-390-after.png)、[320px后图](../../artifacts/optimization/fintech-320-after.png)。本节是作者验证，最后一批独立复核由另一位审核者完成。
+
 ## 研究依据
 
 见 [`docs/DATA-SERVICE-NOTES.md`](../../docs/DATA-SERVICE-NOTES.md) 的 D3 线性尺度、坐标轴与数字格式、USWDS 数据可视化原文记录。实现采用原生 SVG 与 Intl.NumberFormat，不需要 D3 运行时；借鉴的是清晰的数据映射、读取方式与比较规则。

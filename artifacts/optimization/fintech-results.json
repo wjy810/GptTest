@@ -1,0 +1,442 @@
+{
+  "browser": "Chromium; no physical iOS test",
+  "checks": [
+    {
+      "name": "1440px document and compact panel bounds",
+      "pass": true
+    },
+    {
+      "name": "390px document and compact panel bounds",
+      "pass": true
+    },
+    {
+      "name": "390px primary touch targets and 16px form text",
+      "pass": true
+    },
+    {
+      "name": "390px all four periods keep date labels separate",
+      "pass": true
+    },
+    {
+      "name": "320px document and compact panel bounds",
+      "pass": true
+    },
+    {
+      "name": "320px primary touch targets and 16px form text",
+      "pass": true
+    },
+    {
+      "name": "320px all four periods keep date labels separate",
+      "pass": true
+    },
+    {
+      "name": "1W bottom table and actual CSV match every date/value",
+      "pass": true
+    },
+    {
+      "name": "Search, enlarged watch button and clear focus work",
+      "pass": true
+    },
+    {
+      "name": "44px sliders retain keyboard increments and zero-growth total",
+      "pass": true
+    },
+    {
+      "name": "Readable assumption control retains monthly ledger and local marker",
+      "pass": true
+    },
+    {
+      "name": "No browser runtime errors",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "width": 1440,
+      "pageHeight": 2128,
+      "scrollWidth": 1440,
+      "items": [
+        {
+          "selector": ".watch-button",
+          "width": 15,
+          "height": 15,
+          "font": "10px"
+        },
+        {
+          "selector": ".range-buttons button",
+          "width": 28.84375,
+          "height": 20,
+          "font": "9px"
+        },
+        {
+          "selector": ".topbar-actions .icon-button",
+          "width": 32,
+          "height": 32,
+          "font": "16px"
+        },
+        {
+          "selector": ".asset-search input",
+          "width": 116,
+          "height": 12,
+          "font": "9px"
+        },
+        {
+          "selector": ".assumption-field select",
+          "width": 140,
+          "height": 33,
+          "font": "10px"
+        },
+        {
+          "selector": ".formula-note p",
+          "width": 574.390625,
+          "height": 19.25,
+          "font": "11px"
+        },
+        {
+          "selector": ".market-footnote",
+          "width": 1143,
+          "height": 48.25,
+          "font": "11px"
+        },
+        {
+          "selector": ".chart-bottom",
+          "width": 743.40625,
+          "height": 50.25,
+          "font": "11px"
+        },
+        {
+          "selector": ".allocation-note",
+          "width": 328.59375,
+          "height": 48.25,
+          "font": "11px"
+        },
+        {
+          "selector": ".metric-footer",
+          "width": 263.640625,
+          "height": 21,
+          "font": "8px"
+        },
+        {
+          "selector": ".slider-field input",
+          "width": 299.1875,
+          "height": 3,
+          "font": "16px"
+        }
+      ],
+      "internalOverflows": []
+    },
+    {
+      "width": 390,
+      "pageHeight": 3547,
+      "scrollWidth": 390,
+      "items": [
+        {
+          "selector": ".watch-button",
+          "width": 44,
+          "height": 44,
+          "font": "11px"
+        },
+        {
+          "selector": ".range-buttons button",
+          "width": 74,
+          "height": 44,
+          "font": "12px"
+        },
+        {
+          "selector": ".topbar-actions .icon-button",
+          "width": 44,
+          "height": 44,
+          "font": "16px"
+        },
+        {
+          "selector": ".asset-search input",
+          "width": 230,
+          "height": 44,
+          "font": "16px"
+        },
+        {
+          "selector": ".assumption-field select",
+          "width": 316,
+          "height": 44,
+          "font": "16px"
+        },
+        {
+          "selector": ".formula-note p",
+          "width": 293,
+          "height": 64.78125,
+          "font": "12px"
+        },
+        {
+          "selector": ".market-footnote",
+          "width": 352,
+          "height": 80.1875,
+          "font": "12px"
+        },
+        {
+          "selector": ".chart-bottom",
+          "width": 316,
+          "height": 80.1875,
+          "font": "12px"
+        },
+        {
+          "selector": ".allocation-note",
+          "width": 352,
+          "height": 48.59375,
+          "font": "12px"
+        },
+        {
+          "selector": ".metric-footer",
+          "width": 140,
+          "height": 36,
+          "font": "11px"
+        },
+        {
+          "selector": ".slider-field input",
+          "width": 146,
+          "height": 44,
+          "font": "16px"
+        }
+      ],
+      "internalOverflows": [],
+      "dateTicks": [
+        {
+          "range": "1W",
+          "ticks": [
+            {
+              "text": "11.11",
+              "left": 42.98925018310547,
+              "right": 85.0517578125
+            },
+            {
+              "text": "11.13",
+              "left": 109.32050323486328,
+              "right": 151.38299560546875
+            },
+            {
+              "text": "11.17",
+              "left": 263.0142517089844,
+              "right": 305.0767517089844
+            }
+          ]
+        },
+        {
+          "range": "1M",
+          "ticks": [
+            {
+              "text": "10.18",
+              "left": 42.98925018310547,
+              "right": 85.0517578125
+            },
+            {
+              "text": "10.30",
+              "left": 126.79300689697266,
+              "right": 168.8555145263672
+            },
+            {
+              "text": "11.17",
+              "left": 263.0142517089844,
+              "right": 305.0767517089844
+            }
+          ]
+        },
+        {
+          "range": "3M",
+          "ticks": [
+            {
+              "text": "08.17",
+              "left": 42.98925018310547,
+              "right": 85.0517578125
+            },
+            {
+              "text": "10.04",
+              "left": 158.69931030273438,
+              "right": 200.76181030273438
+            },
+            {
+              "text": "11.17",
+              "left": 263.0142517089844,
+              "right": 305.0767517089844
+            }
+          ]
+        },
+        {
+          "range": "1Y",
+          "ticks": [
+            {
+              "text": "2025.11",
+              "left": 42.98925018310547,
+              "right": 101.86425018310547
+            },
+            {
+              "text": "2026.05",
+              "left": 143.5184326171875,
+              "right": 202.3934326171875
+            },
+            {
+              "text": "2026.11",
+              "left": 246.20175170898438,
+              "right": 305.0767517089844
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "pageHeight": 3539,
+      "scrollWidth": 320,
+      "items": [
+        {
+          "selector": ".watch-button",
+          "width": 44,
+          "height": 44,
+          "font": "11px"
+        },
+        {
+          "selector": ".range-buttons button",
+          "width": 56.5,
+          "height": 44,
+          "font": "12px"
+        },
+        {
+          "selector": ".topbar-actions .icon-button",
+          "width": 44,
+          "height": 44,
+          "font": "16px"
+        },
+        {
+          "selector": ".asset-search input",
+          "width": 160,
+          "height": 44,
+          "font": "16px"
+        },
+        {
+          "selector": ".assumption-field select",
+          "width": 246,
+          "height": 44,
+          "font": "16px"
+        },
+        {
+          "selector": ".formula-note p",
+          "width": 223,
+          "height": 64.78125,
+          "font": "12px"
+        },
+        {
+          "selector": ".market-footnote",
+          "width": 282,
+          "height": 80.1875,
+          "font": "12px"
+        },
+        {
+          "selector": ".chart-bottom",
+          "width": 246,
+          "height": 80.1875,
+          "font": "12px"
+        },
+        {
+          "selector": ".allocation-note",
+          "width": 282,
+          "height": 48.59375,
+          "font": "12px"
+        },
+        {
+          "selector": ".metric-footer",
+          "width": 111,
+          "height": 36,
+          "font": "11px"
+        },
+        {
+          "selector": ".slider-field input",
+          "width": 111,
+          "height": 44,
+          "font": "16px"
+        }
+      ],
+      "internalOverflows": [],
+      "dateTicks": [
+        {
+          "range": "1W",
+          "ticks": [
+            {
+              "text": "11.11",
+              "left": 40.03787612915039,
+              "right": 73.20975494384766
+            },
+            {
+              "text": "11.13",
+              "left": 92.39569091796875,
+              "right": 125.56756591796875
+            },
+            {
+              "text": "11.17",
+              "left": 213.697265625,
+              "right": 246.869140625
+            }
+          ]
+        },
+        {
+          "range": "1M",
+          "ticks": [
+            {
+              "text": "10.18",
+              "left": 40.03787612915039,
+              "right": 73.20975494384766
+            },
+            {
+              "text": "10.30",
+              "left": 106.18444061279297,
+              "right": 139.3563232421875
+            },
+            {
+              "text": "11.17",
+              "left": 213.697265625,
+              "right": 246.869140625
+            }
+          ]
+        },
+        {
+          "range": "3M",
+          "ticks": [
+            {
+              "text": "08.17",
+              "left": 40.03787612915039,
+              "right": 73.20975494384766
+            },
+            {
+              "text": "10.04",
+              "left": 131.36390686035156,
+              "right": 164.8917999267578
+            },
+            {
+              "text": "11.17",
+              "left": 213.697265625,
+              "right": 246.869140625
+            }
+          ]
+        },
+        {
+          "range": "1Y",
+          "ticks": [
+            {
+              "text": "2025.11",
+              "left": 40.03787612915039,
+              "right": 86.47537231445312
+            },
+            {
+              "text": "2026.05",
+              "left": 119.38475799560547,
+              "right": 165.822265625
+            },
+            {
+              "text": "2026.11",
+              "left": 200.43165588378906,
+              "right": 246.86917114257812
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

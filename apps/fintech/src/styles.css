@@ -2490,3 +2490,217 @@ footer i {
     line-height: 1.6;
   }
 }
+
+/* Keep data assumptions readable without enlarging the desktop toolbars. */
+.allocation-note,
+.market-footnote,
+.formula-note p,
+.plan-local,
+.notes-panel p,
+.notes-panel details > p,
+.chart-bottom,
+.chart-bottom p,
+.chart-data {
+  font-size: 11px;
+  line-height: 1.75;
+}
+.allocation-note,
+.market-footnote,
+.formula-note,
+.chart-bottom > span,
+.chart-bottom p {
+  color: #989eab;
+}
+
+@media (max-width: 700px) {
+  .icon-button,
+  .watch-button,
+  .asset-search > button,
+  .feedback-toast button {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+  }
+  .topbar-actions {
+    gap: 4px;
+  }
+  .breadcrumb {
+    gap: 5px;
+  }
+  .chart-controls {
+    align-items: stretch;
+    gap: 8px;
+    padding-top: 12px;
+  }
+  .chart-legend {
+    width: 100%;
+    font-size: 11px;
+    gap: 18px;
+  }
+  .chart-legend > button {
+    min-height: 44px;
+    font-size: 11px;
+  }
+  .range-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(44px, 1fr));
+    width: 100%;
+  }
+  .range-buttons button {
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 12px;
+  }
+  .chart-area svg text {
+    font-size: 16px;
+    fill: #989eab;
+  }
+  /* Three existing date ticks fit the narrow plot; the table retains every date. */
+  .chart-area svg > text {
+    display: none;
+  }
+  .chart-area svg > text:first-of-type,
+  .chart-area svg > text:nth-of-type(3),
+  .chart-area svg > text:last-of-type {
+    display: block;
+  }
+  .chart-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .chart-bottom p {
+    text-align: left;
+  }
+  .chart-data {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .chart-data > summary,
+  .asset-tabs button,
+  .mint-button,
+  .plan-button,
+  .empty-state button,
+  .notes-panel summary,
+  .note-links a,
+  .note-links button {
+    min-height: 44px;
+  }
+  .asset-tabs button {
+    font-size: 12px;
+  }
+  .overview-actions .mint-button {
+    font-size: 11px;
+  }
+  .overview-header > div > p:last-child {
+    text-wrap: balance;
+  }
+  .asset-search {
+    min-width: 0;
+    min-height: 44px;
+    padding: 0 0 0 10px;
+  }
+  .asset-search input {
+    height: 44px;
+    font-size: 16px;
+  }
+  .market-table td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .market-table td:first-child,
+  .market-table .star-column {
+    width: 44px;
+    padding-right: 4px;
+  }
+  .metric-label {
+    font-size: 11px;
+  }
+  .metric-footer {
+    font-size: 11px;
+    line-height: 1.6;
+    min-height: 36px;
+    flex-wrap: wrap;
+  }
+  .metric-footer .positive {
+    font-size: 11px;
+  }
+  .metric-footer > svg {
+    display: none;
+  }
+  .allocation-list > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 6px;
+    font-size: 11px;
+    margin: 14px 0;
+  }
+  .allocation-list em {
+    grid-column: 1/-1;
+    font-size: 11px;
+    margin-left: 12px;
+    text-align: left;
+  }
+  .allocation-list b {
+    font-size: 12px;
+  }
+  .slider-field > div:first-child {
+    margin-bottom: 0;
+  }
+  .slider-field input {
+    height: 44px;
+    margin: 0;
+    background: linear-gradient(#51465e, #51465e) center / 100% 3px no-repeat;
+  }
+  .slider-field input::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+  }
+  .slider-field input::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+  }
+  .slider-ends {
+    margin-top: 0;
+    font-size: 11px;
+  }
+  .assumption-field {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .assumption-field select {
+    width: 100%;
+    max-width: none;
+    min-height: 44px;
+    font-size: 16px;
+  }
+  .panel-heading p,
+  .overview-header > div > p:last-child,
+  .assumption-field label,
+  .slider-field label,
+  .allocation-note,
+  .market-footnote,
+  .formula-note p,
+  .plan-local,
+  .notes-panel p,
+  .notes-panel details,
+  .notes-panel details > p,
+  .chart-bottom,
+  .chart-bottom p,
+  .chart-data,
+  .feedback-toast {
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .table-scroll-hint,
+  .note-links a,
+  .note-links button {
+    font-size: 11px;
+  }
+  .plan-local {
+    color: #624d75;
+  }
+  footer {
+    font-size: 10px;
+  }
+}

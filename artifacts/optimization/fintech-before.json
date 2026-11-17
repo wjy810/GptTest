@@ -1,0 +1,239 @@
+[
+  {
+    "width": 1440,
+    "height": 2098,
+    "scrollWidth": 1440,
+    "items": [
+      {
+        "selector": ".watch-button",
+        "width": 15,
+        "height": 15,
+        "font": "10px"
+      },
+      {
+        "selector": ".range-buttons button",
+        "width": 28.84375,
+        "height": 20,
+        "font": "9px"
+      },
+      {
+        "selector": ".icon-button",
+        "width": 0,
+        "height": 0,
+        "font": "10px"
+      },
+      {
+        "selector": ".asset-search input",
+        "width": 116,
+        "height": 12,
+        "font": "9px"
+      },
+      {
+        "selector": ".assumption-field select",
+        "width": 140,
+        "height": 33,
+        "font": "10px"
+      },
+      {
+        "selector": ".formula-note p",
+        "width": 469.96875,
+        "height": 15.296875,
+        "font": "9px"
+      },
+      {
+        "selector": ".market-footnote",
+        "width": 1143,
+        "height": 41,
+        "font": "8px"
+      },
+      {
+        "selector": ".chart-bottom",
+        "width": 743.40625,
+        "height": 42,
+        "font": "8px"
+      },
+      {
+        "selector": ".allocation-note",
+        "width": 328.59375,
+        "height": 41,
+        "font": "8px"
+      },
+      {
+        "selector": ".metric-footer",
+        "width": 263.640625,
+        "height": 21,
+        "font": "8px"
+      },
+      {
+        "selector": ".slider-field input",
+        "width": 299.1875,
+        "height": 3,
+        "font": "16px"
+      },
+      {
+        "selector": ".table-scroll-hint",
+        "width": 0,
+        "height": 0,
+        "font": "16px"
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "height": 3163,
+    "scrollWidth": 390,
+    "items": [
+      {
+        "selector": ".watch-button",
+        "width": 15,
+        "height": 15,
+        "font": "11px"
+      },
+      {
+        "selector": ".range-buttons button",
+        "width": 23.640625,
+        "height": 19,
+        "font": "8px"
+      },
+      {
+        "selector": ".icon-button",
+        "width": 28,
+        "height": 28,
+        "font": "9px"
+      },
+      {
+        "selector": ".asset-search input",
+        "width": 236,
+        "height": 14,
+        "font": "11px"
+      },
+      {
+        "selector": ".assumption-field select",
+        "width": 122,
+        "height": 35,
+        "font": "10px"
+      },
+      {
+        "selector": ".formula-note p",
+        "width": 293,
+        "height": 33.28125,
+        "font": "9px"
+      },
+      {
+        "selector": ".market-footnote",
+        "width": 352,
+        "height": 60,
+        "font": "8px"
+      },
+      {
+        "selector": ".chart-bottom",
+        "width": 316,
+        "height": 39,
+        "font": "7px"
+      },
+      {
+        "selector": ".allocation-note",
+        "width": 352,
+        "height": 39,
+        "font": "8px"
+      },
+      {
+        "selector": ".metric-footer",
+        "width": 140,
+        "height": 21,
+        "font": "7px"
+      },
+      {
+        "selector": ".slider-field input",
+        "width": 146,
+        "height": 3,
+        "font": "16px"
+      },
+      {
+        "selector": ".table-scroll-hint",
+        "width": 316,
+        "height": 16,
+        "font": "10px"
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "height": 3122,
+    "scrollWidth": 320,
+    "items": [
+      {
+        "selector": ".watch-button",
+        "width": 15,
+        "height": 15,
+        "font": "11px"
+      },
+      {
+        "selector": ".range-buttons button",
+        "width": 23.640625,
+        "height": 19,
+        "font": "8px"
+      },
+      {
+        "selector": ".icon-button",
+        "width": 28,
+        "height": 28,
+        "font": "9px"
+      },
+      {
+        "selector": ".asset-search input",
+        "width": 166,
+        "height": 14,
+        "font": "11px"
+      },
+      {
+        "selector": ".assumption-field select",
+        "width": 114,
+        "height": 34,
+        "font": "9px"
+      },
+      {
+        "selector": ".formula-note p",
+        "width": 223,
+        "height": 49.921875,
+        "font": "9px"
+      },
+      {
+        "selector": ".market-footnote",
+        "width": 282,
+        "height": 60,
+        "font": "8px"
+      },
+      {
+        "selector": ".chart-bottom",
+        "width": 246,
+        "height": 39,
+        "font": "7px"
+      },
+      {
+        "selector": ".allocation-note",
+        "width": 282,
+        "height": 39,
+        "font": "8px"
+      },
+      {
+        "selector": ".metric-footer",
+        "width": 111,
+        "height": 21,
+        "font": "6px"
+      },
+      {
+        "selector": ".slider-field input",
+        "width": 111,
+        "height": 3,
+        "font": "16px"
+      },
+      {
+        "selector": ".table-scroll-hint",
+        "width": 246,
+        "height": 16,
+        "font": "10px"
+      }
+    ]
+  }
+]
