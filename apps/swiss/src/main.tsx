@@ -11,6 +11,7 @@ type Exhibition = {
   category: string
   artist: string
   description: string
+  introduction: string
   className: string
 }
 const exhibitions: Exhibition[] = [
@@ -21,6 +22,7 @@ const exhibitions: Exhibition[] = [
     en: 'OTHER SIDE OF ORDER',
     category: '视觉系统 / VISUAL SYSTEMS',
     artist: '林之 / Studio Between',
+    introduction: '从重复与偏差中，重新认识视觉秩序。',
     description:
       '当网格开始偏移，秩序会去向哪里？以 64 个可重复的基础单元为起点，探索系统中的变化、偏差与意外。走进一张被放大的网格，重新认识那些习以为常的视觉规则。',
     className: 'poster-order',
@@ -32,6 +34,7 @@ const exhibitions: Exhibition[] = [
     en: 'TYPE WITHOUT LIMITS',
     category: '实验字体 / EXPERIMENTAL TYPE',
     artist: 'Chen & Objects',
+    introduction: '让文字走出纸面，成为可以感受的空间。',
     description:
       '字母不仅是信息的容器，也可以是空间、结构与情绪。从一笔一画到可行走的装置，用身体感受字号、字距与留白如何改变阅读。',
     className: 'poster-type',
@@ -43,6 +46,7 @@ const exhibitions: Exhibition[] = [
     en: 'STILL IN MOTION',
     category: '动态影像 / MOVING IMAGE',
     artist: '小间研究所 / ROOM 08',
+    introduction: '在光与节奏之间，观察图形如何改变。',
     description:
       '运动与静止之间，有一段看不见的过渡。通过光、重复与节奏，观察极简图形在时间中的变化。本展览使用缓慢运动，现场亦提供静态观看版本。',
     className: 'poster-motion',
@@ -138,6 +142,16 @@ const ticketTypes = [
     description: '三日入场 · 全部展览与公开对谈 · 纪念刊物',
   },
 ]
+const eventNames: Record<string, string> = {
+  KEYNOTE: '开场演讲',
+  WORKSHOP: '工作坊',
+  TALK: '主题对谈',
+  PANEL: '圆桌交流',
+  'OPEN STUDIO': '开放工作台',
+  'GUIDED TOUR': '策展导览',
+  ROUNDTABLE: '圆桌对话',
+  CLOSING: '闭幕交流',
+}
 
 function Burst() {
   return (
@@ -198,6 +212,22 @@ function clickedBackdrop(event: React.MouseEvent<HTMLDialogElement>) {
     event.clientY > rect.bottom
   )
 }
+function keepDialogFocus(event: React.KeyboardEvent<HTMLDialogElement>) {
+  if (event.key !== 'Tab') return
+  const controls = event.currentTarget.querySelectorAll<HTMLElement>(
+    'button:not(:disabled), a[href]',
+  )
+  const first = controls[0],
+    last = controls[controls.length - 1]
+  if (!first) return
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault()
+    first.focus()
+  }
+}
 function App() {
   const [date, setDate] = useState('18')
   const [selected, setSelected] = useState<Exhibition | null>(null)
@@ -208,6 +238,8 @@ function App() {
   const [menu, setMenu] = useState(false)
   const detailRef = useRef<HTMLDialogElement>(null)
   const bookingRef = useRef<HTMLDialogElement>(null)
+  const menuRef = useRef<HTMLButtonElement>(null)
+  const visibleSchedule = schedule.filter((s) => s.date === date)
   const selectedTicket = ticketTypes.find((t) => t.id === ticket)!
   useEffect(() => {
     if (selected) detailRef.current?.showModal()
@@ -254,14 +286,29 @@ function App() {
           <span className="logo-dot" />
         </a>
         <button
+          ref={menuRef}
           className="mobile-menu"
           onClick={() => setMenu(!menu)}
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') setMenu(false)
+          }}
           aria-expanded={menu}
           aria-label="导航菜单"
+          aria-controls="main-navigation"
         >
           {menu ? <X size={22} /> : <Plus size={22} />}
         </button>
-        <nav className={menu ? 'nav-open' : ''} aria-label="主要导航">
+        <nav
+          id="main-navigation"
+          className={menu ? 'nav-open' : ''}
+          aria-label="主要导航"
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') {
+              setMenu(false)
+              menuRef.current?.focus()
+            }
+          }}
+        >
           <a href="#exhibitions" onClick={() => setMenu(false)}>
             展览 <span>01</span>
           </a>
@@ -361,6 +408,13 @@ function App() {
           <div className="exhibition-grid">
             {exhibitions.map((item) => (
               <article className="exhibition-card" key={item.id}>
+                <div className="exhibition-index">
+                  <span>{item.number}</span>
+                  <div>
+                    <strong>{item.category.split(' / ')[0]}</strong>
+                    <small>{item.category.split(' / ')[1]}</small>
+                  </div>
+                </div>
                 <button
                   className="poster-button"
                   onClick={() => setSelected(item)}
@@ -371,15 +425,12 @@ function App() {
                     进入展览 <ArrowUpRight size={24} />
                   </span>
                 </button>
-                <div className="exhibition-meta">
-                  <span>{item.category}</span>
-                  <span>{item.number}</span>
-                </div>
                 <button className="exhibition-name" onClick={() => setSelected(item)}>
                   <h3>{item.name}</h3>
                   <ArrowUpRight size={23} />
                 </button>
-                <p>{item.artist}</p>
+                <p className="exhibition-intro">{item.introduction}</p>
+                <p className="exhibition-artist">{item.artist}</p>
               </article>
             ))}
           </div>
@@ -437,58 +488,79 @@ function App() {
               选择日期，找到你的日程。
             </p>
           </div>
-          <div className="date-tabs" role="tablist" aria-label="活动日期">
-            {[
-              { date: '18', day: 'FRIDAY', cn: '星期五' },
-              { date: '19', day: 'SATURDAY', cn: '星期六' },
-              { date: '20', day: 'SUNDAY', cn: '星期日' },
-            ].map((d) => (
-              <button
-                role="tab"
-                tabIndex={date === d.date ? 0 : -1}
-                onKeyDown={moveDateTab}
-                id={`tab-${d.date}`}
-                aria-controls="schedule-panel"
-                aria-selected={date === d.date}
-                className={date === d.date ? 'active' : ''}
-                onClick={() => setDate(d.date)}
-                key={d.date}
-              >
-                <span>12.{d.date}</span>
-                <small>
-                  {d.day}
-                  <br />
-                  {d.cn}
-                </small>
-                <ArrowUpRight size={24} />
-              </button>
-            ))}
-          </div>
-          <div
-            id="schedule-panel"
-            role="tabpanel"
-            tabIndex={0}
-            aria-labelledby={`tab-${date}`}
-            className="schedule-list"
-          >
-            {schedule
-              .filter((s) => s.date === date)
-              .map((s, i) => (
+          <div className="programme-body">
+            <div className="date-tabs" role="tablist" aria-label="活动日期">
+              {[
+                { date: '18', day: 'FRIDAY', cn: '星期五' },
+                { date: '19', day: 'SATURDAY', cn: '星期六' },
+                { date: '20', day: 'SUNDAY', cn: '星期日' },
+              ].map((d) => (
+                <button
+                  role="tab"
+                  tabIndex={date === d.date ? 0 : -1}
+                  onKeyDown={moveDateTab}
+                  id={`tab-${d.date}`}
+                  aria-controls="schedule-panel"
+                  aria-selected={date === d.date}
+                  className={date === d.date ? 'active' : ''}
+                  onClick={() => setDate(d.date)}
+                  key={d.date}
+                >
+                  <span>12.{d.date}</span>
+                  <small>
+                    {d.day}
+                    <br />
+                    {d.cn}
+                  </small>
+                  <ArrowUpRight size={24} />
+                </button>
+              ))}
+            </div>
+            <div className="programme-context">
+              <p aria-live="polite">
+                <strong>12 月 {date} 日</strong>
+                <span>{visibleSchedule.length} 场活动</span>
+              </p>
+              <span>现场时间 / UTC+8</span>
+            </div>
+            <div className="schedule-labels" aria-hidden="true">
+              <span>时间 / TIME</span>
+              <span>活动 / PROGRAMME</span>
+              <span>地点 / VENUE</span>
+            </div>
+            <div
+              id="schedule-panel"
+              role="tabpanel"
+              tabIndex={0}
+              aria-labelledby={`tab-${date}`}
+              className="schedule-list"
+            >
+              {visibleSchedule.map((s) => (
                 <div className="schedule-row" key={s.name}>
-                  <span className="schedule-time">{s.time}</span>
+                  <div className="schedule-time" aria-label={s.time}>
+                    <time dateTime={`2026-12-${date}T${s.time.split('—')[0]}:00+08:00`}>
+                      {s.time.split('—')[0]}
+                    </time>
+                    <span>— {s.time.split('—')[1]}</span>
+                  </div>
                   <div className="schedule-main">
-                    <span className="event-type">{s.type}</span>
+                    <span className="event-type">
+                      {eventNames[s.type]} <span>/ {s.type}</span>
+                    </span>
                     <h3>{s.name}</h3>
                     <p>{s.person}</p>
                   </div>
-                  <span className="schedule-location">{s.location}</span>
-                  <span className="schedule-number">0{i + 1}</span>
+                  <div className="schedule-location">
+                    <span>{s.location.split(' / ')[0]}</span>
+                    <small>{s.location.split(' / ')[1]}</small>
+                  </div>
                 </div>
               ))}
+            </div>
+            <p className="programme-note">
+              所有时间均为北京时间（UTC+8）。工作坊席位与现场安排以实际主办方信息为准；本页面为交互演示。
+            </p>
           </div>
-          <p className="programme-note">
-            所有时间均为北京时间（UTC+8）。工作坊席位与现场安排以实际主办方信息为准；本页面为交互演示。
-          </p>
         </section>
         <section className="ticket-section" id="tickets">
           <div className="ticket-title">
@@ -620,6 +692,7 @@ function App() {
         aria-labelledby="exhibition-dialog-title"
         onCancel={() => setSelected(null)}
         onClose={() => setSelected(null)}
+        onKeyDown={keepDialogFocus}
         onClick={(e) => {
           if (clickedBackdrop(e)) setSelected(null)
         }}
@@ -655,7 +728,19 @@ function App() {
                   <dd>{selected.category}</dd>
                 </div>
               </dl>
-              <a className="dialog-ticket" href="#tickets" onClick={() => setSelected(null)}>
+              <a
+                className="dialog-ticket"
+                href="#tickets"
+                onClick={() => {
+                  detailRef.current?.close()
+                  setSelected(null)
+                  requestAnimationFrame(() =>
+                    document
+                      .querySelector<HTMLInputElement>('.ticket-option input:checked')
+                      ?.focus({ preventScroll: true }),
+                  )
+                }}
+              >
                 选择通行证 <ArrowUpRight size={20} />
               </a>
               <small>虚构展览 · 用于交互与视觉演示</small>
@@ -669,6 +754,7 @@ function App() {
         aria-labelledby="booking-title"
         onCancel={() => setBooking(false)}
         onClose={() => setBooking(false)}
+        onKeyDown={keepDialogFocus}
         onClick={(e) => {
           if (clickedBackdrop(e)) setBooking(false)
         }}

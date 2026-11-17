@@ -1,0 +1,350 @@
+[
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "height": 4143,
+    "heroHeight": 643,
+    "readable": [
+      {
+        "class": "exhibition-meta",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "视觉系统 / VISUAL SYSTEMS01"
+      },
+      {
+        "class": "exhibition-meta",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "实验字体 / EXPERIMENTAL TYPE02"
+      },
+      {
+        "class": "exhibition-meta",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "动态影像 / MOVING IMAGE03"
+      },
+      {
+        "class": "schedule-time",
+        "font": "12px",
+        "lineHeight": "normal",
+        "text": "10:00—11:00"
+      },
+      {
+        "class": "event-type",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "KEYNOTE"
+      },
+      {
+        "class": "",
+        "font": "19px",
+        "lineHeight": "normal",
+        "text": "开场：秩序是一种选择"
+      },
+      {
+        "class": "schedule-location",
+        "font": "9px",
+        "lineHeight": "normal",
+        "text": "主会场 / HALL A"
+      },
+      {
+        "class": "schedule-time",
+        "font": "12px",
+        "lineHeight": "normal",
+        "text": "13:30—15:00"
+      },
+      {
+        "class": "event-type",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "WORKSHOP"
+      },
+      {
+        "class": "",
+        "font": "19px",
+        "lineHeight": "normal",
+        "text": "用一张纸，构建一个系统"
+      },
+      {
+        "class": "schedule-location",
+        "font": "9px",
+        "lineHeight": "normal",
+        "text": "工作间 / ROOM 02"
+      },
+      {
+        "class": "schedule-time",
+        "font": "12px",
+        "lineHeight": "normal",
+        "text": "16:00—17:00"
+      },
+      {
+        "class": "event-type",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "TALK"
+      },
+      {
+        "class": "",
+        "font": "19px",
+        "lineHeight": "normal",
+        "text": "字体之外，我们在读什么？"
+      },
+      {
+        "class": "schedule-location",
+        "font": "9px",
+        "lineHeight": "normal",
+        "text": "主会场 / HALL A"
+      },
+      {
+        "class": "",
+        "font": "9px",
+        "lineHeight": "13.5px",
+        "text": "任选一天 · 全部展览与公开对谈"
+      },
+      {
+        "class": "",
+        "font": "9px",
+        "lineHeight": "13.5px",
+        "text": "三日入场 · 全部展览与公开对谈 · 纪念刊物"
+      },
+      {
+        "class": "ticket-disclaimer",
+        "font": "9px",
+        "lineHeight": "15.3px",
+        "text": "交互演示 · 不收取费用，不生成真实门票，也不收集个人信息。"
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "height": 5018,
+    "heroHeight": 595.171875,
+    "readable": [
+      {
+        "class": "exhibition-meta",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "视觉系统 / VISUAL SYSTEMS01"
+      },
+      {
+        "class": "exhibition-meta",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "实验字体 / EXPERIMENTAL TYPE02"
+      },
+      {
+        "class": "exhibition-meta",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "动态影像 / MOVING IMAGE03"
+      },
+      {
+        "class": "schedule-time",
+        "font": "10px",
+        "lineHeight": "normal",
+        "text": "10:00—11:00"
+      },
+      {
+        "class": "event-type",
+        "font": "7px",
+        "lineHeight": "normal",
+        "text": "KEYNOTE"
+      },
+      {
+        "class": "",
+        "font": "16px",
+        "lineHeight": "24px",
+        "text": "开场：秩序是一种选择"
+      },
+      {
+        "class": "schedule-location",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "主会场 / HALL A"
+      },
+      {
+        "class": "schedule-time",
+        "font": "10px",
+        "lineHeight": "normal",
+        "text": "13:30—15:00"
+      },
+      {
+        "class": "event-type",
+        "font": "7px",
+        "lineHeight": "normal",
+        "text": "WORKSHOP"
+      },
+      {
+        "class": "",
+        "font": "16px",
+        "lineHeight": "24px",
+        "text": "用一张纸，构建一个系统"
+      },
+      {
+        "class": "schedule-location",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "工作间 / ROOM 02"
+      },
+      {
+        "class": "schedule-time",
+        "font": "10px",
+        "lineHeight": "normal",
+        "text": "16:00—17:00"
+      },
+      {
+        "class": "event-type",
+        "font": "7px",
+        "lineHeight": "normal",
+        "text": "TALK"
+      },
+      {
+        "class": "",
+        "font": "16px",
+        "lineHeight": "24px",
+        "text": "字体之外，我们在读什么？"
+      },
+      {
+        "class": "schedule-location",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "主会场 / HALL A"
+      },
+      {
+        "class": "",
+        "font": "9px",
+        "lineHeight": "13.5px",
+        "text": "任选一天 · 全部展览与公开对谈"
+      },
+      {
+        "class": "",
+        "font": "9px",
+        "lineHeight": "13.5px",
+        "text": "三日入场 · 全部展览与公开对谈 · 纪念刊物"
+      },
+      {
+        "class": "ticket-disclaimer",
+        "font": "8px",
+        "lineHeight": "13.6px",
+        "text": "交互演示 · 不收取费用，不生成真实门票，也不收集个人信息。"
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "height": 4780,
+    "heroHeight": 537.78125,
+    "readable": [
+      {
+        "class": "exhibition-meta",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "视觉系统 / VISUAL SYSTEMS01"
+      },
+      {
+        "class": "exhibition-meta",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "实验字体 / EXPERIMENTAL TYPE02"
+      },
+      {
+        "class": "exhibition-meta",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "动态影像 / MOVING IMAGE03"
+      },
+      {
+        "class": "schedule-time",
+        "font": "10px",
+        "lineHeight": "normal",
+        "text": "10:00—11:00"
+      },
+      {
+        "class": "event-type",
+        "font": "7px",
+        "lineHeight": "normal",
+        "text": "KEYNOTE"
+      },
+      {
+        "class": "",
+        "font": "16px",
+        "lineHeight": "24px",
+        "text": "开场：秩序是一种选择"
+      },
+      {
+        "class": "schedule-location",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "主会场 / HALL A"
+      },
+      {
+        "class": "schedule-time",
+        "font": "10px",
+        "lineHeight": "normal",
+        "text": "13:30—15:00"
+      },
+      {
+        "class": "event-type",
+        "font": "7px",
+        "lineHeight": "normal",
+        "text": "WORKSHOP"
+      },
+      {
+        "class": "",
+        "font": "16px",
+        "lineHeight": "24px",
+        "text": "用一张纸，构建一个系统"
+      },
+      {
+        "class": "schedule-location",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "工作间 / ROOM 02"
+      },
+      {
+        "class": "schedule-time",
+        "font": "10px",
+        "lineHeight": "normal",
+        "text": "16:00—17:00"
+      },
+      {
+        "class": "event-type",
+        "font": "7px",
+        "lineHeight": "normal",
+        "text": "TALK"
+      },
+      {
+        "class": "",
+        "font": "16px",
+        "lineHeight": "24px",
+        "text": "字体之外，我们在读什么？"
+      },
+      {
+        "class": "schedule-location",
+        "font": "8px",
+        "lineHeight": "normal",
+        "text": "主会场 / HALL A"
+      },
+      {
+        "class": "",
+        "font": "9px",
+        "lineHeight": "13.5px",
+        "text": "任选一天 · 全部展览与公开对谈"
+      },
+      {
+        "class": "",
+        "font": "9px",
+        "lineHeight": "13.5px",
+        "text": "三日入场 · 全部展览与公开对谈 · 纪念刊物"
+      },
+      {
+        "class": "ticket-disclaimer",
+        "font": "8px",
+        "lineHeight": "13.6px",
+        "text": "交互演示 · 不收取费用，不生成真实门票，也不收集个人信息。"
+      }
+    ]
+  }
+]

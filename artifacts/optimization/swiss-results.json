@@ -1,0 +1,630 @@
+{
+  "url": "http://127.0.0.1:4173/swiss/",
+  "browser": "Chromium; no iOS device claim",
+  "checks": [
+    {
+      "name": "1440: no page overflow or clipped hero text",
+      "pass": true
+    },
+    {
+      "name": "1440: three exhibition cards and three current events",
+      "pass": true
+    },
+    {
+      "name": "1440: poster titles stay inside artwork and clear its graphics",
+      "pass": true
+    },
+    {
+      "name": "1440: key interactive touch targets at least 44px",
+      "pass": true
+    },
+    {
+      "name": "1440: arrow and Home/End dates update selection, focus and results",
+      "pass": true
+    },
+    {
+      "name": "1440: exhibition Enter, dialog Tab cycle, Escape and restored focus",
+      "pass": true
+    },
+    {
+      "name": "1440: detail ticket link hands focus to selected radio",
+      "pass": true
+    },
+    {
+      "name": "1440: full pass two people totals 316 with date disabled and honest summary",
+      "pass": true
+    },
+    {
+      "name": "1440: day pass, date 19 and two people totals 136",
+      "pass": true
+    },
+    {
+      "name": "1440: quantity constrained 1 to 6 and remains derived from ticket",
+      "pass": true
+    },
+    {
+      "name": "1440: reduced motion avoids smooth scroll",
+      "pass": true
+    },
+    {
+      "name": "390: no page overflow or clipped hero text",
+      "pass": true
+    },
+    {
+      "name": "390: three exhibition cards and three current events",
+      "pass": true
+    },
+    {
+      "name": "390: poster titles stay inside artwork and clear its graphics",
+      "pass": true
+    },
+    {
+      "name": "390: key interactive touch targets at least 44px",
+      "pass": true
+    },
+    {
+      "name": "390: native select computes 16px",
+      "pass": true
+    },
+    {
+      "name": "390: menu Escape on button and navigation restores focus",
+      "pass": true
+    },
+    {
+      "name": "390: arrow and Home/End dates update selection, focus and results",
+      "pass": true
+    },
+    {
+      "name": "390: exhibition Enter, dialog Tab cycle, Escape and restored focus",
+      "pass": true
+    },
+    {
+      "name": "390: detail ticket link hands focus to selected radio",
+      "pass": true
+    },
+    {
+      "name": "390: full pass two people totals 316 with date disabled and honest summary",
+      "pass": true
+    },
+    {
+      "name": "390: day pass, date 19 and two people totals 136",
+      "pass": true
+    },
+    {
+      "name": "390: quantity constrained 1 to 6 and remains derived from ticket",
+      "pass": true
+    },
+    {
+      "name": "390: reduced motion avoids smooth scroll",
+      "pass": true
+    },
+    {
+      "name": "320: no page overflow or clipped hero text",
+      "pass": true
+    },
+    {
+      "name": "320: three exhibition cards and three current events",
+      "pass": true
+    },
+    {
+      "name": "320: poster titles stay inside artwork and clear its graphics",
+      "pass": true
+    },
+    {
+      "name": "320: key interactive touch targets at least 44px",
+      "pass": true
+    },
+    {
+      "name": "320: native select computes 16px",
+      "pass": true
+    },
+    {
+      "name": "320: menu Escape on button and navigation restores focus",
+      "pass": true
+    },
+    {
+      "name": "320: arrow and Home/End dates update selection, focus and results",
+      "pass": true
+    },
+    {
+      "name": "320: exhibition Enter, dialog Tab cycle, Escape and restored focus",
+      "pass": true
+    },
+    {
+      "name": "320: detail ticket link hands focus to selected radio",
+      "pass": true
+    },
+    {
+      "name": "320: full pass two people totals 316 with date disabled and honest summary",
+      "pass": true
+    },
+    {
+      "name": "320: day pass, date 19 and two people totals 136",
+      "pass": true
+    },
+    {
+      "name": "320: quantity constrained 1 to 6 and remains derived from ticket",
+      "pass": true
+    },
+    {
+      "name": "320: reduced motion avoids smooth scroll",
+      "pass": true
+    },
+    {
+      "name": "701: narrow three-column posters keep graphic and title bounds separate",
+      "pass": true
+    },
+    {
+      "name": "No browser script errors across three viewports",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "pageHeight": 4283,
+      "heroHeight": 645.59375,
+      "fonts": [
+        {
+          "selector": ".exhibition-index strong",
+          "font": "13px"
+        },
+        {
+          "selector": ".exhibition-index small",
+          "font": "10px"
+        },
+        {
+          "selector": ".exhibition-intro",
+          "font": "14px"
+        },
+        {
+          "selector": ".exhibition-artist",
+          "font": "12px"
+        },
+        {
+          "selector": ".schedule-time time",
+          "font": "19px"
+        },
+        {
+          "selector": ".schedule-time > span",
+          "font": "12px"
+        },
+        {
+          "selector": ".event-type",
+          "font": "11px"
+        },
+        {
+          "selector": ".schedule-main h3",
+          "font": "21px"
+        },
+        {
+          "selector": ".schedule-location",
+          "font": "12px"
+        },
+        {
+          "selector": ".ticket-option p",
+          "font": "12px"
+        },
+        {
+          "selector": ".ticket-disclaimer",
+          "font": "11px"
+        },
+        {
+          "selector": ".ticket-settings select",
+          "font": "13px"
+        }
+      ],
+      "controls": [
+        {
+          "selector": ".mobile-menu",
+          "width": 0,
+          "height": 0,
+          "font": "16px"
+        },
+        {
+          "selector": ".header-ticket",
+          "width": 123.015625,
+          "height": 44,
+          "font": "12px"
+        },
+        {
+          "selector": ".exhibition-name",
+          "width": 418.609375,
+          "height": 67,
+          "font": "16px"
+        },
+        {
+          "selector": ".date-tabs button",
+          "width": 294.328125,
+          "height": 100,
+          "font": "16px"
+        },
+        {
+          "selector": ".ticket-settings select",
+          "width": 333.984375,
+          "height": 48,
+          "font": "13px"
+        },
+        {
+          "selector": ".quantity-control button",
+          "width": 44,
+          "height": 46,
+          "font": "16px"
+        },
+        {
+          "selector": ".book-button",
+          "width": 615.921875,
+          "height": 61,
+          "font": "14px"
+        }
+      ],
+      "heroText": [
+        {
+          "left": 64.078125,
+          "right": 387.890625,
+          "width": 323.8125
+        },
+        {
+          "left": 387.890625,
+          "right": 387.890625,
+          "width": 0
+        },
+        {
+          "left": 64.078125,
+          "right": 596.078125,
+          "width": 532
+        },
+        {
+          "left": 596.078125,
+          "right": 596.078125,
+          "width": 0
+        },
+        {
+          "left": 64.078125,
+          "right": 617.109375,
+          "width": 553.03125
+        },
+        {
+          "left": 64.078125,
+          "right": 617.109375,
+          "width": 553.03125
+        }
+      ],
+      "posters": [
+        {
+          "class": "exhibition-poster poster-order",
+          "titleBottomGap": 22,
+          "artToTitleGap": 67.78125
+        },
+        {
+          "class": "exhibition-poster poster-type",
+          "titleBottomGap": 22,
+          "artToTitleGap": 93.76318359375
+        },
+        {
+          "class": "exhibition-poster poster-motion",
+          "titleBottomGap": 22,
+          "artToTitleGap": 54.5
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "pageHeight": 5745,
+      "heroHeight": 538.171875,
+      "fonts": [
+        {
+          "selector": ".exhibition-index strong",
+          "font": "13px"
+        },
+        {
+          "selector": ".exhibition-index small",
+          "font": "10px"
+        },
+        {
+          "selector": ".exhibition-intro",
+          "font": "14px"
+        },
+        {
+          "selector": ".exhibition-artist",
+          "font": "12px"
+        },
+        {
+          "selector": ".schedule-time time",
+          "font": "18px"
+        },
+        {
+          "selector": ".schedule-time > span",
+          "font": "12px"
+        },
+        {
+          "selector": ".event-type",
+          "font": "11px"
+        },
+        {
+          "selector": ".schedule-main h3",
+          "font": "18px"
+        },
+        {
+          "selector": ".schedule-location",
+          "font": "12px"
+        },
+        {
+          "selector": ".ticket-option p",
+          "font": "12px"
+        },
+        {
+          "selector": ".ticket-disclaimer",
+          "font": "11px"
+        },
+        {
+          "selector": ".ticket-settings select",
+          "font": "16px"
+        }
+      ],
+      "controls": [
+        {
+          "selector": ".mobile-menu",
+          "width": 44,
+          "height": 44,
+          "font": "16px"
+        },
+        {
+          "selector": ".header-ticket",
+          "width": 93,
+          "height": 44,
+          "font": "11px"
+        },
+        {
+          "selector": ".exhibition-name",
+          "width": 350,
+          "height": 63,
+          "font": "16px"
+        },
+        {
+          "selector": ".date-tabs button",
+          "width": 116,
+          "height": 106,
+          "font": "16px"
+        },
+        {
+          "selector": ".ticket-settings select",
+          "width": 202,
+          "height": 48,
+          "font": "16px"
+        },
+        {
+          "selector": ".quantity-control button",
+          "width": 44,
+          "height": 46,
+          "font": "16px"
+        },
+        {
+          "selector": ".book-button",
+          "width": 350,
+          "height": 61,
+          "font": "14px"
+        }
+      ],
+      "heroText": [
+        {
+          "left": 20,
+          "right": 191.3125,
+          "width": 171.3125
+        },
+        {
+          "left": 191.3125,
+          "right": 191.3125,
+          "width": 0
+        },
+        {
+          "left": 20,
+          "right": 301.390625,
+          "width": 281.390625
+        },
+        {
+          "left": 301.390625,
+          "right": 301.390625,
+          "width": 0
+        },
+        {
+          "left": 20,
+          "right": 313.015625,
+          "width": 293.015625
+        },
+        {
+          "left": 20,
+          "right": 313.015625,
+          "width": 293.015625
+        }
+      ],
+      "posters": [
+        {
+          "class": "exhibition-poster poster-order",
+          "titleBottomGap": 23,
+          "artToTitleGap": 20.734375
+        },
+        {
+          "class": "exhibition-poster poster-type",
+          "titleBottomGap": 23,
+          "artToTitleGap": 11.3387451171875
+        },
+        {
+          "class": "exhibition-poster poster-motion",
+          "titleBottomGap": 23,
+          "artToTitleGap": 23.875
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "pageHeight": 5700,
+      "heroHeight": 478.75,
+      "fonts": [
+        {
+          "selector": ".exhibition-index strong",
+          "font": "13px"
+        },
+        {
+          "selector": ".exhibition-index small",
+          "font": "10px"
+        },
+        {
+          "selector": ".exhibition-intro",
+          "font": "14px"
+        },
+        {
+          "selector": ".exhibition-artist",
+          "font": "12px"
+        },
+        {
+          "selector": ".schedule-time time",
+          "font": "18px"
+        },
+        {
+          "selector": ".schedule-time > span",
+          "font": "12px"
+        },
+        {
+          "selector": ".event-type",
+          "font": "11px"
+        },
+        {
+          "selector": ".schedule-main h3",
+          "font": "18px"
+        },
+        {
+          "selector": ".schedule-location",
+          "font": "12px"
+        },
+        {
+          "selector": ".ticket-option p",
+          "font": "11px"
+        },
+        {
+          "selector": ".ticket-disclaimer",
+          "font": "11px"
+        },
+        {
+          "selector": ".ticket-settings select",
+          "font": "16px"
+        }
+      ],
+      "controls": [
+        {
+          "selector": ".mobile-menu",
+          "width": 44,
+          "height": 44,
+          "font": "16px"
+        },
+        {
+          "selector": ".header-ticket",
+          "width": 87,
+          "height": 44,
+          "font": "10px"
+        },
+        {
+          "selector": ".exhibition-name",
+          "width": 288,
+          "height": 63,
+          "font": "16px"
+        },
+        {
+          "selector": ".date-tabs button",
+          "width": 95.328125,
+          "height": 104,
+          "font": "16px"
+        },
+        {
+          "selector": ".ticket-settings select",
+          "width": 288,
+          "height": 48,
+          "font": "16px"
+        },
+        {
+          "selector": ".quantity-control button",
+          "width": 44,
+          "height": 46,
+          "font": "16px"
+        },
+        {
+          "selector": ".book-button",
+          "width": 288,
+          "height": 61,
+          "font": "14px"
+        }
+      ],
+      "heroText": [
+        {
+          "left": 16,
+          "right": 156.578125,
+          "width": 140.578125
+        },
+        {
+          "left": 156.578125,
+          "right": 156.578125,
+          "width": 0
+        },
+        {
+          "left": 16,
+          "right": 246.90625,
+          "width": 230.90625
+        },
+        {
+          "left": 246.90625,
+          "right": 246.90625,
+          "width": 0
+        },
+        {
+          "left": 16,
+          "right": 256.453125,
+          "width": 240.453125
+        },
+        {
+          "left": 16,
+          "right": 256.453125,
+          "width": 240.453125
+        }
+      ],
+      "posters": [
+        {
+          "class": "exhibition-poster poster-order",
+          "titleBottomGap": 23,
+          "artToTitleGap": 11.84375
+        },
+        {
+          "class": "exhibition-poster poster-type",
+          "titleBottomGap": 23,
+          "artToTitleGap": 0.6318359375
+        },
+        {
+          "class": "exhibition-poster poster-motion",
+          "titleBottomGap": 23,
+          "artToTitleGap": 14.40625
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "narrowDesktopPosters": [
+    {
+      "class": "exhibition-poster poster-order",
+      "titleBottomGap": 16,
+      "artToTitleGap": 12.609375
+    },
+    {
+      "class": "exhibition-poster poster-type",
+      "titleBottomGap": 16,
+      "artToTitleGap": 13.947265625
+    },
+    {
+      "class": "exhibition-poster poster-motion",
+      "titleBottomGap": 16,
+      "artToTitleGap": 6.453125
+    }
+  ],
+  "passed": 39
+}
