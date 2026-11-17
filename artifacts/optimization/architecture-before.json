@@ -1,0 +1,191 @@
+[
+  {
+    "width": 1440,
+    "metrics": [
+      {
+        "s": ".hero-image",
+        "w": 1440,
+        "h": 740,
+        "y": 91,
+        "font": "14px"
+      },
+      {
+        "s": ".intro",
+        "w": 1320,
+        "h": 452.78125,
+        "y": 902,
+        "font": "14px"
+      },
+      null,
+      {
+        "s": ".contact label",
+        "w": 305.53125,
+        "h": 67,
+        "y": 4201.09375,
+        "font": "11px"
+      },
+      {
+        "s": ".contact input",
+        "w": 639.0625,
+        "h": 40,
+        "y": 4321.09375,
+        "font": "12px"
+      },
+      {
+        "s": ".contact select",
+        "w": 305.53125,
+        "h": 42,
+        "y": 4226.09375,
+        "font": "12px"
+      },
+      {
+        "s": ".contact textarea",
+        "w": 639.0625,
+        "h": 110,
+        "y": 4414.09375,
+        "font": "12px"
+      },
+      {
+        "s": ".brief-button",
+        "w": 639.0625,
+        "h": 53,
+        "y": 4552.09375,
+        "font": "12px"
+      },
+      {
+        "s": ".hero-controls button",
+        "w": 35,
+        "h": 40,
+        "y": 846,
+        "font": "14px"
+      }
+    ],
+    "workTitleY": 1385.78125
+  },
+  {
+    "width": 390,
+    "metrics": [
+      {
+        "s": ".hero-image",
+        "w": 390,
+        "h": 585,
+        "y": 75,
+        "font": "14px"
+      },
+      {
+        "s": ".intro",
+        "w": 350,
+        "h": 447.09375,
+        "y": 735,
+        "font": "14px"
+      },
+      null,
+      {
+        "s": ".contact label",
+        "w": 165.5,
+        "h": 67,
+        "y": 5517.8125,
+        "font": "11px"
+      },
+      {
+        "s": ".contact input",
+        "w": 350,
+        "h": 41,
+        "y": 5634.8125,
+        "font": "13px"
+      },
+      {
+        "s": ".contact select",
+        "w": 165.5,
+        "h": 42,
+        "y": 5542.8125,
+        "font": "12px"
+      },
+      {
+        "s": ".contact textarea",
+        "w": 350,
+        "h": 110,
+        "y": 5725.8125,
+        "font": "13px"
+      },
+      {
+        "s": ".brief-button",
+        "w": 350,
+        "h": 53,
+        "y": 5860.8125,
+        "font": "12px"
+      },
+      {
+        "s": ".hero-controls button",
+        "w": 31,
+        "h": 44,
+        "y": 675,
+        "font": "14px"
+      }
+    ],
+    "workTitleY": 1235.6875
+  },
+  {
+    "width": 320,
+    "metrics": [
+      {
+        "s": ".hero-image",
+        "w": 320,
+        "h": 585,
+        "y": 75,
+        "font": "14px"
+      },
+      {
+        "s": ".intro",
+        "w": 280,
+        "h": 488.84375,
+        "y": 735,
+        "font": "14px"
+      },
+      null,
+      {
+        "s": ".contact label",
+        "w": 130.5,
+        "h": 67,
+        "y": 5559.5625,
+        "font": "11px"
+      },
+      {
+        "s": ".contact input",
+        "w": 280,
+        "h": 41,
+        "y": 5676.5625,
+        "font": "13px"
+      },
+      {
+        "s": ".contact select",
+        "w": 130.5,
+        "h": 42,
+        "y": 5584.5625,
+        "font": "12px"
+      },
+      {
+        "s": ".contact textarea",
+        "w": 280,
+        "h": 110,
+        "y": 5767.5625,
+        "font": "13px"
+      },
+      {
+        "s": ".brief-button",
+        "w": 280,
+        "h": 53,
+        "y": 5902.5625,
+        "font": "12px"
+      },
+      {
+        "s": ".hero-controls button",
+        "w": 31,
+        "h": 44,
+        "y": 675,
+        "font": "14px"
+      }
+    ],
+    "workTitleY": 1277.4375
+  }
+]

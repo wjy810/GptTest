@@ -257,8 +257,8 @@ textarea:focus-visible {
 .hero-controls button {
   display: grid;
   place-items: center;
-  min-width: 35px;
-  min-height: 40px;
+  min-width: 44px;
+  min-height: 44px;
   color: #5d6553;
 }
 .intro {
@@ -1099,7 +1099,7 @@ textarea:focus-visible {
     gap: 5px;
   }
   .hero-controls button {
-    min-width: 31px;
+    min-width: 44px;
     min-height: 44px;
   }
   .intro {
@@ -1446,8 +1446,8 @@ textarea:focus-visible {
     font-size: 10px;
   }
   .hero-open {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     right: 20px;
     bottom: 35px;
   }
@@ -1770,4 +1770,123 @@ textarea:focus-visible {
   padding: 10px 14px;
   margin: 0 0 20px;
   background: #e8ded5;
+}
+
+/* Compact the phone reading interval while retaining the full architectural scene. */
+.hero-information > div:first-child > button,
+.filters button,
+.project-caption button {
+  min-height: 44px;
+}
+.filters button {
+  min-width: 44px;
+}
+@media (max-width: 760px) {
+  .header nav a,
+  .practice-copy > a,
+  .detail-content > a,
+  .footer-top > a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .intro {
+    padding-top: 35px;
+    padding-bottom: 36px;
+    gap: 15px;
+  }
+  .intro > .section-number {
+    padding-top: 0;
+  }
+  .intro-bottom {
+    margin-top: 20px;
+    padding-bottom: 0;
+    gap: 14px 20px;
+  }
+  .intro-bottom > p {
+    font-size: 14px;
+    line-height: 1.85;
+  }
+  .intro-bottom > a {
+    width: 44px;
+    height: 44px;
+  }
+  .hero-controls {
+    gap: 2px;
+    flex-shrink: 0;
+  }
+  .hero-information > div:first-child {
+    min-width: 0;
+  }
+  .filters button {
+    min-width: 44px;
+  }
+  .contact label {
+    font-size: 13px;
+    line-height: 1.65;
+    color: #53594d;
+    margin-bottom: 24px;
+  }
+  .contact input,
+  .contact textarea,
+  .contact select {
+    min-height: 48px;
+    font-size: 16px;
+    line-height: 1.65;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin-top: 7px;
+  }
+  .contact textarea {
+    min-height: 132px;
+    line-height: 1.85;
+  }
+  .brief-button {
+    min-height: 52px;
+    font-size: 14px;
+  }
+  .form-note {
+    align-items: flex-start;
+    font-size: 12px;
+    line-height: 1.85;
+  }
+  .form-note > svg {
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+}
+@media (max-width: 480px) {
+  .hero-caption h1 {
+    font-size: clamp(36px, 11vw, 43px);
+  }
+  .intro h2 {
+    font-size: clamp(27px, 7.95vw, 31px);
+    letter-spacing: -0.8px;
+    line-height: 1.3;
+  }
+  .intro-bottom {
+    grid-template-columns: minmax(0, 1fr) 44px;
+    gap: 13px 16px;
+  }
+  .intro-bottom > p:first-child {
+    grid-column: 1 / -1;
+  }
+  .intro-bottom > p br {
+    display: none;
+  }
+  .intro-bottom > a {
+    position: static;
+    grid-column: 2;
+    align-self: end;
+    margin: 0;
+  }
+  .form-row {
+    gap: 16px;
+  }
+}
+@media (max-width: 350px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
 }

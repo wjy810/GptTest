@@ -1,0 +1,297 @@
+{
+  "results": [
+    {
+      "name": "首屏循环四项目/详情与当前项目一致",
+      "pass": true
+    },
+    {
+      "name": "分类2/1/1/4与模态焦点/详情转简报",
+      "pass": true
+    },
+    {
+      "name": "表单空白拒绝/真实Markdown下载回读/编辑清除成功",
+      "pass": true
+    },
+    {
+      "name": "320px图文/画廊类名/44px目标/16px输入/截图",
+      "pass": true
+    },
+    {
+      "name": "390px图文/画廊类名/44px目标/16px输入/截图",
+      "pass": true
+    },
+    {
+      "name": "1440px图文/画廊类名/44px目标/16px输入/截图",
+      "pass": true
+    },
+    {
+      "name": "运行无异常/减少动态/无重复SVG ID",
+      "pass": true
+    },
+    {
+      "name": "320px 16px项目下拉选项完整显示/两字段单列且可切换",
+      "pass": true
+    }
+  ],
+  "metrics": [
+    {
+      "width": 320,
+      "heroHeight": 585,
+      "introHeight": 360.125,
+      "workTitleY": 1148.71875,
+      "inputs": [
+        {
+          "font": 16,
+          "height": 48
+        },
+        {
+          "font": 16,
+          "height": 48
+        },
+        {
+          "font": 16,
+          "height": 51.390625
+        },
+        {
+          "font": 16,
+          "height": 132
+        }
+      ],
+      "controls": [
+        {
+          "name": "查看静庭项目",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "上一个建筑项目",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "下一个建筑项目",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "全部04",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "居住02",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "文化01",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "公共01",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "The Quiet Courtyard静庭 / 居住",
+          "width": 146.421875,
+          "height": 46.796875
+        },
+        {
+          "name": "A Place for Light光的居所 / 文化",
+          "width": 117,
+          "height": 46.796875
+        },
+        {
+          "name": "Between Land & Sea陆与海之间 / 居住",
+          "width": 152.546875,
+          "height": 46.796875
+        },
+        {
+          "name": "Under One Roof同一屋檐下 / 公共",
+          "width": 118.203125,
+          "height": 46.796875
+        },
+        {
+          "name": "生成项目简报",
+          "width": 280,
+          "height": 56
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "heroHeight": 585,
+      "introHeight": 344.640625,
+      "workTitleY": 1133.234375,
+      "inputs": [
+        {
+          "font": 16,
+          "height": 48
+        },
+        {
+          "font": 16,
+          "height": 48
+        },
+        {
+          "font": 16,
+          "height": 51.390625
+        },
+        {
+          "font": 16,
+          "height": 132
+        }
+      ],
+      "controls": [
+        {
+          "name": "查看静庭项目",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "上一个建筑项目",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "下一个建筑项目",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "全部04",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "居住02",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "文化01",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "公共01",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "The Quiet Courtyard静庭 / 居住",
+          "width": 146.421875,
+          "height": 46.796875
+        },
+        {
+          "name": "A Place for Light光的居所 / 文化",
+          "width": 117,
+          "height": 46.796875
+        },
+        {
+          "name": "Between Land & Sea陆与海之间 / 居住",
+          "width": 152.546875,
+          "height": 46.796875
+        },
+        {
+          "name": "Under One Roof同一屋檐下 / 公共",
+          "width": 118.203125,
+          "height": 46.796875
+        },
+        {
+          "name": "生成项目简报",
+          "width": 350,
+          "height": 56
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "heroHeight": 740,
+      "introHeight": 452.78125,
+      "workTitleY": 1385.78125,
+      "inputs": [
+        {
+          "font": 12,
+          "height": 42
+        },
+        {
+          "font": 12,
+          "height": 42
+        },
+        {
+          "font": 12,
+          "height": 40
+        },
+        {
+          "font": 12,
+          "height": 110
+        }
+      ],
+      "controls": [
+        {
+          "name": "查看静庭项目",
+          "width": 53,
+          "height": 53
+        },
+        {
+          "name": "上一个建筑项目",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "下一个建筑项目",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "全部04",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "居住02",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "文化01",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "公共01",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "name": "The Quiet Courtyard静庭 / 居住",
+          "width": 155.484375,
+          "height": 46
+        },
+        {
+          "name": "A Place for Light光的居所 / 文化",
+          "width": 124.28125,
+          "height": 46
+        },
+        {
+          "name": "Between Land & Sea陆与海之间 / 居住",
+          "width": 161.9375,
+          "height": 46
+        },
+        {
+          "name": "Under One Roof同一屋檐下 / 公共",
+          "width": 125.484375,
+          "height": 46
+        },
+        {
+          "name": "生成项目简报",
+          "width": 639.0625,
+          "height": 53
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

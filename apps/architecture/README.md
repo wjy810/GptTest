@@ -54,7 +54,7 @@ python -m http.server 4185 --directory dist/architecture --bind 0.0.0.0
 | 桌面导航高度 | `91px`                                                                      |
 | 首屏景观高度 | `calc(100svh - 160px)`；最小 560px、最大 850px                              |
 | 主景观标题   | Georgia 61px，字重 400，字距 −2px                                           |
-| 手机景观标题 | 43px，字距 −1.5px                                                           |
+| 手机景观标题 | `clamp(36px, 11vw, 43px)`，字距 −1.5px                                      |
 
 灰白界面搭配略带自然色的空间图。主要正文没有依赖极浅灰来制造“高级感”；细小的编号和标签承担辅助层级。
 
@@ -97,7 +97,9 @@ python -m http.server 4185 --directory dist/architecture --bind 0.0.0.0
 - 景观铺满容器，标题放在左下，按钮放在右下。
 - `.hero-image:after` 在画面下半部叠透明到 `#243025a6` 的渐变，让白色标题和操作按钮有稳定对比。
 - 侧边 `.hero-vertical` 使用 `writing-mode: vertical-rl`，只承载系列编号。
-- 项目信息不挤进图像，放到独立的 71px 信息栏。
+- 项目信息不挤进图像，放到独立的 71px 信息栏。手机保留原来的 `65svh` 建筑景观高度，主要缩短图像后的介绍阅读区，而不是裁短建筑。
+- 手机 `.intro` 上下留白调整为 35px / 36px；章节到标题间隔 15px，正文 14px / 1.85 行高。480px 以下取消两段正文中的硬换行，并给 44px 浏览箭头单独网格列，避免定位按钮盖住文字。
+- 手机主标题使用 36–43px 响应式字号，使 320px 标题末尾与右下详情箭头保留间隔。切换箭头、项目入口和筛选目标至少 44px 高；独立图标目标至少 44×44px。
 
 ### 画廊
 
@@ -155,6 +157,8 @@ python -m http.server 4185 --directory dist/architecture --bind 0.0.0.0
 
 ## 7. 本地简报生成
 
+手机表单的 select、input、textarea 均为 16px；标签 13px、说明 12px。输入区域至少 48px 高，多行想法至少 132px，高度随用户调整。保留原细下划线与灰白配色；方向/面积通常为两列，350px 以下改为单列，避免 16px 选项文字被原生下拉箭头裁掉，不用缩小输入文字保住布局。
+
 表单维护 `service`、`size`、`location`、`idea` 四项状态：
 
 - 项目方向：住宅 / 文化 / 社区公共 / 其他研究。
@@ -196,7 +200,7 @@ python -m http.server 4185 --directory dist/architecture --bind 0.0.0.0
 
 ## 9. 验收清单及现有证据
 
-1. 1440px 与 390px 浏览完整页面：首屏建筑比例正常，标题完整，页面无横向滚动。
+1. 1440px、390px 与 320px 浏览完整页面：首屏建筑比例正常，标题完整、与详情箭头不重叠，页面无横向滚动；手机表单字号至少 16px、操作目标至少 44px。
 2. 通过首屏左右按钮循环四项：图片、编号、名称、地点一致，打开的是当前项。
 3. 点击居住 / 公共筛选，分别出现 2 / 1 个项目；恢复全部为 4 个。
 4. 键盘聚焦作品图，Enter 打开详情；标题、面积、材料正确；Escape 关闭。
@@ -207,3 +211,9 @@ python -m http.server 4185 --directory dist/architecture --bind 0.0.0.0
 9. 系统减少动态效果下，页面没有强制动画；图片放大过渡与平滑滚动关闭。
 
 已完成独立构建与 TypeScript 检查，并执行 14 条浏览器断言：首屏前后切换、筛选数量、键盘详情、Escape、笔记展开、简报内容读回、手机导航、无横向溢出及无运行时错误。截图见 `artifacts/reviews/architecture-{desktop,mobile}.png`，首屏特写为同目录 `architecture-{desktop,mobile}-hero.png`。第四批独立审核结果以最终 `docs/reviews/BATCH-04.md` 为准。
+
+## 10. 本轮排版优化证据
+
+前后截图位于 [`artifacts/optimization/`](../../artifacts/optimization/) 的 `architecture-*` 文件。`architecture-before.json` 与 `architecture-results.json` 记录 900px 高视口下介绍区高度、作品标题位置、触控尺寸与输入字号；390×900 时作品标题从约 y=1236 提前至 y=1133，介绍区由约 447px 收至 345px；320px 对应从约 y=1277 提前至 y=1149。手机景观本身保持 585px 高。所有坐标都依赖指定视口，不能当作任意手机的固定值。
+
+本轮 8 组针对性检查通过；预览运行后可执行 `node artifacts/optimization/architecture-check.mjs` 重验。优化保留全幅建筑景观、作品数据、`project-scene-*` 命名、项目筛选、详情生命周期和简报校验。验证实际切换四场景、操作筛选与模态焦点，并下载、读回 Markdown 中的方向、面积、地点、想法与“未发送”说明。未增加新服务或委托提交功能。
