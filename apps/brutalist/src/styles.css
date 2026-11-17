@@ -1075,10 +1075,13 @@ footer {
   .section-head h2 {
     font-size: 56px;
     letter-spacing: -3px;
+    width: 100%;
   }
   .section-head h2 sup {
     font-size: 12px;
-    right: -35px;
+    right: 0;
+    top: auto;
+    bottom: 6px;
   }
   .section-head > div > p {
     font-size: 11px;
@@ -1090,13 +1093,30 @@ footer {
   }
   .work-grid {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 28px;
   }
   .work-card:nth-child(even) {
     padding-top: 0;
   }
-  .poster {
-    height: 390px;
+  .work-art > .poster {
+    height: 340px;
+  }
+  .work-art .type-glyph {
+    font-size: 195px;
+    top: 5px;
+  }
+  .work-art .carton {
+    top: 112px;
+    transform: rotate(13deg) scale(0.72);
+  }
+  .work-art .object-ball {
+    top: 70px;
+  }
+  .work-art .object-ring {
+    top: 200px;
+  }
+  .work-art .object-bar {
+    top: 260px;
   }
   .signal-text {
     font-size: 92px;
@@ -1113,11 +1133,16 @@ footer {
   .milk-title {
     font-size: 64px;
   }
-  .project-info button {
+  .project-info {
+    padding: 14px 0;
+  }
+  .project-info > button {
     font-size: 22px;
+    min-height: 44px;
   }
   .project-info > span {
     font-size: 9px;
+    bottom: 16px;
   }
   .about {
     padding: 30px 6% 45px;
@@ -1209,6 +1234,7 @@ footer {
   .choice-row button {
     font-size: 11px;
     padding: 12px;
+    min-height: 44px;
   }
   .contact textarea {
     font-size: 12px;
@@ -1308,7 +1334,8 @@ footer {
   .filters button {
     min-height: 42px;
   }
+  .contact select,
   .contact textarea {
-    font-size: 14px;
+    font-size: 16px;
   }
 }

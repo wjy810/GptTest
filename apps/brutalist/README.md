@@ -41,16 +41,16 @@ npm run typecheck
 
 ## 3. 先还原这些视觉参数
 
-| 参数                | 当前实现                                                            |
-| ------------------- | ------------------------------------------------------------------- |
-| 背景 / 正文         | `#f3f2e9` / `#171713`                                               |
-| 荧光强调 / 红色笔触 | `#edff3b` / `#fa5238`                                               |
-| 字体                | Arial、Noto Sans CJK SC、系统 sans-serif；不在线下载字体            |
-| 首屏标题            | `clamp(100px, 15.3vw, 245px)`，字重 950，行高 `.83`，字距 `-.075em` |
-| 边框                | 主要分隔与控件采用约 2px 实线，保留硬边与直接反馈                   |
-| 作品网格            | `1.1fr 1fr`，列间距 34px、行间距 50px；移动端单列                   |
-| 海报高度            | 基础 490px；1100px 断点收至 420px；650px 下为 390px                 |
-| 桌面整体上限        | `main, header, footer` 最大宽度 1650px                              |
+| 参数                | 当前实现                                                                          |
+| ------------------- | --------------------------------------------------------------------------------- |
+| 背景 / 正文         | `#f3f2e9` / `#171713`                                                             |
+| 荧光强调 / 红色笔触 | `#edff3b` / `#fa5238`                                                             |
+| 字体                | Arial、Noto Sans CJK SC、系统 sans-serif；不在线下载字体                          |
+| 首屏标题            | `clamp(100px, 15.3vw, 245px)`，字重 950，行高 `.83`，字距 `-.075em`               |
+| 边框                | 主要分隔与控件采用约 2px 实线，保留硬边与直接反馈                                 |
+| 作品网格            | `1.1fr 1fr`，列间距 34px、行间距 50px；移动端单列                                 |
+| 海报高度            | 基础 490px；1100px 断点收至 420px；650px 下作品列表为 340px（详情海报仍为 360px） |
+| 桌面整体上限        | `main, header, footer` 最大宽度 1650px                                            |
 
 先保证大字和内容网格成立，再添加贴纸；不要靠随机旋转所有元素制造“粗野”。
 
@@ -90,18 +90,37 @@ npm run typecheck
 ## 6. 移动端与可访问性
 
 - 主要断点为 1100px 与 650px；650px 下作品单列、导航切换为可展开菜单。
-- 核对文件末尾的小屏修正规则，最终计算样式以靠后的匹配声明为准。
+- 作品标题在手机端占满当前内容宽度，计数 `(04)` 放在第二行右侧：`right: 0; top: auto; bottom: 6px`。保留计数和 56px 标题；不要用全站 `overflow-x: hidden` 掩盖计数越界。
+- 手机作品海报高 340px、网格行距 28px，标题按钮最小高度 44px。局部缩放字形/纸盒、上移几何物件，适配收短后的海报，而不是裁掉操作入口。
+- 手机预算选择与简报输入为 16px，服务选择按钮至少 44px 高。核对文件末尾的小屏修正规则，最终计算样式以靠后的匹配声明为准。
 - `skip` 链接可直接跳到作品；图形使用 `aria-hidden`，按钮保留可理解的名称。
 - 保留可见焦点；用 Enter 打开项目，Tab 在弹窗内移动，再用 Esc 关闭并检查焦点返回。
 - `prefers-reduced-motion: reduce` 关闭平滑滚动与装饰过渡；信息和操作仍完整。
 
 ## 7. 五步验收
 
-1. 桌面与 390px 宽度分别检查首屏和海报，页面不应横向溢出，文字不被图形盖住。
+1. 1440px、390px 与 320px 宽度分别检查首屏和海报，页面不应横向溢出，文字不被图形盖住。
 2. 点击“数字体验”，只显示 `OFF TYPE`；点击“全部”恢复四项。
 3. 打开 `NO SIGNAL`，核对问题、方法、产出；分别用 Esc 和关闭按钮退出。
 4. 展开服务说明，切换预算，正文少于 5 字符时提交应被表单校验阻止。
 5. 输入有效简报并下载，打开 Markdown 核对服务、预算、正文与“未发送”说明完全一致。
+
+### 本轮针对性优化的实际记录
+
+本轮仅调整小屏 CSS；首屏结构和所有交互保持原实现。已实际通过独立构建、仓库 TypeScript 检查、已有 ODD 的 5 项 Playwright 测试（含筛选、详情与简报下载内容），以及 [三个尺寸的布局实测脚本](../../artifacts/optimization/verify-brutalist.mjs)。
+
+| 实测项               | 优化前 → 优化后                                               |
+| -------------------- | ------------------------------------------------------------- |
+| 320px 页面宽度       | `329px → 320px`；计数右边界 `328.89px → 300.81px`，计数仍可见 |
+| 手机作品海报高度     | `390px → 340px`，缩短约 12.8%                                 |
+| 手机作品标题按钮高度 | `26px → 44px`                                                 |
+| 手机预算 / 简报字号  | `13px / 14px → 16px / 16px`                                   |
+| 390px 联系区起点     | `4249.31px → 4061.31px`，更早 188px                           |
+| 1440px 整页高度      | `4506px → 4506px`，桌面截图像素保持一致                       |
+
+[优化前测量](../../artifacts/optimization/brutalist-before-metrics.json) / [优化后测量](../../artifacts/optimization/brutalist-after-metrics.json)；截图：[320px 前](../../artifacts/optimization/brutalist-320-before.png) / [后](../../artifacts/optimization/brutalist-320-after.png)、[390px 前](../../artifacts/optimization/brutalist-390-before.png) / [后](../../artifacts/optimization/brutalist-390-after.png)、[1440px 前](../../artifacts/optimization/brutalist-1440-before.png) / [后](../../artifacts/optimization/brutalist-1440-after.png)。
+
+复验时先运行 `npm run build -- --mode brutalist` 与根预览服务，再执行 `node artifacts/optimization/verify-brutalist.mjs`。此脚本只针对本轮布局范围；下载流程由 `npx playwright test --grep brutalist` 的既有用例验证。
 
 ## 8. 研究依据与边界
 

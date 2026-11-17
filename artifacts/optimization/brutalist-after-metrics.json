@@ -1,0 +1,221 @@
+[
+  {
+    "width": 1440,
+    "documentWidth": 1440,
+    "documentHeight": 4506,
+    "work": {
+      "top": 827.515625,
+      "width": 1440,
+      "height": 1711.78125,
+      "right": 1440
+    },
+    "count": {
+      "top": 917.515625,
+      "width": 36.125,
+      "height": 13.5,
+      "right": 467.984375
+    },
+    "art": {
+      "top": 1099.296875,
+      "width": 676.125,
+      "height": 490,
+      "right": 733.71875
+    },
+    "titleButton": {
+      "top": 1609.296875,
+      "width": 172.90625,
+      "height": 29,
+      "right": 230.5
+    },
+    "contact": {
+      "top": 3641.234375,
+      "width": 1440,
+      "height": 609.1875,
+      "right": 1440
+    },
+    "budget": "13px",
+    "brief": "12px",
+    "actions": [
+      {
+        "height": 29,
+        "width": 172.90625
+      },
+      {
+        "height": 29,
+        "width": 157.234375
+      },
+      {
+        "height": 29,
+        "width": 155.828125
+      },
+      {
+        "height": 29,
+        "width": 212.59375
+      },
+      {
+        "height": 42,
+        "width": 186.96875
+      },
+      {
+        "height": 42,
+        "width": 186.96875
+      },
+      {
+        "height": 42,
+        "width": 186.96875
+      },
+      {
+        "height": 59,
+        "width": 574.90625
+      }
+    ],
+    "rootOverflow": "visible",
+    "bodyOverflow": "visible"
+  },
+  {
+    "width": 390,
+    "documentWidth": 390,
+    "documentHeight": 5255,
+    "work": {
+      "top": 587.125,
+      "width": 390,
+      "height": 2206.96875,
+      "right": 390
+    },
+    "count": {
+      "top": 726.109375,
+      "width": 28.90625,
+      "height": 10.796875,
+      "right": 366.609375
+    },
+    "art": {
+      "top": 903.09375,
+      "width": 343.21875,
+      "height": 340,
+      "right": 366.609375
+    },
+    "titleButton": {
+      "top": 1257.09375,
+      "width": 156.234375,
+      "height": 44,
+      "right": 179.625
+    },
+    "contact": {
+      "top": 4061.3125,
+      "width": 390,
+      "height": 939.359375,
+      "right": 390
+    },
+    "budget": "16px",
+    "brief": "16px",
+    "actions": [
+      {
+        "height": 44,
+        "width": 156.234375
+      },
+      {
+        "height": 44,
+        "width": 142.5625
+      },
+      {
+        "height": 44,
+        "width": 141.328125
+      },
+      {
+        "height": 44,
+        "width": 190.921875
+      },
+      {
+        "height": 44,
+        "width": 109.734375
+      },
+      {
+        "height": 44,
+        "width": 109.75
+      },
+      {
+        "height": 44,
+        "width": 109.734375
+      },
+      {
+        "height": 59,
+        "width": 343.21875
+      }
+    ],
+    "rootOverflow": "visible",
+    "bodyOverflow": "visible"
+  },
+  {
+    "width": 320,
+    "documentWidth": 320,
+    "documentHeight": 5331,
+    "work": {
+      "top": 614.1875,
+      "width": 320,
+      "height": 2206.96875,
+      "right": 320
+    },
+    "count": {
+      "top": 753.171875,
+      "width": 28.90625,
+      "height": 10.796875,
+      "right": 300.8125
+    },
+    "art": {
+      "top": 930.15625,
+      "width": 281.625,
+      "height": 340,
+      "right": 300.8125
+    },
+    "titleButton": {
+      "top": 1284.15625,
+      "width": 156.234375,
+      "height": 44,
+      "right": 175.421875
+    },
+    "contact": {
+      "top": 4136.375,
+      "width": 320,
+      "height": 939.359375,
+      "right": 320
+    },
+    "budget": "16px",
+    "brief": "16px",
+    "actions": [
+      {
+        "height": 44,
+        "width": 156.234375
+      },
+      {
+        "height": 44,
+        "width": 142.5625
+      },
+      {
+        "height": 44,
+        "width": 141.328125
+      },
+      {
+        "height": 44,
+        "width": 190.921875
+      },
+      {
+        "height": 44,
+        "width": 89.203125
+      },
+      {
+        "height": 44,
+        "width": 89.21875
+      },
+      {
+        "height": 44,
+        "width": 89.203125
+      },
+      {
+        "height": 59,
+        "width": 281.625
+      }
+    ],
+    "rootOverflow": "visible",
+    "bodyOverflow": "visible"
+  }
+]
