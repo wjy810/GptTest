@@ -390,7 +390,7 @@ function App() {
                         id="command-input"
                         value={customCommand}
                         onChange={(e) => setCustomCommand(e.target.value)}
-                        placeholder={running ? 'Working…' : 'Try deploy, check, status, or help'}
+                        placeholder={running ? 'Working…' : '输入 help 查看命令'}
                         disabled={running}
                         autoComplete="off"
                         spellCheck={false}

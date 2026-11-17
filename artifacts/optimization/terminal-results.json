@@ -1,0 +1,358 @@
+{
+  "browser": "Chromium; no physical iOS device test",
+  "checks": [
+    {
+      "name": "1440px layout, readable command controls and honest integration copy",
+      "pass": true
+    },
+    {
+      "name": "390px layout, readable command controls and honest integration copy",
+      "pass": true
+    },
+    {
+      "name": "Normalized command, running state, completion and simulated output",
+      "pass": true
+    },
+    {
+      "name": "Help, long unknown command, safe wrapping, clear and keyboard submit",
+      "pass": true
+    },
+    {
+      "name": "Ctrl+2 and Ctrl+1 keep terminal/config navigation working",
+      "pass": true
+    },
+    {
+      "name": "Monthly/annual prices, annual totals and honest plan preview",
+      "pass": true
+    },
+    {
+      "name": "320px layout, readable command controls and honest integration copy",
+      "pass": true
+    },
+    {
+      "name": "320px typed command completes with contained output",
+      "pass": true
+    },
+    {
+      "name": "No browser script errors",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heroText": [
+        {
+          "left": 130,
+          "right": 537.140625
+        },
+        {
+          "left": 537.140625,
+          "right": 537.140625
+        },
+        {
+          "left": 130,
+          "right": 303.671875
+        },
+        {
+          "left": 303.671875,
+          "right": 322.296875
+        },
+        {
+          "left": 322.296875,
+          "right": 453.46875
+        },
+        {
+          "left": 453.46875,
+          "right": 495.75
+        },
+        {
+          "left": 322.296875,
+          "right": 453.46875
+        },
+        {
+          "left": 453.46875,
+          "right": 495.75
+        }
+      ],
+      "details": [
+        {
+          "selector": "#command-input",
+          "font": "16px",
+          "lineHeight": "24px",
+          "width": 833.375,
+          "height": 44,
+          "color": "rgb(216, 231, 221)"
+        },
+        {
+          "selector": ".terminal-input",
+          "font": "11px",
+          "lineHeight": "normal",
+          "width": 922,
+          "height": 54,
+          "color": "rgb(161, 224, 170)"
+        },
+        {
+          "selector": ".terminal-input > button",
+          "font": "11px",
+          "lineHeight": "normal",
+          "width": 44,
+          "height": 44,
+          "color": "rgb(161, 224, 170)"
+        },
+        {
+          "selector": ".terminal-content",
+          "font": "12px",
+          "lineHeight": "22.2px",
+          "width": 970,
+          "height": 310,
+          "color": "rgb(225, 231, 226)"
+        },
+        {
+          "selector": ".terminal-lines > div",
+          "font": "12px",
+          "lineHeight": "22.2px",
+          "width": 914,
+          "height": 22.1875,
+          "color": "rgb(163, 183, 171)"
+        },
+        {
+          "selector": ".hero-description > p",
+          "font": "14px",
+          "lineHeight": "26.6px",
+          "width": 542.859375,
+          "height": 53.1875,
+          "color": "rgb(176, 192, 181)"
+        },
+        {
+          "selector": ".compatibility > p",
+          "font": "12px",
+          "lineHeight": "21.6px",
+          "width": 456,
+          "height": 21.59375,
+          "color": "rgb(162, 185, 169)"
+        }
+      ],
+      "terminal": {
+        "scrollWidth": 970,
+        "clientWidth": 970,
+        "scrollHeight": 310,
+        "clientHeight": 310,
+        "scrollTop": 0
+      }
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "heroText": [
+        {
+          "left": 16,
+          "right": 330.484375
+        },
+        {
+          "left": 330.484375,
+          "right": 330.484375
+        },
+        {
+          "left": 16,
+          "right": 150.375
+        },
+        {
+          "left": 150.375,
+          "right": 164.71875
+        },
+        {
+          "left": 164.71875,
+          "right": 266.09375
+        },
+        {
+          "left": 266.09375,
+          "right": 298.8125
+        },
+        {
+          "left": 164.71875,
+          "right": 266.09375
+        },
+        {
+          "left": 266.09375,
+          "right": 298.8125
+        }
+      ],
+      "details": [
+        {
+          "selector": "#command-input",
+          "font": "16px",
+          "lineHeight": "24px",
+          "width": 249.375,
+          "height": 44,
+          "color": "rgb(216, 231, 221)"
+        },
+        {
+          "selector": ".terminal-input",
+          "font": "11px",
+          "lineHeight": "normal",
+          "width": 332,
+          "height": 54,
+          "color": "rgb(161, 224, 170)"
+        },
+        {
+          "selector": ".terminal-input > button",
+          "font": "11px",
+          "lineHeight": "normal",
+          "width": 44,
+          "height": 44,
+          "color": "rgb(161, 224, 170)"
+        },
+        {
+          "selector": ".terminal-content",
+          "font": "12px",
+          "lineHeight": "22.2px",
+          "width": 356,
+          "height": 340,
+          "color": "rgb(225, 231, 226)"
+        },
+        {
+          "selector": ".terminal-lines > div",
+          "font": "12px",
+          "lineHeight": "22.2px",
+          "width": 324,
+          "height": 22.1875,
+          "color": "rgb(163, 183, 171)"
+        },
+        {
+          "selector": ".hero-description > p",
+          "font": "14px",
+          "lineHeight": "26.6px",
+          "width": 358,
+          "height": 53.1875,
+          "color": "rgb(176, 192, 181)"
+        },
+        {
+          "selector": ".compatibility > p",
+          "font": "12px",
+          "lineHeight": "21.6px",
+          "width": 358,
+          "height": 21.59375,
+          "color": "rgb(162, 185, 169)"
+        }
+      ],
+      "terminal": {
+        "scrollWidth": 356,
+        "clientWidth": 356,
+        "scrollHeight": 340,
+        "clientHeight": 340,
+        "scrollTop": 0
+      }
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "heroText": [
+        {
+          "left": 16,
+          "right": 139.421875
+        },
+        {
+          "left": 16,
+          "right": 192.734375
+        },
+        {
+          "left": 192.734375,
+          "right": 192.734375
+        },
+        {
+          "left": 16,
+          "right": 150.375
+        },
+        {
+          "left": 150.375,
+          "right": 164.71875
+        },
+        {
+          "left": 164.71875,
+          "right": 266.09375
+        },
+        {
+          "left": 266.09375,
+          "right": 298.8125
+        },
+        {
+          "left": 164.71875,
+          "right": 266.09375
+        },
+        {
+          "left": 266.09375,
+          "right": 298.8125
+        }
+      ],
+      "details": [
+        {
+          "selector": "#command-input",
+          "font": "16px",
+          "lineHeight": "24px",
+          "width": 202,
+          "height": 44,
+          "color": "rgb(216, 231, 221)"
+        },
+        {
+          "selector": ".terminal-input",
+          "font": "11px",
+          "lineHeight": "normal",
+          "width": 270,
+          "height": 54,
+          "color": "rgb(161, 224, 170)"
+        },
+        {
+          "selector": ".terminal-input > button",
+          "font": "11px",
+          "lineHeight": "normal",
+          "width": 44,
+          "height": 44,
+          "color": "rgb(161, 224, 170)"
+        },
+        {
+          "selector": ".terminal-content",
+          "font": "12px",
+          "lineHeight": "22.2px",
+          "width": 286,
+          "height": 430,
+          "color": "rgb(225, 231, 226)"
+        },
+        {
+          "selector": ".terminal-lines > div",
+          "font": "12px",
+          "lineHeight": "22.2px",
+          "width": 254,
+          "height": 44.375,
+          "color": "rgb(163, 183, 171)"
+        },
+        {
+          "selector": ".hero-description > p",
+          "font": "14px",
+          "lineHeight": "26.6px",
+          "width": 288,
+          "height": 53.1875,
+          "color": "rgb(176, 192, 181)"
+        },
+        {
+          "selector": ".compatibility > p",
+          "font": "12px",
+          "lineHeight": "21.6px",
+          "width": 288,
+          "height": 21.59375,
+          "color": "rgb(162, 185, 169)"
+        }
+      ],
+      "terminal": {
+        "scrollWidth": 286,
+        "clientWidth": 286,
+        "scrollHeight": 430,
+        "clientHeight": 430,
+        "scrollTop": 0
+      }
+    }
+  ],
+  "errors": [],
+  "passed": 9
+}

@@ -2537,3 +2537,172 @@ input:focus-visible {
     font-size: 9px;
   }
 }
+
+/* Readable working surfaces: size the task, then preserve the terminal density. */
+.hero-description > p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #b0c0b5;
+}
+.hero-description > span {
+  font-size: 9px;
+  line-height: 1.7;
+}
+.hero-actions .primary-button,
+.hero-actions > a {
+  min-height: 44px;
+  font-size: 12px;
+}
+.terminal-content {
+  height: 310px;
+  flex: 0 0 auto;
+  font-size: 12px;
+  line-height: 1.85;
+  padding: 24px 28px 18px;
+}
+.terminal-welcome {
+  font-size: 12px;
+}
+.terminal-welcome > small {
+  font-size: 10px;
+  color: #8eaa98;
+}
+.terminal-command {
+  font-size: 12px;
+  line-height: 1.85;
+  margin: 16px 0;
+  overflow-wrap: anywhere;
+}
+.terminal-command > span {
+  font-size: 11px;
+  color: #9ab6a4;
+}
+.terminal-lines > div {
+  font-size: 12px;
+  line-height: 1.85;
+  padding-left: 22px;
+  text-indent: -22px;
+  overflow-wrap: anywhere;
+}
+.terminal-lines > div > span {
+  width: 22px;
+  text-indent: 0;
+}
+.running-line {
+  font-size: 11px;
+  line-height: 1.8;
+}
+.terminal-input {
+  min-height: 54px;
+  margin: 12px 24px 16px;
+  padding: 4px 4px 4px 12px;
+  gap: 10px;
+  border: 1px solid #a1e0aa38;
+  border-radius: 4px;
+  background: #111b15;
+}
+.terminal-input:focus-within {
+  border-color: #a1e0aa;
+  box-shadow: 0 0 0 2px #a1e0aa18;
+}
+.terminal-input input {
+  min-height: 44px;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 10px 0;
+  color: #d8e7dd;
+}
+.terminal-input input::placeholder {
+  font-size: 16px;
+  color: #91ab9b;
+}
+.terminal-input input:focus-visible {
+  box-shadow: none;
+}
+.terminal-input > button {
+  flex: 0 0 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 2px;
+  color: #a1e0aa;
+  background: #a1e0aa0c;
+}
+.terminal-input > button:hover:not(:disabled) {
+  background: #a1e0aa24;
+}
+.editor-tabs {
+  height: 44px;
+}
+.editor-tabs > button {
+  min-height: 44px;
+  font-size: 11px;
+}
+.compatibility > span {
+  font-size: 10px;
+  line-height: 1.7;
+  color: #8da897;
+}
+.compatibility > p {
+  max-width: 38em;
+  margin: 24px auto 0;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #a2b9a9;
+}
+.config-caption {
+  font-size: 11px;
+  line-height: 1.8;
+}
+.config-preview {
+  font-size: 12px;
+  line-height: 1.85;
+}
+@media (max-width: 760px) {
+  .hero-actions > a {
+    font-size: 11px;
+  }
+  .terminal-content {
+    height: 340px;
+    padding: 20px 16px 16px;
+  }
+  .terminal-welcome {
+    letter-spacing: 0.5px;
+  }
+  .terminal-welcome > small {
+    font-size: 9px;
+  }
+  .terminal-command > span {
+    display: block;
+    margin: 0 0 4px;
+  }
+  .terminal-input {
+    margin: 10px 12px 14px;
+    gap: 8px;
+    padding-left: 10px;
+  }
+  .editor-tabs > button {
+    padding-inline: 14px;
+  }
+  .config-preview {
+    padding-inline: 16px;
+  }
+}
+@media (max-width: 360px) {
+  .terminal-content {
+    height: 430px;
+  }
+  .hero-actions {
+    flex-wrap: wrap;
+    gap: 8px 18px;
+  }
+  .terminal-welcome > small {
+    display: block;
+    margin: 2px 0 0;
+  }
+  .terminal-input {
+    margin-inline: 8px;
+  }
+  .terminal-input > label {
+    display: none;
+  }
+}

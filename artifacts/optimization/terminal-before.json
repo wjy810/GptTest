@@ -1,0 +1,188 @@
+[
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "details": [
+      {
+        "selector": "#command-input",
+        "font": "11px",
+        "lineHeight": "normal",
+        "width": 857.375,
+        "height": 22,
+        "color": "rgb(189, 206, 191)"
+      },
+      {
+        "selector": ".terminal-input",
+        "font": "11px",
+        "lineHeight": "normal",
+        "width": 916,
+        "height": 36,
+        "color": "rgb(161, 224, 170)"
+      },
+      {
+        "selector": ".terminal-input > button",
+        "font": "11px",
+        "lineHeight": "normal",
+        "width": 36,
+        "height": 36,
+        "color": "rgb(115, 153, 129)"
+      },
+      {
+        "selector": ".terminal-content",
+        "font": "10px",
+        "lineHeight": "19px",
+        "width": 970,
+        "height": 280,
+        "color": "rgb(225, 231, 226)"
+      },
+      {
+        "selector": ".terminal-lines > div",
+        "font": "11px",
+        "lineHeight": "20.9px",
+        "width": 912,
+        "height": 20.890625,
+        "color": "rgb(163, 183, 171)"
+      },
+      {
+        "selector": ".hero-description > p",
+        "font": "13px",
+        "lineHeight": "27.3px",
+        "width": 542.859375,
+        "height": 54.59375,
+        "color": "rgb(154, 166, 157)"
+      },
+      {
+        "selector": ".compatibility > p",
+        "font": "7px",
+        "lineHeight": "normal",
+        "width": 1180,
+        "height": 10,
+        "color": "rgb(70, 95, 80)"
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "details": [
+      {
+        "selector": "#command-input",
+        "font": "11px",
+        "lineHeight": "normal",
+        "width": 267.375,
+        "height": 22,
+        "color": "rgb(189, 206, 191)"
+      },
+      {
+        "selector": ".terminal-input",
+        "font": "11px",
+        "lineHeight": "normal",
+        "width": 326,
+        "height": 36,
+        "color": "rgb(161, 224, 170)"
+      },
+      {
+        "selector": ".terminal-input > button",
+        "font": "11px",
+        "lineHeight": "normal",
+        "width": 36,
+        "height": 36,
+        "color": "rgb(115, 153, 129)"
+      },
+      {
+        "selector": ".terminal-content",
+        "font": "10px",
+        "lineHeight": "19px",
+        "width": 356,
+        "height": 290,
+        "color": "rgb(225, 231, 226)"
+      },
+      {
+        "selector": ".terminal-lines > div",
+        "font": "10px",
+        "lineHeight": "19px",
+        "width": 331,
+        "height": 19,
+        "color": "rgb(163, 183, 171)"
+      },
+      {
+        "selector": ".hero-description > p",
+        "font": "11px",
+        "lineHeight": "22px",
+        "width": 358,
+        "height": 44,
+        "color": "rgb(154, 166, 157)"
+      },
+      {
+        "selector": ".compatibility > p",
+        "font": "5px",
+        "lineHeight": "8.5px",
+        "width": 358,
+        "height": 8.5,
+        "color": "rgb(70, 95, 80)"
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "details": [
+      {
+        "selector": "#command-input",
+        "font": "11px",
+        "lineHeight": "normal",
+        "width": 197.375,
+        "height": 22,
+        "color": "rgb(189, 206, 191)"
+      },
+      {
+        "selector": ".terminal-input",
+        "font": "11px",
+        "lineHeight": "normal",
+        "width": 256,
+        "height": 36,
+        "color": "rgb(161, 224, 170)"
+      },
+      {
+        "selector": ".terminal-input > button",
+        "font": "11px",
+        "lineHeight": "normal",
+        "width": 36,
+        "height": 36,
+        "color": "rgb(115, 153, 129)"
+      },
+      {
+        "selector": ".terminal-content",
+        "font": "10px",
+        "lineHeight": "19px",
+        "width": 286,
+        "height": 290,
+        "color": "rgb(225, 231, 226)"
+      },
+      {
+        "selector": ".terminal-lines > div",
+        "font": "10px",
+        "lineHeight": "19px",
+        "width": 261,
+        "height": 19,
+        "color": "rgb(163, 183, 171)"
+      },
+      {
+        "selector": ".hero-description > p",
+        "font": "11px",
+        "lineHeight": "22px",
+        "width": 288,
+        "height": 44,
+        "color": "rgb(154, 166, 157)"
+      },
+      {
+        "selector": ".compatibility > p",
+        "font": "5px",
+        "lineHeight": "8.5px",
+        "width": 288,
+        "height": 8.5,
+        "color": "rgb(70, 95, 80)"
+      }
+    ]
+  }
+]
