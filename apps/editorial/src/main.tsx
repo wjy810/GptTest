@@ -200,6 +200,8 @@ function App() {
   })
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
+  const [subscriptionStored, setSubscriptionStored] = useState(false)
+  const [storageMessage, setStorageMessage] = useState('')
   const dialog = useRef<HTMLDialogElement>(null)
   useEffect(() => {
     if (!article) {
@@ -218,8 +220,16 @@ function App() {
     setSaved(next)
     try {
       localStorage.setItem('folio-saved', JSON.stringify(next))
-    } catch {}
+      setStorageMessage('')
+    } catch {
+      setStorageMessage('已更新当前页面；浏览器未能保存收藏，刷新后可能无法保留。')
+    }
   }
+  const visibleStories = stories.filter(
+    (story) =>
+      category === '全部' ||
+      (category === '已收藏' ? saved.includes(story.id) : story.category === category),
+  )
   return (
     <>
       <a className="skip" href="#journal">
@@ -273,7 +283,8 @@ function App() {
                 在喧闹世界里，留下一点自己的节奏。
               </p>
               <button onClick={() => setArticle(stories[0])} aria-label="阅读本期封面故事">
-                <ArrowUpRight size={31} />
+                <span>阅读封面故事</span>
+                <ArrowUpRight size={22} />
               </button>
             </div>
           </div>
@@ -295,45 +306,60 @@ function App() {
             SCROLL TO DISCOVER <ArrowRight size={16} />
           </span>
         </div>
-        <section className="journal" id="journal">
+        <section className="journal" id="journal" aria-labelledby="journal-title">
           <div className="section-head">
             <div>
               <span className="eyebrow">01 / THE JOURNAL</span>
-              <h2>
+              <h2 id="journal-title">
                 值得停留的故事<span>Selected readings</span>
               </h2>
             </div>
-            <div className="category-filter" role="group" aria-label="文章分类">
-              {['全部', '空间', '物件', '日常', '已收藏'].map((c) => (
-                <button key={c} aria-pressed={category === c} onClick={() => setCategory(c)}>
-                  {c}
-                  {c === '已收藏' && ` (${saved.length})`}
-                </button>
-              ))}
+            <div className="journal-tools">
+              <div className="category-filter" role="group" aria-label="文章分类">
+                {['全部', '空间', '物件', '日常', '已收藏'].map((c) => (
+                  <button key={c} aria-pressed={category === c} onClick={() => setCategory(c)}>
+                    {c}
+                    {c === '已收藏' && ` (${saved.length})`}
+                  </button>
+                ))}
+              </div>
+              <span className="journal-count" aria-live="polite">
+                {String(visibleStories.length).padStart(2, '0')} 篇故事 · 留给慢慢读的时间
+              </span>
             </div>
           </div>
-          <div className="story-grid">
-            {stories
-              .filter(
-                (s) =>
-                  category === '全部' ||
-                  (category === '已收藏' ? saved.includes(s.id) : s.category === category),
-              )
-              .map((s) => (
-                <article className="story" key={s.id}>
-                  <button
-                    className="story-image"
-                    onClick={() => setArticle(s)}
-                    aria-label={`阅读 ${s.title}`}
-                  >
-                    <Artwork type={s.color} />
-                    <span className="story-read">
-                      <ArrowUpRight size={25} />
-                    </span>
-                  </button>
+          {storageMessage && (
+            <p className="storage-status" role="status">
+              {storageMessage}
+            </p>
+          )}
+          <div
+            className={`story-grid ${category === '全部' ? 'story-grid-curated' : 'story-grid-filtered'}`}
+          >
+            {visibleStories.map((s) => (
+              <article
+                className={`story ${category === '全部' && s.id === '01' ? 'story-lead' : ''}`}
+                key={s.id}
+              >
+                <button
+                  className="story-image"
+                  onClick={() => setArticle(s)}
+                  aria-label={`阅读 ${s.title}`}
+                >
+                  <Artwork type={s.color} />
+                  <span className="story-index" aria-hidden="true">
+                    {s.id}
+                  </span>
+                  <span className="story-read">
+                    <ArrowUpRight size={25} />
+                  </span>
+                </button>
+                <div className="story-copy">
                   <div className="story-meta">
                     <span>
-                      {s.category} / {s.en.toUpperCase()}
+                      {s.category}
+                      <i> / </i>
+                      {s.id === '01' ? '封面故事' : `观察 ${s.id}`}
                     </span>
                     <button
                       aria-label={`${saved.includes(s.id) ? '取消收藏' : '收藏'} ${s.title}`}
@@ -346,12 +372,14 @@ function App() {
                   <button className="story-title" onClick={() => setArticle(s)}>
                     {s.title}
                   </button>
+                  <span className="story-english">{s.en}</span>
                   <p>{s.intro}</p>
                   <span className="reading-time">
-                    {s.time}阅读 <span>— FOLIO 编辑部</span>
+                    {s.time}阅读 <span>FOLIO 编辑部</span>
                   </span>
-                </article>
-              ))}
+                </div>
+              </article>
+            ))}
           </div>
           {category === '已收藏' && saved.length === 0 && (
             <p className="empty-state">你的书架还很安静。点击文章旁的书签，留住想再读的故事。</p>
@@ -397,7 +425,10 @@ function App() {
               setSubscribed(true)
               try {
                 localStorage.setItem('folio-newsletter-demo', email)
-              } catch {}
+                setSubscriptionStored(true)
+              } catch {
+                setSubscriptionStored(false)
+              }
             }}
           >
             <label htmlFor="folio-email">你的电子邮箱</label>
@@ -417,7 +448,9 @@ function App() {
             </div>
             <small role="status">
               {subscribed
-                ? '订阅意向已保存在此浏览器。演示站不会发送邮件。'
+                ? subscriptionStored
+                  ? '订阅意向已保存在此浏览器。演示站不会发送邮件。'
+                  : '已记录当前页面的订阅意向，但浏览器未能保存；演示站不会发送邮件。'
                 : '本地体验演示 · 不会向服务器发送你的邮箱'}
             </small>
           </form>
@@ -487,6 +520,11 @@ function App() {
               {saved.includes(article.id) ? <Check size={17} /> : <Plus size={17} />}{' '}
               {saved.includes(article.id) ? '已存入书架' : '收藏这篇故事'}
             </button>
+            {storageMessage && (
+              <p className="storage-status" role="status">
+                {storageMessage}
+              </p>
+            )}
           </>
         )}
       </dialog>

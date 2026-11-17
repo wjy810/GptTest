@@ -1,0 +1,218 @@
+{
+  "checks": 44,
+  "results": [
+    {
+      "name": "1440: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "1440: reduced motion disables smooth scrolling",
+      "passed": true
+    },
+    {
+      "name": "1440: visible named cover action",
+      "passed": true
+    },
+    {
+      "name": "1440: four stories, one lead",
+      "passed": true
+    },
+    {
+      "name": "1440: measured layout",
+      "metric": {
+        "width": 1440,
+        "doc": 1440,
+        "hero": 600,
+        "lead": 698.53125,
+        "summary": "15px",
+        "bodyOverflow": "",
+        "scroll": "auto"
+      }
+    },
+    {
+      "name": "1440: space filter retains two full stories",
+      "passed": true
+    },
+    {
+      "name": "1440: named reader opens from keyboard",
+      "passed": true
+    },
+    {
+      "name": "1440: background locked",
+      "passed": true
+    },
+    {
+      "name": "1440: reverse tab remains in reader",
+      "passed": true
+    },
+    {
+      "name": "1440: forward tab cycles to close",
+      "passed": true
+    },
+    {
+      "name": "1440: escape restores trigger and body scroll",
+      "passed": true
+    },
+    {
+      "name": "390: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "390: reduced motion disables smooth scrolling",
+      "passed": true
+    },
+    {
+      "name": "390: visible named cover action",
+      "passed": true
+    },
+    {
+      "name": "390: four stories, one lead",
+      "passed": true
+    },
+    {
+      "name": "390: measured layout",
+      "metric": {
+        "width": 390,
+        "doc": 390,
+        "hero": 758.46875,
+        "lead": 352,
+        "summary": "14px",
+        "bodyOverflow": "",
+        "scroll": "auto"
+      }
+    },
+    {
+      "name": "390: space filter retains two full stories",
+      "passed": true
+    },
+    {
+      "name": "390: named reader opens from keyboard",
+      "passed": true
+    },
+    {
+      "name": "390: background locked",
+      "passed": true
+    },
+    {
+      "name": "390: reverse tab remains in reader",
+      "passed": true
+    },
+    {
+      "name": "390: forward tab cycles to close",
+      "passed": true
+    },
+    {
+      "name": "390: escape restores trigger and body scroll",
+      "passed": true
+    },
+    {
+      "name": "320: no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "320: reduced motion disables smooth scrolling",
+      "passed": true
+    },
+    {
+      "name": "320: visible named cover action",
+      "passed": true
+    },
+    {
+      "name": "320: four stories, one lead",
+      "passed": true
+    },
+    {
+      "name": "320: measured layout",
+      "metric": {
+        "width": 320,
+        "doc": 320,
+        "hero": 693.53125,
+        "lead": 289,
+        "summary": "14px",
+        "bodyOverflow": "",
+        "scroll": "auto"
+      }
+    },
+    {
+      "name": "320: space filter retains two full stories",
+      "passed": true
+    },
+    {
+      "name": "320: named reader opens from keyboard",
+      "passed": true
+    },
+    {
+      "name": "320: background locked",
+      "passed": true
+    },
+    {
+      "name": "320: reverse tab remains in reader",
+      "passed": true
+    },
+    {
+      "name": "320: forward tab cycles to close",
+      "passed": true
+    },
+    {
+      "name": "320: escape restores trigger and body scroll",
+      "passed": true
+    },
+    {
+      "name": "write denied: bookmark changes in current session",
+      "passed": true
+    },
+    {
+      "name": "write denied: no bookmark persisted",
+      "passed": true
+    },
+    {
+      "name": "write denied: visible warning describes refresh loss",
+      "passed": true
+    },
+    {
+      "name": "write denied: session collection usable",
+      "passed": true
+    },
+    {
+      "name": "write denied: dialog also explains unsaved state",
+      "passed": true
+    },
+    {
+      "name": "write denied: newsletter honestly reports local failure",
+      "passed": true
+    },
+    {
+      "name": "write denied: no newsletter persisted",
+      "passed": true
+    },
+    {
+      "name": "write denied: reloading does not falsely retain bookmark",
+      "passed": true
+    },
+    {
+      "name": "storage recovers: warning clears after successful write",
+      "passed": true
+    },
+    {
+      "name": "storage recovers: bookmark survives refresh",
+      "passed": true
+    },
+    {
+      "name": "storage recovers: newsletter saved with local-only feedback",
+      "passed": true
+    },
+    {
+      "name": "bad storage: valid IDs deduplicated",
+      "passed": true
+    },
+    {
+      "name": "bad storage: object recovers to empty collection",
+      "passed": true
+    },
+    {
+      "name": "no uncaught browser errors",
+      "passed": true
+    }
+  ],
+  "errors": []
+}
