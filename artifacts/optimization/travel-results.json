@@ -1,0 +1,228 @@
+{
+  "browser": "Chromium; no physical iOS test",
+  "checks": [
+    {
+      "name": "1440px layout, planner entry and primary target sizes",
+      "pass": true
+    },
+    {
+      "name": "390px layout, planner entry and primary target sizes",
+      "pass": true
+    },
+    {
+      "name": "Destination category filters preserve content and selection",
+      "pass": true
+    },
+    {
+      "name": "Saved destinations persist after reload and recover from empty state",
+      "pass": true
+    },
+    {
+      "name": "Destination details hand selected place and focus to the planner",
+      "pass": true
+    },
+    {
+      "name": "Budget controls retain exact formulas and quantity bounds",
+      "pass": true
+    },
+    {
+      "name": "Actual Markdown download matches people, duration, budget and demo boundary",
+      "pass": true
+    },
+    {
+      "name": "320px layout, planner entry and primary target sizes",
+      "pass": true
+    },
+    {
+      "name": "No browser script errors",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "pageHeight": 4705,
+      "planY": 3353.015625,
+      "imageHeight": 265,
+      "cardGap": "40px",
+      "selectFont": "13px",
+      "controls": [
+        {
+          "selector": ".header-cta",
+          "width": 136.015625,
+          "height": 44
+        },
+        {
+          "selector": ".menu-toggle",
+          "width": 0,
+          "height": 0
+        },
+        {
+          "selector": ".filters button",
+          "width": 64.015625,
+          "height": 44
+        },
+        {
+          "selector": ".save-button",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "selector": ".destination-title",
+          "width": 410,
+          "height": 63
+        },
+        {
+          "selector": ".destination-next .text-link",
+          "width": 138.015625,
+          "height": 44
+        },
+        {
+          "selector": "#destination",
+          "width": 546.84375,
+          "height": 49
+        },
+        {
+          "selector": "#trip-days",
+          "width": 310.109375,
+          "height": 44
+        },
+        {
+          "selector": ".stepper button",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "selector": ".plan-submit",
+          "width": 546.84375,
+          "height": 52
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "pageHeight": 6584,
+      "planY": 5158.71875,
+      "imageHeight": 191.09375,
+      "cardGap": "26px",
+      "selectFont": "16px",
+      "controls": [
+        {
+          "selector": ".header-cta",
+          "width": 108.015625,
+          "height": 44
+        },
+        {
+          "selector": ".menu-toggle",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "selector": ".filters button",
+          "width": 46.015625,
+          "height": 44
+        },
+        {
+          "selector": ".save-button",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "selector": ".destination-title",
+          "width": 350,
+          "height": 56
+        },
+        {
+          "selector": ".destination-next .text-link",
+          "width": 138.015625,
+          "height": 44
+        },
+        {
+          "selector": "#destination",
+          "width": 310,
+          "height": 49
+        },
+        {
+          "selector": "#trip-days",
+          "width": 167.90625,
+          "height": 44
+        },
+        {
+          "selector": ".stepper button",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "selector": ".plan-submit",
+          "width": 310,
+          "height": 50
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "pageHeight": 6655,
+      "planY": 5017.75,
+      "imageHeight": 160,
+      "cardGap": "26px",
+      "selectFont": "16px",
+      "controls": [
+        {
+          "selector": ".header-cta",
+          "width": 95,
+          "height": 44
+        },
+        {
+          "selector": ".menu-toggle",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "selector": ".filters button",
+          "width": 46.015625,
+          "height": 44
+        },
+        {
+          "selector": ".save-button",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "selector": ".destination-title",
+          "width": 280,
+          "height": 56
+        },
+        {
+          "selector": ".destination-next .text-link",
+          "width": 138.015625,
+          "height": 44
+        },
+        {
+          "selector": "#destination",
+          "width": 240,
+          "height": 49
+        },
+        {
+          "selector": "#trip-days",
+          "width": 240,
+          "height": 44
+        },
+        {
+          "selector": ".stepper button",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "selector": ".plan-submit",
+          "width": 240,
+          "height": 50
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "passed": 9
+}

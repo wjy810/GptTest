@@ -584,9 +584,14 @@ function App() {
               </button>
             </div>
           )}
-          <p className="price-note">
-            费用为本地演示参考值，用于行程预算练习；非实时报价，未提供实际预订服务。
-          </p>
+          <div className="destination-next">
+            <p className="price-note">
+              费用为本地演示参考值，用于行程预算练习；非实时报价，未提供实际预订服务。
+            </p>
+            <a className="text-link" href="#plan">
+              先算一份旅行预算 <ArrowUpRight size={18} />
+            </a>
+          </div>
         </section>
         <section className="philosophy" id="philosophy">
           <div className="philosophy-art" aria-hidden="true">

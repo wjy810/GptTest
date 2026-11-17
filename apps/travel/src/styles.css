@@ -2211,3 +2211,135 @@ dialog::backdrop {
     min-height: 42px;
   }
 }
+
+/* A shorter journey from landscape browsing to the existing trip planner. */
+.header-cta {
+  min-height: 44px;
+  font-size: 12px;
+  font-weight: 500;
+  border-color: #183e4e66;
+}
+.menu-toggle,
+.save-button,
+.dialog-close {
+  min-width: 44px;
+  min-height: 44px;
+}
+.hero-bottom > a {
+  width: 44px;
+  height: 44px;
+}
+.filters button {
+  min-height: 44px;
+  font-size: 12px;
+}
+.destination-title {
+  min-height: 44px;
+}
+.destination-next {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #183e4e20;
+}
+.destination-next .price-note {
+  margin: 0;
+  max-width: 46em;
+  font-size: 11px;
+  line-height: 1.8;
+}
+.destination-next .text-link {
+  flex-shrink: 0;
+  min-height: 44px;
+  font-size: 12px;
+  gap: 24px;
+}
+.stepper {
+  height: 46px;
+}
+.stepper button {
+  flex: 0 0 44px;
+  min-width: 44px;
+  height: 44px;
+}
+#trip-days {
+  height: 44px;
+  margin-top: 0;
+}
+@media (max-width: 760px) {
+  .planner-form select {
+    font-size: 16px;
+  }
+  .planner-disclaimer {
+    font-size: 11px;
+    line-height: 1.8;
+  }
+  .budget-total small {
+    font-size: 10px;
+  }
+  .range-labels {
+    font-size: 9px;
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+  .destination-next {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 22px;
+    padding-top: 17px;
+  }
+}
+@media (max-width: 480px) {
+  .destinations.section {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  .destinations .section-heading {
+    margin-bottom: 28px;
+  }
+  .destination-toolbar {
+    margin-bottom: 20px;
+  }
+  .filters button {
+    padding-inline: 10px;
+  }
+  .destination-grid {
+    row-gap: 26px;
+  }
+  .destination-image {
+    height: clamp(160px, 49vw, 210px);
+  }
+  .destination-topline {
+    margin-top: 12px;
+  }
+  .destination-title {
+    padding-top: 8px;
+    padding-bottom: 10px;
+  }
+  .destination-bottom {
+    margin-top: 10px;
+  }
+}
+@media (max-width: 360px) {
+  .header {
+    padding-inline: 16px;
+    gap: 9px;
+  }
+  .header-cta {
+    font-size: 11px;
+    padding-inline: 8px;
+    gap: 7px;
+  }
+  .planner-settings {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .budget-total {
+    flex-wrap: wrap;
+    row-gap: 12px;
+  }
+}

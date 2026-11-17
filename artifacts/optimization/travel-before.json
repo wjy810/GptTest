@@ -1,0 +1,254 @@
+[
+  {
+    "width": 1440,
+    "pageHeight": 4631,
+    "planY": 3298.3125,
+    "details": [
+      {
+        "selector": ".hero",
+        "width": 1440,
+        "height": 690,
+        "font": "14px",
+        "gap": "normal"
+      },
+      {
+        "selector": ".destination-grid",
+        "width": 1280,
+        "height": 822,
+        "font": "14px",
+        "gap": "40px 25px"
+      },
+      {
+        "selector": ".destination-image",
+        "width": 410,
+        "height": 265,
+        "font": "14px",
+        "gap": "normal"
+      },
+      {
+        "selector": ".destination-title",
+        "width": 410,
+        "height": 63,
+        "font": "14px",
+        "gap": "12px"
+      },
+      {
+        "selector": ".destination-topline",
+        "width": 410,
+        "height": 13,
+        "font": "9px",
+        "gap": "15px"
+      },
+      {
+        "selector": ".destination-bottom",
+        "width": 410,
+        "height": 20,
+        "font": "9px",
+        "gap": "10px"
+      },
+      {
+        "selector": ".filters button",
+        "width": 62,
+        "height": 40,
+        "font": "11px",
+        "gap": "7px"
+      },
+      {
+        "selector": ".save-button",
+        "width": 39,
+        "height": 39,
+        "font": "14px",
+        "gap": "normal"
+      },
+      {
+        "selector": "#destination",
+        "width": 546.84375,
+        "height": 49,
+        "font": "13px",
+        "gap": "normal"
+      },
+      {
+        "selector": ".journal-grid",
+        "width": 1280,
+        "height": 266.59375,
+        "font": "14px",
+        "gap": "45px"
+      },
+      {
+        "selector": ".philosophy",
+        "width": 1440,
+        "height": 522.265625,
+        "font": "14px",
+        "gap": "normal"
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "pageHeight": 6939,
+    "planY": 5539.5625,
+    "details": [
+      {
+        "selector": ".hero",
+        "width": 390,
+        "height": 795,
+        "font": "14px",
+        "gap": "normal"
+      },
+      {
+        "selector": ".destination-grid",
+        "width": 350,
+        "height": 2386,
+        "font": "14px",
+        "gap": "32px"
+      },
+      {
+        "selector": ".destination-image",
+        "width": 350,
+        "height": 250,
+        "font": "14px",
+        "gap": "normal"
+      },
+      {
+        "selector": ".destination-title",
+        "width": 350,
+        "height": 63,
+        "font": "14px",
+        "gap": "13px"
+      },
+      {
+        "selector": ".destination-topline",
+        "width": 350,
+        "height": 15,
+        "font": "10px",
+        "gap": "8px"
+      },
+      {
+        "selector": ".destination-bottom",
+        "width": 350,
+        "height": 18,
+        "font": "10px",
+        "gap": "10px"
+      },
+      {
+        "selector": ".filters button",
+        "width": 52,
+        "height": 42,
+        "font": "11px",
+        "gap": "7px"
+      },
+      {
+        "selector": ".save-button",
+        "width": 42,
+        "height": 42,
+        "font": "14px",
+        "gap": "normal"
+      },
+      {
+        "selector": "#destination",
+        "width": 310,
+        "height": 49,
+        "font": "12px",
+        "gap": "normal"
+      },
+      {
+        "selector": ".journal-grid",
+        "width": 350,
+        "height": 607.78125,
+        "font": "14px",
+        "gap": "35px"
+      },
+      {
+        "selector": ".philosophy",
+        "width": 390,
+        "height": 780.546875,
+        "font": "14px",
+        "gap": "normal"
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "pageHeight": 7078,
+    "planY": 5631.15625,
+    "details": [
+      {
+        "selector": ".hero",
+        "width": 320,
+        "height": 795,
+        "font": "14px",
+        "gap": "normal"
+      },
+      {
+        "selector": ".destination-grid",
+        "width": 280,
+        "height": 2386,
+        "font": "14px",
+        "gap": "32px"
+      },
+      {
+        "selector": ".destination-image",
+        "width": 280,
+        "height": 250,
+        "font": "14px",
+        "gap": "normal"
+      },
+      {
+        "selector": ".destination-title",
+        "width": 280,
+        "height": 63,
+        "font": "14px",
+        "gap": "13px"
+      },
+      {
+        "selector": ".destination-topline",
+        "width": 280,
+        "height": 15,
+        "font": "10px",
+        "gap": "8px"
+      },
+      {
+        "selector": ".destination-bottom",
+        "width": 280,
+        "height": 18,
+        "font": "10px",
+        "gap": "10px"
+      },
+      {
+        "selector": ".filters button",
+        "width": 52,
+        "height": 42,
+        "font": "11px",
+        "gap": "7px"
+      },
+      {
+        "selector": ".save-button",
+        "width": 42,
+        "height": 42,
+        "font": "14px",
+        "gap": "normal"
+      },
+      {
+        "selector": "#destination",
+        "width": 240,
+        "height": 49,
+        "font": "12px",
+        "gap": "normal"
+      },
+      {
+        "selector": ".journal-grid",
+        "width": 280,
+        "height": 653.375,
+        "font": "14px",
+        "gap": "35px"
+      },
+      {
+        "selector": ".philosophy",
+        "width": 320,
+        "height": 780.546875,
+        "font": "14px",
+        "gap": "normal"
+      }
+    ]
+  }
+]
