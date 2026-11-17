@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-17",
+  "checks": [
+    {
+      "name": "architecture 1440px layout and unique SVG IDs",
+      "result": "passed"
+    },
+    {
+      "name": "architecture 390px layout and unique SVG IDs",
+      "result": "passed"
+    },
+    {
+      "name": "architecture hero cycles four projects with synchronized image, index and title",
+      "result": "passed"
+    },
+    {
+      "name": "architecture categories return 2/1/1/4 and gallery scene does not inherit container grid",
+      "result": "passed"
+    },
+    {
+      "name": "architecture named modal has valid content, body lock, focus wrap and Escape restoration",
+      "result": "passed"
+    },
+    {
+      "name": "architecture detail-to-brief link transfers keyboard focus to project direction",
+      "result": "passed"
+    },
+    {
+      "name": "architecture three field notes expose real content with keyboard controls",
+      "result": "passed"
+    },
+    {
+      "name": "architecture required and whitespace-only inputs cannot export empty briefs",
+      "result": "passed"
+    },
+    {
+      "name": "architecture actual Markdown contains chosen fields, trimmed content and local-only boundary",
+      "result": "passed"
+    },
+    {
+      "name": "architecture mobile menu closes on navigation; form is ephemeral; reduced motion and no exceptions",
+      "result": "passed"
+    }
+  ],
+  "errors": [],
+  "posts": []
+}

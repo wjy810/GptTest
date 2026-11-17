@@ -1,0 +1,526 @@
+{
+  "site": "fintech",
+  "target": "http://127.0.0.1:4173/fintech/",
+  "testedAt": "2026-11-17T05:37:23.170Z",
+  "passed": 103,
+  "total": 103,
+  "results": [
+    {
+      "group": "watchlist",
+      "name": "initial default contains AURA and MWLD only",
+      "passed": true
+    },
+    {
+      "group": "market",
+      "name": "initial market has all six sample assets",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1W selection, title and caption synchronize",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1W date bounds and table row count match sample",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1W table includes correct opening, ending and baseline values",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1W summary cards and textual delta agree",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1W plot has one point per row and uses elapsed-date x spacing",
+      "passed": true
+    },
+    {
+      "group": "export",
+      "name": "1W real CSV download name, header, dates and every value match table",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1M selection, title and caption synchronize",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1M date bounds and table row count match sample",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1M table includes correct opening, ending and baseline values",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1M summary cards and textual delta agree",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1M plot has one point per row and uses elapsed-date x spacing",
+      "passed": true
+    },
+    {
+      "group": "export",
+      "name": "1M real CSV download name, header, dates and every value match table",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "3M selection, title and caption synchronize",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "3M date bounds and table row count match sample",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "3M table includes correct opening, ending and baseline values",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "3M summary cards and textual delta agree",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "3M plot has one point per row and uses elapsed-date x spacing",
+      "passed": true
+    },
+    {
+      "group": "export",
+      "name": "3M real CSV download name, header, dates and every value match table",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1Y selection, title and caption synchronize",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1Y date bounds and table row count match sample",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1Y table includes correct opening, ending and baseline values",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1Y summary cards and textual delta agree",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "1Y plot has one point per row and uses elapsed-date x spacing",
+      "passed": true
+    },
+    {
+      "group": "export",
+      "name": "1Y real CSV download name, header, dates and every value match table",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "all four ranges produce different portfolio paths",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "comparison toggle hides only benchmark curve",
+      "passed": true
+    },
+    {
+      "group": "chart",
+      "name": "benchmark curve can be restored",
+      "passed": true
+    },
+    {
+      "group": "market",
+      "name": "stock category shows AURA and FLUX",
+      "passed": true
+    },
+    {
+      "group": "market",
+      "name": "case insensitive trimmed search intersects with category",
+      "passed": true
+    },
+    {
+      "group": "market",
+      "name": "mismatched search and category show empty recovery",
+      "passed": true
+    },
+    {
+      "group": "focus",
+      "name": "empty reset restores six assets and focuses market section",
+      "passed": true
+    },
+    {
+      "group": "market",
+      "name": "search also matches full asset names",
+      "passed": true
+    },
+    {
+      "group": "focus",
+      "name": "clear restores input focus rather than body",
+      "passed": true
+    },
+    {
+      "group": "market",
+      "name": "descending daily change sort is numeric and stable",
+      "passed": true
+    },
+    {
+      "group": "market",
+      "name": "sort toggle restores original data order",
+      "passed": true
+    },
+    {
+      "group": "watchlist",
+      "name": "removing one asset survives refresh",
+      "passed": true
+    },
+    {
+      "group": "watchlist",
+      "name": "watchlist filter shows only saved asset",
+      "passed": true
+    },
+    {
+      "group": "watchlist",
+      "name": "clear writes empty array and shows recovery immediately",
+      "passed": true
+    },
+    {
+      "group": "watchlist",
+      "name": "empty watchlist does not resurrect defaults on reload",
+      "passed": true
+    },
+    {
+      "group": "watchlist",
+      "name": "read drops unknown IDs, wrong types and duplicates",
+      "passed": true
+    },
+    {
+      "group": "watchlist",
+      "name": "malformed JSON falls back to documented initial watchlist",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "range bounds and steps are explicit",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "100/month × 1 years at -2% agrees with monthly ledger and breakdown",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "100/month × 1 years at -2% syncs overview and loss wording",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "100/month × 1 years at 0% agrees with monthly ledger and breakdown",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "100/month × 1 years at 0% syncs overview and loss wording",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "100/month × 1 years at 4% agrees with monthly ledger and breakdown",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "100/month × 1 years at 4% syncs overview and loss wording",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "100/month × 1 years at 8% agrees with monthly ledger and breakdown",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "100/month × 1 years at 8% syncs overview and loss wording",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "3000/month × 30 years at -2% agrees with monthly ledger and breakdown",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "3000/month × 30 years at -2% syncs overview and loss wording",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "3000/month × 30 years at 0% agrees with monthly ledger and breakdown",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "3000/month × 30 years at 0% syncs overview and loss wording",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "3000/month × 30 years at 4% agrees with monthly ledger and breakdown",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "3000/month × 30 years at 4% syncs overview and loss wording",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "3000/month × 30 years at 8% agrees with monthly ledger and breakdown",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "3000/month × 30 years at 8% syncs overview and loss wording",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "500/month × 10 years at -2% agrees with monthly ledger and breakdown",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "500/month × 10 years at -2% syncs overview and loss wording",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "500/month × 10 years at 0% agrees with monthly ledger and breakdown",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "500/month × 10 years at 0% syncs overview and loss wording",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "500/month × 10 years at 4% agrees with monthly ledger and breakdown",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "500/month × 10 years at 4% syncs overview and loss wording",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "500/month × 10 years at 8% agrees with monthly ledger and breakdown",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "500/month × 10 years at 8% syncs overview and loss wording",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "monthly keyboard decrement clamps to minimum",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "years keyboard increment clamps to maximum",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "marking plan has explicit in-memory feedback",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "marking plan does not write storage",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "editing invalidates previous plan marker",
+      "passed": true
+    },
+    {
+      "group": "planner",
+      "name": "refresh resets marker and all planner values",
+      "passed": true
+    },
+    {
+      "group": "notifications",
+      "name": "panel opens and focuses dismiss control",
+      "passed": true
+    },
+    {
+      "group": "notifications",
+      "name": "Escape closes notifications and returns bell focus",
+      "passed": true
+    },
+    {
+      "group": "notifications",
+      "name": "close button returns focus to bell",
+      "passed": true
+    },
+    {
+      "group": "content",
+      "name": "data explanation states local data and annuity formula",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "1440px viewport has no document horizontal overflow",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "1440px chart keeps its SVG in visible panel bounds",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "390px viewport has no document horizontal overflow",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "390px chart keeps its SVG in visible panel bounds",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "390px drawer opens and focuses first navigation link",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "390px Escape closes sidebar and restores toggle focus",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "390px navigation reaches market and transfers focus out of hidden sidebar",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "390px primary action focuses planner",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "390px asset table scroll is contained locally",
+      "passed": true
+    },
+    {
+      "group": "accessibility",
+      "name": "390px table has visible scroll instruction and keyboard region",
+      "passed": true
+    },
+    {
+      "group": "accessibility",
+      "name": "390px focused table scrolls with direction key",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "320px viewport has no document horizontal overflow",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "320px chart keeps its SVG in visible panel bounds",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "320px drawer opens and focuses first navigation link",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "320px Escape closes sidebar and restores toggle focus",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "320px navigation reaches market and transfers focus out of hidden sidebar",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "320px primary action focuses planner",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "320px asset table scroll is contained locally",
+      "passed": true
+    },
+    {
+      "group": "accessibility",
+      "name": "320px table has visible scroll instruction and keyboard region",
+      "passed": true
+    },
+    {
+      "group": "accessibility",
+      "name": "320px focused table scrolls with direction key",
+      "passed": true
+    },
+    {
+      "group": "accessibility",
+      "name": "reduced motion disables smooth scrolling",
+      "passed": true
+    },
+    {
+      "group": "watchlist",
+      "name": "write denial preserves in-memory update and announces non-persistence",
+      "passed": true
+    },
+    {
+      "group": "watchlist",
+      "name": "clear denial still clears session and states persisted data was not cleared",
+      "passed": true
+    },
+    {
+      "group": "privacy",
+      "name": "no POST or other mutating network requests",
+      "passed": true
+    },
+    {
+      "group": "runtime",
+      "name": "no uncaught browser errors",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "mutatingRequests": []
+}

@@ -1,55 +1,466 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { LayoutDashboard, ChartNoAxesCombined, Wallet, CircleHelp, Bell, ArrowUpRight, ArrowDownRight, ArrowRight, Download, Search, ChevronDown, ChevronRight, Plus, Star, SlidersHorizontal, Layers, ShieldCheck, X, Menu, Check, TrendingUp, Clock3, Info, Activity } from 'lucide-react'
+import {
+  LayoutDashboard,
+  ChartNoAxesCombined,
+  Wallet,
+  CircleHelp,
+  Bell,
+  ArrowUpRight,
+  ArrowDownRight,
+  ArrowRight,
+  Download,
+  Search,
+  ChevronDown,
+  ChevronRight,
+  Plus,
+  Star,
+  SlidersHorizontal,
+  Layers,
+  ShieldCheck,
+  X,
+  Menu,
+  Check,
+  TrendingUp,
+  Clock3,
+  Info,
+  Activity,
+} from 'lucide-react'
 import './styles.css'
 
 type RangeKey = '1W' | '1M' | '3M' | '1Y'
 type Series = { dates: string[]; values: number[]; baseline: number[] }
 const series: Record<RangeKey, Series> = {
-  '1W': { dates: ['2026-11-11', '2026-11-12', '2026-11-13', '2026-11-14', '2026-11-15', '2026-11-16', '2026-11-17'], values: [125380, 126210, 125870, 127100, 126810, 128090, 128430.65], baseline: [125380, 125710, 125410, 126050, 125920, 126880, 127250] },
-  '1M': { dates: ['2026-10-18', '2026-10-21', '2026-10-24', '2026-10-27', '2026-10-30', '2026-11-02', '2026-11-05', '2026-11-08', '2026-11-11', '2026-11-14', '2026-11-17'], values: [119600, 120830, 120100, 123280, 122100, 122930, 125770, 124810, 126500, 127080, 128430.65], baseline: [119600, 120210, 119980, 121270, 120740, 121330, 122600, 122350, 123180, 123940, 124570] },
-  '3M': { dates: ['2026-08-17', '2026-08-25', '2026-09-02', '2026-09-10', '2026-09-18', '2026-09-26', '2026-10-04', '2026-10-12', '2026-10-20', '2026-10-28', '2026-11-05', '2026-11-17'], values: [113200, 115840, 114120, 117450, 115900, 119980, 118260, 121540, 120810, 124590, 123450, 128430.65], baseline: [113200, 114100, 113840, 115350, 115120, 116340, 117010, 117450, 118120, 119060, 119830, 121400] },
-  '1Y': { dates: ['2025-11-17', '2025-12-17', '2026-01-17', '2026-02-17', '2026-03-17', '2026-04-17', '2026-05-17', '2026-06-17', '2026-07-17', '2026-08-17', '2026-09-17', '2026-11-17'], values: [98400, 101700, 99800, 105200, 103800, 109200, 107700, 114500, 112300, 119600, 117500, 128430.65], baseline: [98400, 99900, 99200, 101200, 100900, 104400, 104000, 107200, 107900, 111100, 111700, 116200] },
+  '1W': {
+    dates: [
+      '2026-11-11',
+      '2026-11-12',
+      '2026-11-13',
+      '2026-11-14',
+      '2026-11-15',
+      '2026-11-16',
+      '2026-11-17',
+    ],
+    values: [125380, 126210, 125870, 127100, 126810, 128090, 128430.65],
+    baseline: [125380, 125710, 125410, 126050, 125920, 126880, 127250],
+  },
+  '1M': {
+    dates: [
+      '2026-10-18',
+      '2026-10-21',
+      '2026-10-24',
+      '2026-10-27',
+      '2026-10-30',
+      '2026-11-02',
+      '2026-11-05',
+      '2026-11-08',
+      '2026-11-11',
+      '2026-11-14',
+      '2026-11-17',
+    ],
+    values: [
+      119600, 120830, 120100, 123280, 122100, 122930, 125770, 124810, 126500, 127080, 128430.65,
+    ],
+    baseline: [
+      119600, 120210, 119980, 121270, 120740, 121330, 122600, 122350, 123180, 123940, 124570,
+    ],
+  },
+  '3M': {
+    dates: [
+      '2026-08-17',
+      '2026-08-25',
+      '2026-09-02',
+      '2026-09-10',
+      '2026-09-18',
+      '2026-09-26',
+      '2026-10-04',
+      '2026-10-12',
+      '2026-10-20',
+      '2026-10-28',
+      '2026-11-05',
+      '2026-11-17',
+    ],
+    values: [
+      113200, 115840, 114120, 117450, 115900, 119980, 118260, 121540, 120810, 124590, 123450,
+      128430.65,
+    ],
+    baseline: [
+      113200, 114100, 113840, 115350, 115120, 116340, 117010, 117450, 118120, 119060, 119830,
+      121400,
+    ],
+  },
+  '1Y': {
+    dates: [
+      '2025-11-17',
+      '2025-12-17',
+      '2026-01-17',
+      '2026-02-17',
+      '2026-03-17',
+      '2026-04-17',
+      '2026-05-17',
+      '2026-06-17',
+      '2026-07-17',
+      '2026-08-17',
+      '2026-09-17',
+      '2026-11-17',
+    ],
+    values: [
+      98400, 101700, 99800, 105200, 103800, 109200, 107700, 114500, 112300, 119600, 117500,
+      128430.65,
+    ],
+    baseline: [
+      98400, 99900, 99200, 101200, 100900, 104400, 104000, 107200, 107900, 111100, 111700, 116200,
+    ],
+  },
 }
 const assets = [
-  { symbol: 'AURA', name: 'Aurora Technologies', type: '股票', icon: 'A', tone: 'violet', price: 182.64, change: 2.34, volume: '12.8 M', chart: [12, 18, 13, 23, 21, 25, 22, 36, 30, 39, 42] },
-  { symbol: 'MWLD', name: 'Mono World Index', type: '基金', icon: 'M', tone: 'mint', price: 104.28, change: 0.86, volume: '4.2 M', chart: [12, 15, 14, 19, 18, 23, 22, 24, 24, 28, 31] },
-  { symbol: 'NOVA', name: 'Nova Network', type: '数字资产', icon: 'N', tone: 'orange', price: 2478.96, change: -1.72, volume: '386 K', chart: [39, 34, 38, 32, 35, 30, 33, 24, 27, 22, 20] },
-  { symbol: 'FLUX', name: 'Flux Energy', type: '股票', icon: 'F', tone: 'blue', price: 86.52, change: 1.18, volume: '8.6 M', chart: [12, 19, 16, 24, 21, 27, 26, 31, 28, 36, 39] },
-  { symbol: 'BOND', name: 'Steady Income Fund', type: '基金', icon: 'B', tone: 'rose', price: 52.31, change: 0.24, volume: '2.1 M', chart: [19, 20, 20, 21, 20, 22, 21, 23, 22, 24, 25] },
-  { symbol: 'ORBT', name: 'Orbit Protocol', type: '数字资产', icon: 'O', tone: 'yellow', price: 16.84, change: -0.63, volume: '721 K', chart: [35, 29, 33, 31, 28, 32, 27, 29, 23, 25, 22] },
+  {
+    symbol: 'AURA',
+    name: 'Aurora Technologies',
+    type: '股票',
+    icon: 'A',
+    tone: 'violet',
+    price: 182.64,
+    change: 2.34,
+    volume: '12.8 M',
+    chart: [12, 18, 13, 23, 21, 25, 22, 36, 30, 39, 42],
+  },
+  {
+    symbol: 'MWLD',
+    name: 'Mono World Index',
+    type: '基金',
+    icon: 'M',
+    tone: 'mint',
+    price: 104.28,
+    change: 0.86,
+    volume: '4.2 M',
+    chart: [12, 15, 14, 19, 18, 23, 22, 24, 24, 28, 31],
+  },
+  {
+    symbol: 'NOVA',
+    name: 'Nova Network',
+    type: '数字资产',
+    icon: 'N',
+    tone: 'orange',
+    price: 2478.96,
+    change: -1.72,
+    volume: '386 K',
+    chart: [39, 34, 38, 32, 35, 30, 33, 24, 27, 22, 20],
+  },
+  {
+    symbol: 'FLUX',
+    name: 'Flux Energy',
+    type: '股票',
+    icon: 'F',
+    tone: 'blue',
+    price: 86.52,
+    change: 1.18,
+    volume: '8.6 M',
+    chart: [12, 19, 16, 24, 21, 27, 26, 31, 28, 36, 39],
+  },
+  {
+    symbol: 'BOND',
+    name: 'Steady Income Fund',
+    type: '基金',
+    icon: 'B',
+    tone: 'rose',
+    price: 52.31,
+    change: 0.24,
+    volume: '2.1 M',
+    chart: [19, 20, 20, 21, 20, 22, 21, 23, 22, 24, 25],
+  },
+  {
+    symbol: 'ORBT',
+    name: 'Orbit Protocol',
+    type: '数字资产',
+    icon: 'O',
+    tone: 'yellow',
+    price: 16.84,
+    change: -0.63,
+    volume: '721 K',
+    chart: [35, 29, 33, 31, 28, 32, 27, 29, 23, 25, 22],
+  },
 ]
-const money = (n: number, digits = 2) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: digits, maximumFractionDigits: digits }).format(n)
-const decimal = (n: number) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 2, minimumFractionDigits: 2 }).format(n)
+const money = (n: number, digits = 2) =>
+  new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  }).format(n)
+const decimal = (n: number) =>
+  new Intl.NumberFormat('en-US', { maximumFractionDigits: 2, minimumFractionDigits: 2 }).format(n)
 const gain = (n: number) => `${n >= 0 ? '+' : ''}${n.toFixed(2)}%`
-const miniPath = (values: number[]) => { const min = Math.min(...values); const max = Math.max(...values); return values.map((v, i) => `${i === 0 ? 'M' : 'L'}${(i / (values.length - 1) * 90).toFixed(1)},${(30 - (v - min) / (max - min || 1) * 25).toFixed(1)}`).join(' ') }
+const miniPath = (values: number[]) => {
+  const min = Math.min(...values)
+  const max = Math.max(...values)
+  return values
+    .map(
+      (v, i) =>
+        `${i === 0 ? 'M' : 'L'}${((i / (values.length - 1)) * 90).toFixed(1)},${(30 - ((v - min) / (max - min || 1)) * 25).toFixed(1)}`,
+    )
+    .join(' ')
+}
 
-function AssetChart({ range, comparison, onRange, onComparison }: { range: RangeKey; comparison: boolean; onRange: (r: RangeKey) => void; onComparison: () => void }) {
+function AssetChart({
+  range,
+  comparison,
+  onRange,
+  onComparison,
+}: {
+  range: RangeKey
+  comparison: boolean
+  onRange: (r: RangeKey) => void
+  onComparison: () => void
+}) {
   const [activePoint, setActivePoint] = useState<number | null>(null)
   const [compact, setCompact] = useState(() => matchMedia('(max-width: 700px)').matches)
-  useEffect(() => { const media = matchMedia('(max-width: 700px)'); const update = () => setCompact(media.matches); media.addEventListener('change', update); return () => media.removeEventListener('change', update) }, [])
+  useEffect(() => {
+    const media = matchMedia('(max-width: 700px)')
+    const update = () => setCompact(media.matches)
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [])
   const chartWidth = compact ? 380 : 760
   const plotWidth = chartWidth - 80
   const data = series[range]
-  const lo = Math.floor(Math.min(...data.values, ...(comparison ? data.baseline : [])) / 5000) * 5000 - 2000
+  const lo =
+    Math.floor(Math.min(...data.values, ...(comparison ? data.baseline : [])) / 5000) * 5000 - 2000
   const hi = Math.ceil(Math.max(...data.values) / 5000) * 5000 + 2000
-  const times = data.dates.map(d => Date.parse(`${d}T00:00:00Z`))
-  const point = (v: number, i: number) => ({ x: 16 + ((times[i] - times[0]) / (times.at(-1)! - times[0])) * plotWidth, y: 210 - (v - lo) / (hi - lo) * 190 })
-  const line = (values: number[]) => values.map((v, i) => { const p = point(v, i); return `${i ? 'L' : 'M'}${p.x},${p.y}` }).join(' ')
+  const times = data.dates.map((d) => Date.parse(`${d}T00:00:00Z`))
+  const point = (v: number, i: number) => ({
+    x: 16 + ((times[i] - times[0]) / (times.at(-1)! - times[0])) * plotWidth,
+    y: 210 - ((v - lo) / (hi - lo)) * 190,
+  })
+  const line = (values: number[]) =>
+    values
+      .map((v, i) => {
+        const p = point(v, i)
+        return `${i ? 'L' : 'M'}${p.x},${p.y}`
+      })
+      .join(' ')
   const hovered = activePoint === null ? null : Math.min(activePoint, data.values.length - 1)
   const delta = data.values.at(-1)! - data.values[0]
   const exportData = () => {
-    const csv = '\uFEFF日期,演示组合_USD,演示基准_USD\n' + data.dates.map((d, i) => `${d},${data.values[i].toFixed(2)},${data.baseline[i].toFixed(2)}`).join('\n')
+    const csv =
+      '\uFEFF日期,演示组合_USD,演示基准_USD\n' +
+      data.dates
+        .map((d, i) => `${d},${data.values[i].toFixed(2)},${data.baseline[i].toFixed(2)}`)
+        .join('\n')
     const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }))
-    const a = document.createElement('a'); a.href = url; a.download = `mono-demo-${range}.csv`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `mono-demo-${range}.csv`
+    a.click()
+    setTimeout(() => URL.revokeObjectURL(url), 1000)
   }
-  return <section className="panel chart-panel" aria-labelledby="chart-heading"><div className="panel-heading"><div><h2 id="chart-heading">组合表现 <span>PORTFOLIO PERFORMANCE</span></h2><p>看清变化，也看清长期。</p></div><button className="icon-button" onClick={exportData} aria-label="导出当前周期演示数据CSV" title="导出CSV"><Download size={17}/></button></div><div className="chart-controls"><div className="chart-legend"><span><i className="mint-dot"/>我的演示组合</span><button className={comparison ? 'enabled' : ''} onClick={onComparison} aria-pressed={comparison}><i className="purple-dot"/>模拟基准</button></div><div className="range-buttons" aria-label="图表时间范围">{(['1W', '1M', '3M', '1Y'] as RangeKey[]).map(r => <button className={range === r ? 'active' : ''} aria-pressed={range === r} onClick={() => { onRange(r); setActivePoint(null) }} key={r}>{r}</button>)}</div></div><div className="chart-area"><svg viewBox={`0 0 ${chartWidth} 250`} role="img" aria-labelledby="chart-title chart-description" onPointerMove={e => { const rect = e.currentTarget.getBoundingClientRect(); const x = (e.clientX - rect.left) / rect.width * chartWidth; setActivePoint(data.values.reduce((closest, value, i) => Math.abs(point(value, i).x - x) < Math.abs(point(data.values[closest], closest).x - x) ? i : closest, 0)) }} onPointerLeave={() => setActivePoint(null)}>
-    <title id="chart-title">{range} 演示组合资产曲线</title><desc id="chart-description">从{money(data.values[0])}变化到{money(data.values.at(-1)!)}。完整数据可展开下方表格。</desc><defs><linearGradient id="chart-area-fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stopColor="#a5efcc" stopOpacity=".14"/><stop offset="100%" stopColor="#a5efcc" stopOpacity="0"/></linearGradient></defs>
-    {[0,1,2,3,4].map(i => <g key={i}><line x1="16" x2={chartWidth - 64} y1={20 + i * 47.5} y2={20 + i * 47.5} stroke="#2a2c30" strokeDasharray="3 5"/><text x={chartWidth - 50} y={24 + i * 47.5} fill="#737782" fontSize="10" fontFamily="monospace">{Math.round((hi - i * (hi - lo) / 4) / 1000)}k</text></g>)}
-    <path d={`${line(data.values)} L${chartWidth - 64},210 L16,210 Z`} fill="url(#chart-area-fill)"/>{comparison && <path d={line(data.baseline)} fill="none" stroke="#9e8ee9" strokeWidth="2" strokeDasharray="5 5"/>}<path d={line(data.values)} fill="none" stroke="#ace6c8" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round"/>
-    {data.dates.map((date, i) => (i === 0 || i === data.dates.length - 1 || i % Math.max(1, Math.floor(data.dates.length / 4)) === 0) && <text key={date} x={point(data.values[i],i).x} y="241" textAnchor={i === 0 ? 'start' : i === data.dates.length-1 ? 'end' : 'middle'} fill="#737782" fontSize="10" fontFamily="monospace">{range === '1Y' ? date.slice(0,7).replace('-', '.') : date.slice(5).replace('-', '.')}</text>)}
-    {hovered !== null && <g><line x1={point(data.values[hovered], hovered).x} x2={point(data.values[hovered], hovered).x} y1="15" y2="214" stroke="#757d87" strokeDasharray="3 4"/><circle cx={point(data.values[hovered], hovered).x} cy={point(data.values[hovered], hovered).y} r="5" fill="#b6f5d6" stroke="#111214" strokeWidth="2"/></g>}
-  </svg>{hovered !== null && <div className="chart-tooltip"><span>{data.dates[hovered]}</span><b>{money(data.values[hovered])}</b></div>}</div><div className="chart-bottom"><span><span className="live-dot"/>本地模拟数据</span><p>本周期增加 <b>{money(delta)}</b> <span>({gain(delta / data.values[0] * 100)})</span></p></div><details className="chart-data"><summary>查看图表数据 <ChevronDown size={13}/></summary><div className="data-table-wrap"><table><caption>{range} 本地演示数据，单位 USD</caption><thead><tr><th>时间</th><th>演示组合</th><th>模拟基准</th></tr></thead><tbody>{data.dates.map((date,i) => <tr key={date}><td>{date}</td><td>{money(data.values[i])}</td><td>{money(data.baseline[i])}</td></tr>)}</tbody></table></div></details></section>
+  return (
+    <section className="panel chart-panel" aria-labelledby="chart-heading">
+      <div className="panel-heading">
+        <div>
+          <h2 id="chart-heading">
+            组合表现 <span>PORTFOLIO PERFORMANCE</span>
+          </h2>
+          <p>看清变化，也看清长期。</p>
+        </div>
+        <button
+          className="icon-button"
+          onClick={exportData}
+          aria-label="导出当前周期演示数据CSV"
+          title="导出CSV"
+        >
+          <Download size={17} />
+        </button>
+      </div>
+      <div className="chart-controls">
+        <div className="chart-legend">
+          <span>
+            <i className="mint-dot" />
+            我的演示组合
+          </span>
+          <button
+            className={comparison ? 'enabled' : ''}
+            onClick={onComparison}
+            aria-pressed={comparison}
+          >
+            <i className="purple-dot" />
+            模拟基准
+          </button>
+        </div>
+        <div className="range-buttons" aria-label="图表时间范围">
+          {(['1W', '1M', '3M', '1Y'] as RangeKey[]).map((r) => (
+            <button
+              className={range === r ? 'active' : ''}
+              aria-pressed={range === r}
+              onClick={() => {
+                onRange(r)
+                setActivePoint(null)
+              }}
+              key={r}
+            >
+              {r}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="chart-area">
+        <svg
+          viewBox={`0 0 ${chartWidth} 250`}
+          role="img"
+          aria-labelledby="chart-title chart-description"
+          onPointerMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect()
+            const x = ((e.clientX - rect.left) / rect.width) * chartWidth
+            setActivePoint(
+              data.values.reduce(
+                (closest, value, i) =>
+                  Math.abs(point(value, i).x - x) <
+                  Math.abs(point(data.values[closest], closest).x - x)
+                    ? i
+                    : closest,
+                0,
+              ),
+            )
+          }}
+          onPointerLeave={() => setActivePoint(null)}
+        >
+          <title id="chart-title">{range} 演示组合资产曲线</title>
+          <desc id="chart-description">
+            从{money(data.values[0])}变化到{money(data.values.at(-1)!)}。完整数据可展开下方表格。
+          </desc>
+          <defs>
+            <linearGradient id="chart-area-fill" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="#a5efcc" stopOpacity=".14" />
+              <stop offset="100%" stopColor="#a5efcc" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          {[0, 1, 2, 3, 4].map((i) => (
+            <g key={i}>
+              <line
+                x1="16"
+                x2={chartWidth - 64}
+                y1={20 + i * 47.5}
+                y2={20 + i * 47.5}
+                stroke="#2a2c30"
+                strokeDasharray="3 5"
+              />
+              <text
+                x={chartWidth - 50}
+                y={24 + i * 47.5}
+                fill="#737782"
+                fontSize="10"
+                fontFamily="monospace"
+              >
+                {Math.round((hi - (i * (hi - lo)) / 4) / 1000)}k
+              </text>
+            </g>
+          ))}
+          <path
+            d={`${line(data.values)} L${chartWidth - 64},210 L16,210 Z`}
+            fill="url(#chart-area-fill)"
+          />
+          {comparison && (
+            <path
+              d={line(data.baseline)}
+              fill="none"
+              stroke="#9e8ee9"
+              strokeWidth="2"
+              strokeDasharray="5 5"
+            />
+          )}
+          <path
+            d={line(data.values)}
+            fill="none"
+            stroke="#ace6c8"
+            strokeWidth="2.5"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
+          {data.dates.map(
+            (date, i) =>
+              (i === 0 ||
+                i === data.dates.length - 1 ||
+                i % Math.max(1, Math.floor(data.dates.length / 4)) === 0) && (
+                <text
+                  key={date}
+                  x={point(data.values[i], i).x}
+                  y="241"
+                  textAnchor={i === 0 ? 'start' : i === data.dates.length - 1 ? 'end' : 'middle'}
+                  fill="#737782"
+                  fontSize="10"
+                  fontFamily="monospace"
+                >
+                  {range === '1Y'
+                    ? date.slice(0, 7).replace('-', '.')
+                    : date.slice(5).replace('-', '.')}
+                </text>
+              ),
+          )}
+          {hovered !== null && (
+            <g>
+              <line
+                x1={point(data.values[hovered], hovered).x}
+                x2={point(data.values[hovered], hovered).x}
+                y1="15"
+                y2="214"
+                stroke="#757d87"
+                strokeDasharray="3 4"
+              />
+              <circle
+                cx={point(data.values[hovered], hovered).x}
+                cy={point(data.values[hovered], hovered).y}
+                r="5"
+                fill="#b6f5d6"
+                stroke="#111214"
+                strokeWidth="2"
+              />
+            </g>
+          )}
+        </svg>
+        {hovered !== null && (
+          <div className="chart-tooltip">
+            <span>{data.dates[hovered]}</span>
+            <b>{money(data.values[hovered])}</b>
+          </div>
+        )}
+      </div>
+      <div className="chart-bottom">
+        <span>
+          <span className="live-dot" />
+          本地模拟数据
+        </span>
+        <p>
+          本周期增加 <b>{money(delta)}</b> <span>({gain((delta / data.values[0]) * 100)})</span>
+        </p>
+      </div>
+      <details className="chart-data">
+        <summary>
+          查看图表数据 <ChevronDown size={13} />
+        </summary>
+        <div className="data-table-wrap">
+          <table>
+            <caption>{range} 本地演示数据，单位 USD</caption>
+            <thead>
+              <tr>
+                <th>时间</th>
+                <th>演示组合</th>
+                <th>模拟基准</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.dates.map((date, i) => (
+                <tr key={date}>
+                  <td>{date}</td>
+                  <td>{money(data.values[i])}</td>
+                  <td>{money(data.baseline[i])}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </section>
+  )
 }
 
 function App() {
@@ -57,7 +468,23 @@ function App() {
   const [comparison, setComparison] = useState(true)
   const [filter, setFilter] = useState('全部资产')
   const [query, setQuery] = useState('')
-  const [watchlist, setWatchlist] = useState<string[]>(() => { try { const v = JSON.parse(localStorage.getItem('mono-watchlist') || '["AURA","MWLD"]'); return Array.isArray(v) ? [...new Set(v.filter((x: unknown): x is string => typeof x === 'string' && assets.some(a => a.symbol === x)))] : ['AURA','MWLD'] } catch { return ['AURA','MWLD'] } })
+  const [watchlist, setWatchlist] = useState<string[]>(() => {
+    try {
+      const v = JSON.parse(localStorage.getItem('mono-watchlist') || '["AURA","MWLD"]')
+      return Array.isArray(v)
+        ? [
+            ...new Set(
+              v.filter(
+                (x: unknown): x is string =>
+                  typeof x === 'string' && assets.some((a) => a.symbol === x),
+              ),
+            ),
+          ]
+        : ['AURA', 'MWLD']
+    } catch {
+      return ['AURA', 'MWLD']
+    }
+  })
   const [sort, setSort] = useState<'default' | 'gainers'>('default')
   const [monthly, setMonthly] = useState(500)
   const [years, setYears] = useState(10)
@@ -70,35 +497,736 @@ function App() {
   const menuRef = useRef<HTMLButtonElement>(null)
   const notificationRef = useRef<HTMLButtonElement>(null)
   const notificationCloseRef = useRef<HTMLButtonElement>(null)
-  const focusArea = (id: string) => requestAnimationFrame(() => document.getElementById(id)?.focus({ preventScroll: true }))
-  const closeMenu = () => { setMenuOpen(false); requestAnimationFrame(() => menuRef.current?.focus()) }
-  const closeNotifications = () => { setNotifications(false); requestAnimationFrame(() => notificationRef.current?.focus()) }
-  useEffect(() => { if (menuOpen) requestAnimationFrame(() => document.querySelector<HTMLAnchorElement>('.sidebar nav a')?.focus()) }, [menuOpen])
-  useEffect(() => { if (notifications) requestAnimationFrame(() => notificationCloseRef.current?.focus()) }, [notifications])
+  const focusArea = (id: string) =>
+    requestAnimationFrame(() => document.getElementById(id)?.focus({ preventScroll: true }))
+  const closeMenu = () => {
+    setMenuOpen(false)
+    requestAnimationFrame(() => menuRef.current?.focus())
+  }
+  const closeNotifications = () => {
+    setNotifications(false)
+    requestAnimationFrame(() => notificationRef.current?.focus())
+  }
+  useEffect(() => {
+    if (menuOpen)
+      requestAnimationFrame(() =>
+        document.querySelector<HTMLAnchorElement>('.sidebar nav a')?.focus(),
+      )
+  }, [menuOpen])
+  useEffect(() => {
+    if (notifications) requestAnimationFrame(() => notificationCloseRef.current?.focus())
+  }, [notifications])
   const latest = series[range].values.at(-1)!
   const delta = latest - series[range].values[0]
   const filtered = useMemo(() => {
-    const list = assets.filter(a => (filter === '全部资产' || (filter === '我的关注' ? watchlist.includes(a.symbol) : a.type === filter)) && `${a.name} ${a.symbol} ${a.type}`.toLowerCase().includes(query.trim().toLowerCase()))
-    return sort === 'gainers' ? [...list].sort((a,b) => b.change - a.change) : list
+    const list = assets.filter(
+      (a) =>
+        (filter === '全部资产' ||
+          (filter === '我的关注' ? watchlist.includes(a.symbol) : a.type === filter)) &&
+        `${a.name} ${a.symbol} ${a.type}`.toLowerCase().includes(query.trim().toLowerCase()),
+    )
+    return sort === 'gainers' ? [...list].sort((a, b) => b.change - a.change) : list
   }, [filter, query, sort, watchlist])
   const r = assumption / 100 / 12
   const periods = years * 12
   const invested = monthly * periods
   const future = r === 0 ? invested : monthly * ((Math.pow(1 + r, periods) - 1) / r)
   const increase = future - invested
-  const updateWatchlist = (symbol: string) => { const next = watchlist.includes(symbol) ? watchlist.filter(x => x !== symbol) : [...watchlist, symbol]; setWatchlist(next); let persisted = true; try { localStorage.setItem('mono-watchlist', JSON.stringify(next)) } catch { persisted = false } setAnnouncement(`${symbol} ${next.includes(symbol) ? '已加入' : '已移出'}关注列表${persisted ? '，已保存到此浏览器。' : '。浏览器存储不可用，仅当前页面有效。'}`) }
-  const scrollToPlanner = () => { document.getElementById('planner')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' }); setMenuOpen(false); focusArea('planner') }
-  const nav = [['overview', '资产概览', LayoutDashboard], ['market', '市场观察', ChartNoAxesCombined], ['planner', '未来规划', Wallet], ['notes', '工作台说明', CircleHelp]] as const
-  return <div className="app"><a className="skip-link" href="#main">跳至资产工作台</a><aside className={`sidebar ${menuOpen ? 'open' : ''}`} onKeyDown={event => { if (event.key === 'Escape' && menuOpen) { event.preventDefault(); closeMenu() } }}><a href="#overview" className="brand" aria-label="MONO 首页"><span className="brand-mark"><i/><i/><i/></span>mono<span className="brand-period">.</span></a><div className="workspace-selector"><span className="workspace-icon">P</span><span>个人工作空间<small>Personal workspace</small></span><ChevronDown size={14}/></div><p className="sidebar-label">WORKSPACE</p><nav aria-label="工作台导航">{nav.map(([id, title, Icon],i) => <a href={`#${id}`} key={id} className={i === 0 ? 'nav-active' : ''} onClick={() => { setMenuOpen(false); focusArea(id) }}><Icon size={18}/><span>{title}</span>{i === 0 && <i/>}</a>)}</nav><div className="sidebar-note"><span><Layers size={17}/> 让复杂，变清晰。</span><p>从每一个数据点，<br/>看见下一步的可能。</p><button onClick={scrollToPlanner}>创建模拟规划 <ArrowUpRight size={14}/></button></div><div className="sidebar-footer"><span className="avatar">L</span><div>Lin's workspace<small>演示账户 · 无真实资产</small></div><span className="profile-dot"/></div></aside>
-    <div className="main-shell"><header className="topbar"><div className="breadcrumb"><button ref={menuRef} className="mobile-menu icon-button" aria-label={menuOpen ? '关闭导航' : '打开导航'} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={19}/> : <Menu size={19}/>}</button><span>工作空间</span><ChevronRight size={12}/><b>总览</b></div><div className="topbar-actions"><span className="demo-pill"><i/> 模拟数据工作台</span><button ref={notificationRef} className={`icon-button ${notifications ? 'selected' : ''}`} aria-label="查看演示通知" aria-expanded={notifications} onClick={() => setNotifications(!notifications)}><Bell size={18}/><i className="notification-dot"/></button><span className="top-avatar">L</span></div>{notifications && <div className="notification-panel" onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); closeNotifications() } }}><div><b>工作台通知</b><button ref={notificationCloseRef} className="icon-button" aria-label="关闭通知" onClick={closeNotifications}><X size={14}/></button></div><p><Check size={15}/><span>你的工作空间已就绪<small>全部数据来自本地模拟样本。</small></span></p><p><Info size={15}/><span>这里没有真实交易<small>观察列表仅保存在本浏览器。</small></span></p></div>}</header>
-    <main id="main"><section className="overview-header" id="overview" tabIndex={-1}><div><p className="small-eyebrow">YOUR MONEY. A CLEARER PICTURE.</p><h1>资产概览<span>↗</span></h1><p>每一份积累，都值得看得更清楚。</p></div><div className="overview-actions"><span><Clock3 size={14}/> 模拟时点 2026.11.17</span><button className="mint-button" onClick={scrollToPlanner}><Plus size={16}/> 新建模拟规划</button></div></section>
-    <div className="metric-grid"><article className="metric-card primary-metric"><div className="metric-label">组合总值 <span>USD</span></div><div className="metric-value"><span>$</span>{decimal(latest).split('.')[0]}<small>.{decimal(latest).split('.')[1]}</small></div><div className="metric-footer"><span className="positive"><ArrowUpRight size={13}/>{gain(delta / series[range].values[0] * 100)}</span><span>所选周期</span><svg viewBox="0 0 90 35" aria-hidden="true"><path d={miniPath(series[range].values)} fill="none" stroke="#b4edce" strokeWidth="1.8"/></svg></div></article><article className="metric-card"><div className="metric-label">周期变动 <TrendingUp size={16}/></div><div className="metric-value small"><span>+$</span>{decimal(delta).split('.')[0]}<small>.{decimal(delta).split('.')[1]}</small></div><div className="metric-footer"><span className="mini-tag">{range}</span><span>根据期初与期末计算</span></div></article><article className="metric-card"><div className="metric-label">每月模拟投入 <Wallet size={16}/></div><div className="metric-value small"><span>$</span>{decimal(monthly).split('.')[0]}<small>.00</small></div><div className="metric-footer"><span className="purple-dot"/><span>与下方规划参数同步</span></div></article><article className="metric-card"><div className="metric-label">示例现金配置 <ShieldCheck size={16}/></div><div className="metric-value small"><span>$</span>{decimal(latest * .15).split('.')[0]}<small>.{decimal(latest * .15).split('.')[1]}</small></div><div className="metric-footer"><span className="allocation-mini"/><span>占演示组合的 15%</span></div></article></div>
-    <div className="portfolio-grid"><AssetChart range={range} comparison={comparison} onRange={setRange} onComparison={() => setComparison(!comparison)}/><section className="panel allocation-panel"><div className="panel-heading"><div><h2>资产配置</h2><p>一个示例，三种组成。</p></div><Layers size={17}/></div><div className="donut" role="img" aria-label="演示配置：权益类55%，固定收益30%，现金15%"><div><span>资产分布</span><b>3<span> 类</span></b><small>DEMO ALLOCATION</small></div></div><div className="allocation-list">{[['权益类',55,'violet'],['固定收益',30,'mint'],['现金',15,'gray']].map(([name,pct,tone]) => <div key={name}><span><i className={`allocation-dot ${tone}`}/>{name}</span><b>{pct}<small>%</small></b><em>{money(latest * Number(pct) / 100, 0)}</em></div>)}</div><p className="allocation-note"><Info size={12}/>固定比例展示，不代表配置建议。</p></section></div>
-    <section className="panel market-panel" id="market" tabIndex={-1}><div className="panel-heading"><div><h2>市场观察 <span>YOUR WATCHLIST</span></h2><p>从关心的地方开始，建立自己的视角。</p></div><span className="table-count">{filtered.length} 个演示资产</span></div><div className="market-toolbar"><div className="asset-tabs" aria-label="资产类别">{['全部资产','股票','基金','数字资产','我的关注'].map(type => <button key={type} aria-pressed={filter === type} className={filter === type ? 'active' : ''} onClick={() => setFilter(type)}>{type}{type === '我的关注' && <span>{watchlist.length}</span>}</button>)}</div><div className="table-tools"><label className="asset-search"><Search size={15}/><input ref={searchRef} value={query} onChange={e => setQuery(e.target.value)} placeholder="搜索资产" aria-label="搜索资产名称或代码"/>{query && <button onClick={() => { setQuery(''); requestAnimationFrame(() => searchRef.current?.focus()) }} aria-label="清除资产搜索"><X size={12}/></button>}</label><button className={`icon-button ${sort === 'gainers' ? 'selected' : ''}`} onClick={() => setSort(sort === 'default' ? 'gainers' : 'default')} aria-pressed={sort === 'gainers'} aria-label={sort === 'gainers' ? '恢复默认顺序' : '按涨幅降序排列'} title="按涨幅排序"><SlidersHorizontal size={16}/></button></div></div><p className="table-scroll-hint" id="asset-table-hint">左右滑动或使用方向键查看全部列 <ArrowRight size={12}/></p><div className="market-table-wrap" tabIndex={0} role="region" aria-label="演示资产表，可横向滚动" aria-describedby="asset-table-hint"><table className="market-table"><thead><tr><th className="star-column"><span className="sr-only">关注</span></th><th>资产名称</th><th>价格 <span>USD</span></th><th>日变动</th><th>7 日走势</th><th>示例交易量</th><th>类别</th></tr></thead><tbody>{filtered.map(asset => <tr key={asset.symbol}><td><button className={`watch-button ${watchlist.includes(asset.symbol) ? 'watched' : ''}`} onClick={() => updateWatchlist(asset.symbol)} aria-label={`${watchlist.includes(asset.symbol) ? '取消关注' : '关注'} ${asset.symbol}`} aria-pressed={watchlist.includes(asset.symbol)}><Star size={15} fill={watchlist.includes(asset.symbol) ? 'currentColor' : 'none'}/></button></td><td><div className="asset-name"><span className={`asset-icon ${asset.tone}`}>{asset.icon}</span><span><b>{asset.symbol}</b><small>{asset.name}</small></span></div></td><td className="price-cell">{money(asset.price)}</td><td><span className={asset.change >= 0 ? 'positive' : 'negative'}>{asset.change >= 0 ? <ArrowUpRight size={12}/> : <ArrowDownRight size={12}/>} {gain(asset.change)}</span></td><td><svg className="sparkline" viewBox="0 0 90 35" aria-label={`近7日示例趋势${asset.change >= 0 ? '上升' : '下降'}`} role="img"><path d={miniPath(asset.chart)} fill="none" stroke={asset.change >= 0 ? '#ace6c8' : '#e5a09a'} strokeWidth="1.5"/></svg></td><td className="volume-cell">{asset.volume}</td><td><span className="asset-type">{asset.type}</span></td></tr>)}</tbody></table></div>{filtered.length === 0 && <div className="empty-state"><Search size={25}/><h3>没有找到匹配的资产</h3><p>调整关键词或类别，重新发现你的关注。</p><button onClick={() => { setQuery(''); setFilter('全部资产'); focusArea('market') }}>重置筛选 <ArrowRight size={13}/></button></div>}<div className="market-footnote"><span><Info size={12}/>名称、价格与交易量均为虚构样本。</span><span>不是实时行情 · 不支持交易</span></div></section>
-    <section className="planner-grid" id="planner" tabIndex={-1}><div className="panel planner-panel"><div className="panel-heading"><div><h2>给未来，一点想象。</h2><p>调整投入和时间，理解复利的数学关系。</p></div><span className="planner-tag">PLAN / 01</span></div><div className="planner-inputs"><div className="slider-field"><div><label htmlFor="monthly">每月末投入</label><output htmlFor="monthly">{money(monthly,0)}<small> / 月</small></output></div><input id="monthly" type="range" min="100" max="3000" step="50" value={monthly} onChange={e => { setMonthly(Number(e.target.value)); setSavedPlan(false) }}/><div className="slider-ends"><span>$100</span><span>$3,000</span></div></div><div className="slider-field"><div><label htmlFor="years">模拟时间</label><output htmlFor="years">{years}<small> 年</small></output></div><input id="years" type="range" min="1" max="30" step="1" value={years} onChange={e => { setYears(Number(e.target.value)); setSavedPlan(false) }}/><div className="slider-ends"><span>1 年</span><span>30 年</span></div></div><div className="assumption-field"><label htmlFor="assumption">假设名义年增长率</label><select id="assumption" value={assumption} onChange={e => { setAssumption(Number(e.target.value)); setSavedPlan(false) }}><option value={-2}>−2% · 负增长情景</option><option value={0}>0% · 无增长情景</option><option value={4}>4% · 数学示例</option><option value={8}>8% · 数学示例</option></select></div></div><div className="formula-note"><Info size={14}/><p>假设按月复利、每月末投入，月率为年率 ÷ 12。未计费用、税费与通胀；结果是数学推算，不是投资建议或收益承诺。</p></div></div><div className="projection-panel"><div className="projection-head"><span>一个可能的数学结果</span><ArrowUpRight size={22}/></div><p className="projection-caption">{years} 年后 · 假设年率 {assumption}%</p><div className="projection-value" aria-live="polite">{money(future,0)}</div><div className="projection-bar"><span style={{ width: `${Math.min(100, invested / Math.max(invested, future) * 100)}%` }}/></div><dl><div><dt><i/>累计投入</dt><dd>{money(invested,0)}</dd></div><div><dt><i/>假设{increase >= 0 ? '增值' : '减少'}</dt><dd>{increase >= 0 ? '+' : '−'}{money(Math.abs(increase),0)}</dd></div></dl><button className={`plan-button ${savedPlan ? 'saved' : ''}`} onClick={() => { setSavedPlan(true); setAnnouncement('当前规划参数已标记，修改参数后需重新标记。仅保留于此页面。') }}>{savedPlan ? <><Check size={16}/> 已标记这组参数</> : <>标记这组模拟参数 <ArrowRight size={16}/></>}</button><span className="plan-local">仅保留在当前页面，不创建真实投资计划。</span></div></section>
-    <section className="notes-panel" id="notes" tabIndex={-1}><div><span className="note-icon"><Activity size={22}/></span><h2>少一点噪音，<br/>多一点理解。</h2></div><div><h3>关于这个工作台</h3><p>MONO 是金融数据界面的独立设计实验。所有资产、组合与行情均为虚构本地数据，不会连接账户、处理资金或执行交易。</p><details><summary>数据与计算说明 <ChevronDown size={13}/></summary><p>曲线使用预置序列，范围选择更新同一数据集的图形、汇总与表格。观察列表只保存资产代码到浏览器 localStorage；规划参数只存于页面内存。月末投入终值：投入额 × ((1 + 月率)^月数 − 1) ÷ 月率；月率为零时直接累加投入。</p></details></div><div className="note-links"><a href="#market">管理关注 <ArrowUpRight size={15}/></a><a href="#planner">探索数学情景 <ArrowUpRight size={15}/></a><button onClick={() => { setWatchlist([]); let persisted = true; try { localStorage.setItem('mono-watchlist', '[]') } catch { persisted = false } setAnnouncement(persisted ? '本地关注已清空，刷新后仍保持为空。' : '当前页面的关注已清空，浏览器存储不可用，未能清除持久数据。') }}>清空本地关注 <ArrowUpRight size={15}/></button></div></section>
-    <footer><span>© 2026 MONO STUDIO <i/> MAKE ROOM FOR CLARITY.</span><span><span className="live-dot"/> 独立设计实验 · 非真实金融服务</span></footer><div className={`feedback-toast ${announcement ? 'visible' : ''}`} role="status">{announcement && <><span>{announcement}</span><button aria-label="关闭状态提示" onClick={() => setAnnouncement('')}><X size={14}/></button></>}</div>
-    </main></div>
-  </div>
+  const updateWatchlist = (symbol: string) => {
+    const next = watchlist.includes(symbol)
+      ? watchlist.filter((x) => x !== symbol)
+      : [...watchlist, symbol]
+    setWatchlist(next)
+    let persisted = true
+    try {
+      localStorage.setItem('mono-watchlist', JSON.stringify(next))
+    } catch {
+      persisted = false
+    }
+    setAnnouncement(
+      `${symbol} ${next.includes(symbol) ? '已加入' : '已移出'}关注列表${persisted ? '，已保存到此浏览器。' : '。浏览器存储不可用，仅当前页面有效。'}`,
+    )
+  }
+  const scrollToPlanner = () => {
+    document
+      .getElementById('planner')
+      ?.scrollIntoView({
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      })
+    setMenuOpen(false)
+    focusArea('planner')
+  }
+  const nav = [
+    ['overview', '资产概览', LayoutDashboard],
+    ['market', '市场观察', ChartNoAxesCombined],
+    ['planner', '未来规划', Wallet],
+    ['notes', '工作台说明', CircleHelp],
+  ] as const
+  return (
+    <div className="app">
+      <a className="skip-link" href="#main">
+        跳至资产工作台
+      </a>
+      <aside
+        className={`sidebar ${menuOpen ? 'open' : ''}`}
+        onKeyDown={(event) => {
+          if (event.key === 'Escape' && menuOpen) {
+            event.preventDefault()
+            closeMenu()
+          }
+        }}
+      >
+        <a href="#overview" className="brand" aria-label="MONO 首页">
+          <span className="brand-mark">
+            <i />
+            <i />
+            <i />
+          </span>
+          mono<span className="brand-period">.</span>
+        </a>
+        <div className="workspace-selector">
+          <span className="workspace-icon">P</span>
+          <span>
+            个人工作空间<small>Personal workspace</small>
+          </span>
+          <ChevronDown size={14} />
+        </div>
+        <p className="sidebar-label">WORKSPACE</p>
+        <nav aria-label="工作台导航">
+          {nav.map(([id, title, Icon], i) => (
+            <a
+              href={`#${id}`}
+              key={id}
+              className={i === 0 ? 'nav-active' : ''}
+              onClick={() => {
+                setMenuOpen(false)
+                focusArea(id)
+              }}
+            >
+              <Icon size={18} />
+              <span>{title}</span>
+              {i === 0 && <i />}
+            </a>
+          ))}
+        </nav>
+        <div className="sidebar-note">
+          <span>
+            <Layers size={17} /> 让复杂，变清晰。
+          </span>
+          <p>
+            从每一个数据点，
+            <br />
+            看见下一步的可能。
+          </p>
+          <button onClick={scrollToPlanner}>
+            创建模拟规划 <ArrowUpRight size={14} />
+          </button>
+        </div>
+        <div className="sidebar-footer">
+          <span className="avatar">L</span>
+          <div>
+            Lin's workspace<small>演示账户 · 无真实资产</small>
+          </div>
+          <span className="profile-dot" />
+        </div>
+      </aside>
+      <div className="main-shell">
+        <header className="topbar">
+          <div className="breadcrumb">
+            <button
+              ref={menuRef}
+              className="mobile-menu icon-button"
+              aria-label={menuOpen ? '关闭导航' : '打开导航'}
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? <X size={19} /> : <Menu size={19} />}
+            </button>
+            <span>工作空间</span>
+            <ChevronRight size={12} />
+            <b>总览</b>
+          </div>
+          <div className="topbar-actions">
+            <span className="demo-pill">
+              <i /> 模拟数据工作台
+            </span>
+            <button
+              ref={notificationRef}
+              className={`icon-button ${notifications ? 'selected' : ''}`}
+              aria-label="查看演示通知"
+              aria-expanded={notifications}
+              onClick={() => setNotifications(!notifications)}
+            >
+              <Bell size={18} />
+              <i className="notification-dot" />
+            </button>
+            <span className="top-avatar">L</span>
+          </div>
+          {notifications && (
+            <div
+              className="notification-panel"
+              onKeyDown={(event) => {
+                if (event.key === 'Escape') {
+                  event.preventDefault()
+                  closeNotifications()
+                }
+              }}
+            >
+              <div>
+                <b>工作台通知</b>
+                <button
+                  ref={notificationCloseRef}
+                  className="icon-button"
+                  aria-label="关闭通知"
+                  onClick={closeNotifications}
+                >
+                  <X size={14} />
+                </button>
+              </div>
+              <p>
+                <Check size={15} />
+                <span>
+                  你的工作空间已就绪<small>全部数据来自本地模拟样本。</small>
+                </span>
+              </p>
+              <p>
+                <Info size={15} />
+                <span>
+                  这里没有真实交易<small>观察列表仅保存在本浏览器。</small>
+                </span>
+              </p>
+            </div>
+          )}
+        </header>
+        <main id="main">
+          <section className="overview-header" id="overview" tabIndex={-1}>
+            <div>
+              <p className="small-eyebrow">YOUR MONEY. A CLEARER PICTURE.</p>
+              <h1>
+                资产概览<span>↗</span>
+              </h1>
+              <p>每一份积累，都值得看得更清楚。</p>
+            </div>
+            <div className="overview-actions">
+              <span>
+                <Clock3 size={14} /> 模拟时点 2026.11.17
+              </span>
+              <button className="mint-button" onClick={scrollToPlanner}>
+                <Plus size={16} /> 新建模拟规划
+              </button>
+            </div>
+          </section>
+          <div className="metric-grid">
+            <article className="metric-card primary-metric">
+              <div className="metric-label">
+                组合总值 <span>USD</span>
+              </div>
+              <div className="metric-value">
+                <span>$</span>
+                {decimal(latest).split('.')[0]}
+                <small>.{decimal(latest).split('.')[1]}</small>
+              </div>
+              <div className="metric-footer">
+                <span className="positive">
+                  <ArrowUpRight size={13} />
+                  {gain((delta / series[range].values[0]) * 100)}
+                </span>
+                <span>所选周期</span>
+                <svg viewBox="0 0 90 35" aria-hidden="true">
+                  <path
+                    d={miniPath(series[range].values)}
+                    fill="none"
+                    stroke="#b4edce"
+                    strokeWidth="1.8"
+                  />
+                </svg>
+              </div>
+            </article>
+            <article className="metric-card">
+              <div className="metric-label">
+                周期变动 <TrendingUp size={16} />
+              </div>
+              <div className="metric-value small">
+                <span>+$</span>
+                {decimal(delta).split('.')[0]}
+                <small>.{decimal(delta).split('.')[1]}</small>
+              </div>
+              <div className="metric-footer">
+                <span className="mini-tag">{range}</span>
+                <span>根据期初与期末计算</span>
+              </div>
+            </article>
+            <article className="metric-card">
+              <div className="metric-label">
+                每月模拟投入 <Wallet size={16} />
+              </div>
+              <div className="metric-value small">
+                <span>$</span>
+                {decimal(monthly).split('.')[0]}
+                <small>.00</small>
+              </div>
+              <div className="metric-footer">
+                <span className="purple-dot" />
+                <span>与下方规划参数同步</span>
+              </div>
+            </article>
+            <article className="metric-card">
+              <div className="metric-label">
+                示例现金配置 <ShieldCheck size={16} />
+              </div>
+              <div className="metric-value small">
+                <span>$</span>
+                {decimal(latest * 0.15).split('.')[0]}
+                <small>.{decimal(latest * 0.15).split('.')[1]}</small>
+              </div>
+              <div className="metric-footer">
+                <span className="allocation-mini" />
+                <span>占演示组合的 15%</span>
+              </div>
+            </article>
+          </div>
+          <div className="portfolio-grid">
+            <AssetChart
+              range={range}
+              comparison={comparison}
+              onRange={setRange}
+              onComparison={() => setComparison(!comparison)}
+            />
+            <section className="panel allocation-panel">
+              <div className="panel-heading">
+                <div>
+                  <h2>资产配置</h2>
+                  <p>一个示例，三种组成。</p>
+                </div>
+                <Layers size={17} />
+              </div>
+              <div
+                className="donut"
+                role="img"
+                aria-label="演示配置：权益类55%，固定收益30%，现金15%"
+              >
+                <div>
+                  <span>资产分布</span>
+                  <b>
+                    3<span> 类</span>
+                  </b>
+                  <small>DEMO ALLOCATION</small>
+                </div>
+              </div>
+              <div className="allocation-list">
+                {[
+                  ['权益类', 55, 'violet'],
+                  ['固定收益', 30, 'mint'],
+                  ['现金', 15, 'gray'],
+                ].map(([name, pct, tone]) => (
+                  <div key={name}>
+                    <span>
+                      <i className={`allocation-dot ${tone}`} />
+                      {name}
+                    </span>
+                    <b>
+                      {pct}
+                      <small>%</small>
+                    </b>
+                    <em>{money((latest * Number(pct)) / 100, 0)}</em>
+                  </div>
+                ))}
+              </div>
+              <p className="allocation-note">
+                <Info size={12} />
+                固定比例展示，不代表配置建议。
+              </p>
+            </section>
+          </div>
+          <section className="panel market-panel" id="market" tabIndex={-1}>
+            <div className="panel-heading">
+              <div>
+                <h2>
+                  市场观察 <span>YOUR WATCHLIST</span>
+                </h2>
+                <p>从关心的地方开始，建立自己的视角。</p>
+              </div>
+              <span className="table-count">{filtered.length} 个演示资产</span>
+            </div>
+            <div className="market-toolbar">
+              <div className="asset-tabs" aria-label="资产类别">
+                {['全部资产', '股票', '基金', '数字资产', '我的关注'].map((type) => (
+                  <button
+                    key={type}
+                    aria-pressed={filter === type}
+                    className={filter === type ? 'active' : ''}
+                    onClick={() => setFilter(type)}
+                  >
+                    {type}
+                    {type === '我的关注' && <span>{watchlist.length}</span>}
+                  </button>
+                ))}
+              </div>
+              <div className="table-tools">
+                <label className="asset-search">
+                  <Search size={15} />
+                  <input
+                    ref={searchRef}
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="搜索资产"
+                    aria-label="搜索资产名称或代码"
+                  />
+                  {query && (
+                    <button
+                      onClick={() => {
+                        setQuery('')
+                        requestAnimationFrame(() => searchRef.current?.focus())
+                      }}
+                      aria-label="清除资产搜索"
+                    >
+                      <X size={12} />
+                    </button>
+                  )}
+                </label>
+                <button
+                  className={`icon-button ${sort === 'gainers' ? 'selected' : ''}`}
+                  onClick={() => setSort(sort === 'default' ? 'gainers' : 'default')}
+                  aria-pressed={sort === 'gainers'}
+                  aria-label={sort === 'gainers' ? '恢复默认顺序' : '按涨幅降序排列'}
+                  title="按涨幅排序"
+                >
+                  <SlidersHorizontal size={16} />
+                </button>
+              </div>
+            </div>
+            <p className="table-scroll-hint" id="asset-table-hint">
+              左右滑动或使用方向键查看全部列 <ArrowRight size={12} />
+            </p>
+            <div
+              className="market-table-wrap"
+              tabIndex={0}
+              role="region"
+              aria-label="演示资产表，可横向滚动"
+              aria-describedby="asset-table-hint"
+            >
+              <table className="market-table">
+                <thead>
+                  <tr>
+                    <th className="star-column">
+                      <span className="sr-only">关注</span>
+                    </th>
+                    <th>资产名称</th>
+                    <th>
+                      价格 <span>USD</span>
+                    </th>
+                    <th>日变动</th>
+                    <th>7 日走势</th>
+                    <th>示例交易量</th>
+                    <th>类别</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map((asset) => (
+                    <tr key={asset.symbol}>
+                      <td>
+                        <button
+                          className={`watch-button ${watchlist.includes(asset.symbol) ? 'watched' : ''}`}
+                          onClick={() => updateWatchlist(asset.symbol)}
+                          aria-label={`${watchlist.includes(asset.symbol) ? '取消关注' : '关注'} ${asset.symbol}`}
+                          aria-pressed={watchlist.includes(asset.symbol)}
+                        >
+                          <Star
+                            size={15}
+                            fill={watchlist.includes(asset.symbol) ? 'currentColor' : 'none'}
+                          />
+                        </button>
+                      </td>
+                      <td>
+                        <div className="asset-name">
+                          <span className={`asset-icon ${asset.tone}`}>{asset.icon}</span>
+                          <span>
+                            <b>{asset.symbol}</b>
+                            <small>{asset.name}</small>
+                          </span>
+                        </div>
+                      </td>
+                      <td className="price-cell">{money(asset.price)}</td>
+                      <td>
+                        <span className={asset.change >= 0 ? 'positive' : 'negative'}>
+                          {asset.change >= 0 ? (
+                            <ArrowUpRight size={12} />
+                          ) : (
+                            <ArrowDownRight size={12} />
+                          )}{' '}
+                          {gain(asset.change)}
+                        </span>
+                      </td>
+                      <td>
+                        <svg
+                          className="sparkline"
+                          viewBox="0 0 90 35"
+                          aria-label={`近7日示例趋势${asset.change >= 0 ? '上升' : '下降'}`}
+                          role="img"
+                        >
+                          <path
+                            d={miniPath(asset.chart)}
+                            fill="none"
+                            stroke={asset.change >= 0 ? '#ace6c8' : '#e5a09a'}
+                            strokeWidth="1.5"
+                          />
+                        </svg>
+                      </td>
+                      <td className="volume-cell">{asset.volume}</td>
+                      <td>
+                        <span className="asset-type">{asset.type}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {filtered.length === 0 && (
+              <div className="empty-state">
+                <Search size={25} />
+                <h3>没有找到匹配的资产</h3>
+                <p>调整关键词或类别，重新发现你的关注。</p>
+                <button
+                  onClick={() => {
+                    setQuery('')
+                    setFilter('全部资产')
+                    focusArea('market')
+                  }}
+                >
+                  重置筛选 <ArrowRight size={13} />
+                </button>
+              </div>
+            )}
+            <div className="market-footnote">
+              <span>
+                <Info size={12} />
+                名称、价格与交易量均为虚构样本。
+              </span>
+              <span>不是实时行情 · 不支持交易</span>
+            </div>
+          </section>
+          <section className="planner-grid" id="planner" tabIndex={-1}>
+            <div className="panel planner-panel">
+              <div className="panel-heading">
+                <div>
+                  <h2>给未来，一点想象。</h2>
+                  <p>调整投入和时间，理解复利的数学关系。</p>
+                </div>
+                <span className="planner-tag">PLAN / 01</span>
+              </div>
+              <div className="planner-inputs">
+                <div className="slider-field">
+                  <div>
+                    <label htmlFor="monthly">每月末投入</label>
+                    <output htmlFor="monthly">
+                      {money(monthly, 0)}
+                      <small> / 月</small>
+                    </output>
+                  </div>
+                  <input
+                    id="monthly"
+                    type="range"
+                    min="100"
+                    max="3000"
+                    step="50"
+                    value={monthly}
+                    onChange={(e) => {
+                      setMonthly(Number(e.target.value))
+                      setSavedPlan(false)
+                    }}
+                  />
+                  <div className="slider-ends">
+                    <span>$100</span>
+                    <span>$3,000</span>
+                  </div>
+                </div>
+                <div className="slider-field">
+                  <div>
+                    <label htmlFor="years">模拟时间</label>
+                    <output htmlFor="years">
+                      {years}
+                      <small> 年</small>
+                    </output>
+                  </div>
+                  <input
+                    id="years"
+                    type="range"
+                    min="1"
+                    max="30"
+                    step="1"
+                    value={years}
+                    onChange={(e) => {
+                      setYears(Number(e.target.value))
+                      setSavedPlan(false)
+                    }}
+                  />
+                  <div className="slider-ends">
+                    <span>1 年</span>
+                    <span>30 年</span>
+                  </div>
+                </div>
+                <div className="assumption-field">
+                  <label htmlFor="assumption">假设名义年增长率</label>
+                  <select
+                    id="assumption"
+                    value={assumption}
+                    onChange={(e) => {
+                      setAssumption(Number(e.target.value))
+                      setSavedPlan(false)
+                    }}
+                  >
+                    <option value={-2}>−2% · 负增长情景</option>
+                    <option value={0}>0% · 无增长情景</option>
+                    <option value={4}>4% · 数学示例</option>
+                    <option value={8}>8% · 数学示例</option>
+                  </select>
+                </div>
+              </div>
+              <div className="formula-note">
+                <Info size={14} />
+                <p>
+                  假设按月复利、每月末投入，月率为年率 ÷
+                  12。未计费用、税费与通胀；结果是数学推算，不是投资建议或收益承诺。
+                </p>
+              </div>
+            </div>
+            <div className="projection-panel">
+              <div className="projection-head">
+                <span>一个可能的数学结果</span>
+                <ArrowUpRight size={22} />
+              </div>
+              <p className="projection-caption">
+                {years} 年后 · 假设年率 {assumption}%
+              </p>
+              <div className="projection-value" aria-live="polite">
+                {money(future, 0)}
+              </div>
+              <div className="projection-bar">
+                <span
+                  style={{
+                    width: `${Math.min(100, (invested / Math.max(invested, future)) * 100)}%`,
+                  }}
+                />
+              </div>
+              <dl>
+                <div>
+                  <dt>
+                    <i />
+                    累计投入
+                  </dt>
+                  <dd>{money(invested, 0)}</dd>
+                </div>
+                <div>
+                  <dt>
+                    <i />
+                    假设{increase >= 0 ? '增值' : '减少'}
+                  </dt>
+                  <dd>
+                    {increase >= 0 ? '+' : '−'}
+                    {money(Math.abs(increase), 0)}
+                  </dd>
+                </div>
+              </dl>
+              <button
+                className={`plan-button ${savedPlan ? 'saved' : ''}`}
+                onClick={() => {
+                  setSavedPlan(true)
+                  setAnnouncement('当前规划参数已标记，修改参数后需重新标记。仅保留于此页面。')
+                }}
+              >
+                {savedPlan ? (
+                  <>
+                    <Check size={16} /> 已标记这组参数
+                  </>
+                ) : (
+                  <>
+                    标记这组模拟参数 <ArrowRight size={16} />
+                  </>
+                )}
+              </button>
+              <span className="plan-local">仅保留在当前页面，不创建真实投资计划。</span>
+            </div>
+          </section>
+          <section className="notes-panel" id="notes" tabIndex={-1}>
+            <div>
+              <span className="note-icon">
+                <Activity size={22} />
+              </span>
+              <h2>
+                少一点噪音，
+                <br />
+                多一点理解。
+              </h2>
+            </div>
+            <div>
+              <h3>关于这个工作台</h3>
+              <p>
+                MONO
+                是金融数据界面的独立设计实验。所有资产、组合与行情均为虚构本地数据，不会连接账户、处理资金或执行交易。
+              </p>
+              <details>
+                <summary>
+                  数据与计算说明 <ChevronDown size={13} />
+                </summary>
+                <p>
+                  曲线使用预置序列，范围选择更新同一数据集的图形、汇总与表格。观察列表只保存资产代码到浏览器
+                  localStorage；规划参数只存于页面内存。月末投入终值：投入额 × ((1 + 月率)^月数 − 1)
+                  ÷ 月率；月率为零时直接累加投入。
+                </p>
+              </details>
+            </div>
+            <div className="note-links">
+              <a href="#market">
+                管理关注 <ArrowUpRight size={15} />
+              </a>
+              <a href="#planner">
+                探索数学情景 <ArrowUpRight size={15} />
+              </a>
+              <button
+                onClick={() => {
+                  setWatchlist([])
+                  let persisted = true
+                  try {
+                    localStorage.setItem('mono-watchlist', '[]')
+                  } catch {
+                    persisted = false
+                  }
+                  setAnnouncement(
+                    persisted
+                      ? '本地关注已清空，刷新后仍保持为空。'
+                      : '当前页面的关注已清空，浏览器存储不可用，未能清除持久数据。',
+                  )
+                }}
+              >
+                清空本地关注 <ArrowUpRight size={15} />
+              </button>
+            </div>
+          </section>
+          <footer>
+            <span>
+              © 2026 MONO STUDIO <i /> MAKE ROOM FOR CLARITY.
+            </span>
+            <span>
+              <span className="live-dot" /> 独立设计实验 · 非真实金融服务
+            </span>
+          </footer>
+          <div className={`feedback-toast ${announcement ? 'visible' : ''}`} role="status">
+            {announcement && (
+              <>
+                <span>{announcement}</span>
+                <button aria-label="关闭状态提示" onClick={() => setAnnouncement('')}>
+                  <X size={14} />
+                </button>
+              </>
+            )}
+          </div>
+        </main>
+      </div>
+    </div>
+  )
 }
-createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>)
+createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)

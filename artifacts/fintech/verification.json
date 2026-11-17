@@ -1,0 +1,57 @@
+{
+  "checks": 12,
+  "results": [
+    {
+      "name": "initial six assets and coherent 3M change",
+      "passed": true
+    },
+    {
+      "name": "range changes curve, summary, table and exact CSV",
+      "passed": true
+    },
+    {
+      "name": "comparison toggles dashed series",
+      "passed": true
+    },
+    {
+      "name": "category and query use intersection, zero state resets",
+      "passed": true
+    },
+    {
+      "name": "gain sorting changes order",
+      "passed": true
+    },
+    {
+      "name": "watchlist persists, clear persists, malformed IDs cleaned",
+      "passed": true
+    },
+    {
+      "name": "zero, negative and positive growth use disclosed formula",
+      "passed": true
+    },
+    {
+      "name": "slider boundaries and plan invalidation",
+      "passed": true
+    },
+    {
+      "name": "notification open and close",
+      "passed": true
+    },
+    {
+      "name": "desktop 1440 no page overflow or runtime errors",
+      "passed": true
+    },
+    {
+      "name": "mobile 390 navigation and chart legibility",
+      "passed": true
+    },
+    {
+      "name": "320 and reduced motion",
+      "passed": true
+    }
+  ],
+  "runtimeErrors": [],
+  "notes": [
+    "前五组来自前一浏览器会话。关注按钮的测试选择器已按实际无障碍名称中的空格修正，重跑后续七组；应用逻辑未为该选择器变更。"
+  ]
+}

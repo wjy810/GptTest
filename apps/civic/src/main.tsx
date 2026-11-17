@@ -139,6 +139,7 @@ function App() {
   } | null>(null)
   const [activeUpdate, setActiveUpdate] = useState<number | null>(null)
   const [formError, setFormError] = useState('')
+  const searchRef = useRef<HTMLInputElement>(null)
   const serviceRef = useRef<HTMLSelectElement>(null)
   const errorRef = useRef<HTMLParagraphElement>(null)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
@@ -266,6 +267,7 @@ function App() {
               </label>
               <input
                 id="city-search"
+                ref={searchRef}
                 placeholder="输入服务名称，例如：居住、健康、学习"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -348,7 +350,15 @@ function App() {
           </div>
           {query && (
             <p className="search-summary">
-              “{query}” 的搜索结果 <button onClick={() => setQuery('')}>清除搜索 ×</button>
+              “{query}” 的搜索结果{' '}
+              <button
+                onClick={() => {
+                  setQuery('')
+                  requestAnimationFrame(() => searchRef.current?.focus())
+                }}
+              >
+                清除搜索 ×
+              </button>
             </p>
           )}
           <div className="service-grid">
@@ -376,6 +386,7 @@ function App() {
                 onClick={() => {
                   setQuery('')
                   setCategory('全部服务')
+                  showResults()
                 }}
               >
                 查看全部服务

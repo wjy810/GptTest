@@ -1,0 +1,253 @@
+{
+  "site": "civic",
+  "target": "http://127.0.0.1:4173/civic/",
+  "testedAt": "2026-11-17T05:33:39.391Z",
+  "browserTimezone": "America/Los_Angeles",
+  "fixedTime": "2026-11-17T16:30:00Z",
+  "passed": 48,
+  "total": 48,
+  "results": [
+    {
+      "group": "timezone",
+      "name": "browser calendar is Nov 17 in Los Angeles",
+      "passed": true
+    },
+    {
+      "group": "timezone",
+      "name": "form min is Nov 18 in UTC+8 city time",
+      "passed": true
+    },
+    {
+      "group": "discovery",
+      "name": "all six services initially visible",
+      "passed": true
+    },
+    {
+      "group": "discovery",
+      "name": "life category has two results",
+      "passed": true
+    },
+    {
+      "group": "discovery",
+      "name": "description search and category intersect to mobility",
+      "passed": true
+    },
+    {
+      "group": "discovery",
+      "name": "incompatible category produces explicit empty state",
+      "passed": true
+    },
+    {
+      "group": "focus",
+      "name": "empty-state reset clears query and category",
+      "passed": true
+    },
+    {
+      "group": "focus",
+      "name": "empty-state reset focuses #services",
+      "passed": true
+    },
+    {
+      "group": "focus",
+      "name": "search submit focuses results with matching health card",
+      "passed": true
+    },
+    {
+      "group": "focus",
+      "name": "clear search restores focus to #city-search",
+      "passed": true
+    },
+    {
+      "group": "discovery",
+      "name": "quick link resets category and searches learning",
+      "passed": true
+    },
+    {
+      "group": "focus",
+      "name": "service card prefills selection and focuses select",
+      "passed": true
+    },
+    {
+      "group": "focus",
+      "name": "health shortcut prefills and focuses appointment",
+      "passed": true
+    },
+    {
+      "group": "validation",
+      "name": "native required stops empty name and focuses it",
+      "passed": true
+    },
+    {
+      "group": "validation",
+      "name": "native email validity rejects malformed address",
+      "passed": true
+    },
+    {
+      "group": "validation",
+      "name": "acknowledgement is required",
+      "passed": true
+    },
+    {
+      "group": "validation",
+      "name": "native date min rejects browser-local today that is city yesterday",
+      "passed": true
+    },
+    {
+      "group": "validation",
+      "name": "submit guard still rejects city-past date when HTML min removed",
+      "passed": true
+    },
+    {
+      "group": "focus",
+      "name": "date error receives keyboard focus",
+      "passed": true
+    },
+    {
+      "group": "validation",
+      "name": "editing clears previous date error",
+      "passed": true
+    },
+    {
+      "group": "validation",
+      "name": "submit guard rejects an injected unsupported time option",
+      "passed": true
+    },
+    {
+      "group": "validation",
+      "name": "submit guard trims and rejects whitespace-only name",
+      "passed": true
+    },
+    {
+      "group": "confirmation",
+      "name": "success region is focused",
+      "passed": true
+    },
+    {
+      "group": "confirmation",
+      "name": "summary repeats selected service, city date, time and local-only state",
+      "passed": true
+    },
+    {
+      "group": "privacy",
+      "name": "no storage writes or stored data after confirmation",
+      "passed": true
+    },
+    {
+      "group": "confirmation",
+      "name": "reschedule returns to form and focuses service select",
+      "passed": true
+    },
+    {
+      "group": "confirmation",
+      "name": "reschedule retains service but clears personal fields",
+      "passed": true
+    },
+    {
+      "group": "content",
+      "name": "announcement expands local-demo activity details",
+      "passed": true
+    },
+    {
+      "group": "content",
+      "name": "opening second announcement closes first",
+      "passed": true
+    },
+    {
+      "group": "content",
+      "name": "announcement can collapse",
+      "passed": true
+    },
+    {
+      "group": "content",
+      "name": "FAQ discloses no storage or server transmission",
+      "passed": true
+    },
+    {
+      "group": "privacy",
+      "name": "reload resets confirmation and entered personal data",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "1440px viewport has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "1440px header main and form stay within viewport",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "390px viewport has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "390px header main and form stay within viewport",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "390px mobile navigation expands",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "390px Escape closes nav and returns focus",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "390px choosing destination closes navigation",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "320px viewport has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "group": "layout",
+      "name": "320px header main and form stay within viewport",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "320px mobile navigation expands",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "320px Escape closes nav and returns focus",
+      "passed": true
+    },
+    {
+      "group": "navigation",
+      "name": "320px choosing destination closes navigation",
+      "passed": true
+    },
+    {
+      "group": "accessibility",
+      "name": "reduced motion disables smooth document scrolling",
+      "passed": true
+    },
+    {
+      "group": "focus",
+      "name": "320px no-results recovery focuses services in reduced motion",
+      "passed": true
+    },
+    {
+      "group": "privacy",
+      "name": "no POST or other mutating network requests",
+      "passed": true
+    },
+    {
+      "group": "runtime",
+      "name": "no uncaught browser errors",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "nonReadRequests": []
+}

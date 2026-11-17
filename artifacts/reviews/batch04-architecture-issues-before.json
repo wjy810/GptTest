@@ -1,0 +1,14 @@
+{
+  "gallery": {
+    "class": "project project-gallery",
+    "display": "grid",
+    "imageWidth": 281.796875,
+    "cardWidth": 562.234375
+  },
+  "dialogOverflow": "",
+  "afterLastTab": {
+    "tag": "BODY",
+    "inside": false
+  },
+  "blankFormDownload": "still-project-brief.md"
+}

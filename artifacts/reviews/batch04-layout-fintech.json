@@ -1,0 +1,68 @@
+[
+  {
+    "site": "fintech",
+    "width": 1440,
+    "layout": {
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "h1Count": 1,
+      "duplicateIds": [],
+      "missingAnchors": [],
+      "titleText": "资产概览↗",
+      "titleBounds": [
+        {
+          "x": 260,
+          "right": 373.609375
+        },
+        {
+          "x": 387.609375,
+          "right": 416.015625
+        },
+        {
+          "x": 387.609375,
+          "right": 416.015625
+        }
+      ],
+      "scrollBehavior": "auto",
+      "firstFocus": {
+        "text": "跳至资产工作台",
+        "tag": "A",
+        "href": "#main"
+      }
+    },
+    "errors": []
+  },
+  {
+    "site": "fintech",
+    "width": 390,
+    "layout": {
+      "viewport": 390,
+      "scrollWidth": 390,
+      "h1Count": 1,
+      "duplicateIds": [],
+      "missingAnchors": [],
+      "titleText": "资产概览↗",
+      "titleBounds": [
+        {
+          "x": 18,
+          "right": 123.609375
+        },
+        {
+          "x": 131.609375,
+          "right": 158.015625
+        },
+        {
+          "x": 131.609375,
+          "right": 158.015625
+        }
+      ],
+      "scrollBehavior": "auto",
+      "firstFocus": {
+        "text": "跳至资产工作台",
+        "tag": "A",
+        "href": "#main"
+      }
+    },
+    "errors": []
+  }
+]
