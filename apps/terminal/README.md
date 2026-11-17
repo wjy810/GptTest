@@ -28,28 +28,28 @@ npm run typecheck
 
 ## 2. 页面结构和源码定位
 
-| 区域 | 定位 | 交互目标 |
-| --- | --- | --- |
+| 区域         | 定位                                                 | 交互目标                                     |
+| ------------ | ---------------------------------------------------- | -------------------------------------------- |
 | 首屏工作空间 | `.workspace`、`.workspace-sidebar`、`.terminal-area` | 左侧导航、编辑器标签、命令输入与实时追加日志 |
-| 功能 | `.feature-grid`、`.pipeline`、`.status-viz` | 用流程和状态展示工具信息层级 |
-| 工作流 | `snippets`、`.code-window` | 在配置与 workflow 示例之间切换 |
-| 设计宣言 | `.manifesto` | 拉开高密度工具区与商业说明区的节奏 |
-| 定价 | `annual`、`.pricing-grid` | 月付/年付切换及方案预览 |
-| FAQ / 结束段 | `.faq-list`、`copyCommand()` | 说明演示边界，提供可复制的本地演示命令 |
+| 功能         | `.feature-grid`、`.pipeline`、`.status-viz`          | 用流程和状态展示工具信息层级                 |
+| 工作流       | `snippets`、`.code-window`                           | 在配置与 workflow 示例之间切换               |
+| 设计宣言     | `.manifesto`                                         | 拉开高密度工具区与商业说明区的节奏           |
+| 定价         | `annual`、`.pricing-grid`                            | 月付/年付切换及方案预览                      |
+| FAQ / 结束段 | `.faq-list`、`copyCommand()`                         | 说明演示边界，提供可复制的本地演示命令       |
 
 ## 3. 视觉参数和层级
 
-| 参数 | 实际实现 |
-| --- | --- |
-| 背景 / 主文字 | `#0c100e` / `#e1e7e2` |
-| 成功强调 | `--green: #a1e0aa` |
-| 次级信息 / 表面 | `--muted: #78837b` / `--surface: #111713` |
-| 边框基线 | `--border: #ffffff12`；重要容器使用略亮绿边框 |
-| 字体 | SFMono-Regular、Consolas、Liberation Mono、中文系统字体、monospace |
-| 内容宽度 | `.shell` 最大 1180px，桌面宽度 `calc(100% - 112px)` |
-| 首屏标题 | `.hero-heading h1` 使用 Arial，基础 85px、行高 1.04、字距 -5px |
-| 编辑器布局 | `.workspace-body` 基础 `208px 1fr`，终端区 `min-width: 0` |
-| 工作空间外框 | 8px 圆角、细边框、低强度阴影；避免厚重拟物窗口 |
+| 参数            | 实际实现                                                           |
+| --------------- | ------------------------------------------------------------------ |
+| 背景 / 主文字   | `#0c100e` / `#e1e7e2`                                              |
+| 成功强调        | `--green: #a1e0aa`                                                 |
+| 次级信息 / 表面 | `--muted: #78837b` / `--surface: #111713`                          |
+| 边框基线        | `--border: #ffffff12`；重要容器使用略亮绿边框                      |
+| 字体            | SFMono-Regular、Consolas、Liberation Mono、中文系统字体、monospace |
+| 内容宽度        | `.shell` 最大 1180px，桌面宽度 `calc(100% - 112px)`                |
+| 首屏标题        | `.hero-heading h1` 使用 Arial，基础 85px、行高 1.04、字距 -5px     |
+| 编辑器布局      | `.workspace-body` 基础 `208px 1fr`，终端区 `min-width: 0`          |
+| 工作空间外框    | 8px 圆角、细边框、低强度阴影；避免厚重拟物窗口                     |
 
 视觉的关键是“信息密度有层次”，不是将所有文字缩小。最终日志字号已在 CSS 末尾提高，需读取完整级联结果。
 

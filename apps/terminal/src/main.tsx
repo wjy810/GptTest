@@ -195,12 +195,10 @@ function App() {
   }
 
   function focusDemo() {
-    document
-      .getElementById('live-demo')
-      ?.scrollIntoView({
-        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-        block: 'center',
-      })
+    document.getElementById('live-demo')?.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      block: 'center',
+    })
     setEditorTab('terminal')
     timers.current.push(setTimeout(() => inputRef.current?.focus({ preventScroll: true }), 350))
   }

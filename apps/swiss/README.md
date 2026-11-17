@@ -29,17 +29,17 @@ npm run preview
 
 ## 视觉 token 与版式规则
 
-| 角色 | 当前数值 | 源码定位 |
-| --- | --- | --- |
-| 主红 | `#ed3728` | `--red` |
-| 纸白 | `#f2f0e9` | `--paper` |
-| 暖黑 | `#171715` | `--black` |
-| 主字体 | Arial / Helvetica Neue / 中文无衬线回退 | `:root` |
-| 封面分栏 | `1.3fr 1fr`，间隔 `30px` | `.hero-layout` |
-| 数字 26 | `clamp(150px,20vw,290px)`，字距 `-.13em` | `.symbol-number` |
-| 展览网格 | 三列，间隔 `24px` | `.exhibition-grid` |
-| 日期切换 | 三等分，1px 实线框 | `.date-tabs` |
-| 票务区 | 两列，间隔 `80px`，主红背景 | `.ticket-section` |
+| 角色     | 当前数值                                 | 源码定位           |
+| -------- | ---------------------------------------- | ------------------ |
+| 主红     | `#ed3728`                                | `--red`            |
+| 纸白     | `#f2f0e9`                                | `--paper`          |
+| 暖黑     | `#171715`                                | `--black`          |
+| 主字体   | Arial / Helvetica Neue / 中文无衬线回退  | `:root`            |
+| 封面分栏 | `1.3fr 1fr`，间隔 `30px`                 | `.hero-layout`     |
+| 数字 26  | `clamp(150px,20vw,290px)`，字距 `-.13em` | `.symbol-number`   |
+| 展览网格 | 三列，间隔 `24px`                        | `.exhibition-grid` |
+| 日期切换 | 三等分，1px 实线框                       | `.date-tabs`       |
+| 票务区   | 两列，间隔 `80px`，主红背景              | `.ticket-section`  |
 
 视觉不是给所有组件加红色：用大色块划分首屏和票务，中段用浅底承载信息，用黑线保持对齐关系。标题、数字和海报是主要图形，正文保持小而稳定的层级。
 
@@ -73,15 +73,15 @@ npm run preview
 
 ## 状态与交互映射
 
-| 状态/函数 | 控制内容 | 实现要点 |
-| --- | --- | --- |
-| `date` / `moveDateTab` | 18/19/20 日活动 | 左右循环、Home/End、选中 tab 的 tabindex 为 0 |
-| `selected` / `detailRef` | 展览详情 | 原生具名 dialog，Esc 关闭，焦点回到触发按钮 |
-| `ticket` | 单日或三日通行证 | 原生 radio；三日票禁用单日日期选择 |
-| `visitDate` | 单日入场日期 | `select` 的值用于摘要 |
-| `quantity` | 1–6 人 | 两端按钮禁用；总额由单价×数量派生 |
-| `booking` / `bookingRef` | 预约摘要 | 只显示当前选择，不调用付款或预约 API |
-| `menu` | 手机导航 | 选择站内锚点后收起 |
+| 状态/函数                | 控制内容         | 实现要点                                      |
+| ------------------------ | ---------------- | --------------------------------------------- |
+| `date` / `moveDateTab`   | 18/19/20 日活动  | 左右循环、Home/End、选中 tab 的 tabindex 为 0 |
+| `selected` / `detailRef` | 展览详情         | 原生具名 dialog，Esc 关闭，焦点回到触发按钮   |
+| `ticket`                 | 单日或三日通行证 | 原生 radio；三日票禁用单日日期选择            |
+| `visitDate`              | 单日入场日期     | `select` 的值用于摘要                         |
+| `quantity`               | 1–6 人           | 两端按钮禁用；总额由单价×数量派生             |
+| `booking` / `bookingRef` | 预约摘要         | 只显示当前选择，不调用付款或预约 API          |
+| `menu`                   | 手机导航         | 选择站内锚点后收起                            |
 
 日期内容在 `schedule` 数组：3 天各 3 场，共 9 场。票价来自 `ticketTypes`：单日 68、三日 158；避免把展示金额与计算金额分别硬编码。
 `clickedBackdrop` 区分窗口内部空白与真正外侧遮罩；弹窗生命周期负责背景滚动锁定和恢复。

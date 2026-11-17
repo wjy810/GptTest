@@ -511,13 +511,11 @@ function App() {
                 onClick={() => {
                   selectTrack(2)
                   void startSound(2)
-                  document
-                    .getElementById('player')
-                    ?.scrollIntoView({
-                      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-                        ? 'auto'
-                        : 'smooth',
-                    })
+                  document.getElementById('player')?.scrollIntoView({
+                    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                      ? 'auto'
+                      : 'smooth',
+                  })
                 }}
               >
                 开启晨间声音 <ArrowUpRight size={15} />
@@ -537,13 +535,11 @@ function App() {
                   selectTrack(0)
                   setTimer(25)
                   void startSound(0)
-                  document
-                    .getElementById('player')
-                    ?.scrollIntoView({
-                      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-                        ? 'auto'
-                        : 'smooth',
-                    })
+                  document.getElementById('player')?.scrollIntoView({
+                    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                      ? 'auto'
+                      : 'smooth',
+                  })
                 }}
               >
                 开始 25 分钟专注 <ArrowUpRight size={15} />
@@ -563,13 +559,11 @@ function App() {
                   selectTrack(3)
                   setTimer(10)
                   void startSound(3)
-                  document
-                    .getElementById('player')
-                    ?.scrollIntoView({
-                      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-                        ? 'auto'
-                        : 'smooth',
-                    })
+                  document.getElementById('player')?.scrollIntoView({
+                    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                      ? 'auto'
+                      : 'smooth',
+                  })
                 }}
               >
                 开始 10 分钟休息 <ArrowUpRight size={15} />
@@ -636,13 +630,11 @@ function App() {
             className="primary-button"
             onClick={() => {
               if (!playing) void startSound(track)
-              document
-                .getElementById('player')
-                ?.scrollIntoView({
-                  behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-                    ? 'auto'
-                    : 'smooth',
-                })
+              document.getElementById('player')?.scrollIntoView({
+                behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                  ? 'auto'
+                  : 'smooth',
+              })
             }}
           >
             <Play size={15} fill="currentColor" /> 把这一刻留给自己

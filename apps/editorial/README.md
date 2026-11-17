@@ -29,18 +29,18 @@ npm run preview
 
 ## 视觉参数：先复制角色，再调整数值
 
-| 角色 | 当前源码值 | 位置 |
-| --- | --- | --- |
-| 纸张背景 | `#f1eee5` | `:root`、`.reader` |
-| 正文暖黑 | `#342e32` | `:root` |
-| 封面梅紫 | `#322b38` | `.hero-copy` |
-| 封面浅字 | `#f5eee4` | `.hero-copy` |
-| 铜粉强调 | `#dfbaa8` | `.hero h1 span`、`.hero-english em` |
-| 最大版心 | `1600px` | `main,header,footer,.mast-meta` |
-| 封面布局 | `1fr 1fr`，左右外边距 `4%` | `.hero` |
-| 主标题 | `clamp(44px,4.4vw,74px)`，行高 `1.35` | `.hero h1` |
-| 英文标题 | Georgia，`51px`，行高 `1.05` | `.hero-english` |
-| 文章列表 | 四列，间隔 `25px` | `.story-grid` |
+| 角色     | 当前源码值                            | 位置                                |
+| -------- | ------------------------------------- | ----------------------------------- |
+| 纸张背景 | `#f1eee5`                             | `:root`、`.reader`                  |
+| 正文暖黑 | `#342e32`                             | `:root`                             |
+| 封面梅紫 | `#322b38`                             | `.hero-copy`                        |
+| 封面浅字 | `#f5eee4`                             | `.hero-copy`                        |
+| 铜粉强调 | `#dfbaa8`                             | `.hero h1 span`、`.hero-english em` |
+| 最大版心 | `1600px`                              | `main,header,footer,.mast-meta`     |
+| 封面布局 | `1fr 1fr`，左右外边距 `4%`            | `.hero`                             |
+| 主标题   | `clamp(44px,4.4vw,74px)`，行高 `1.35` | `.hero h1`                          |
+| 英文标题 | Georgia，`51px`，行高 `1.05`          | `.hero-english`                     |
+| 文章列表 | 四列，间隔 `25px`                     | `.story-grid`                       |
 
 本套没有外部字体请求。中文按宋体/可用 CJK 衬线字体回退，英文使用 Georgia；不同操作系统字形会有差异。先保留行长和层级，再决定是否引入自托管字体。
 
@@ -71,13 +71,13 @@ npm run preview
 
 ## 状态与源码定位
 
-| 状态/函数 | 用户行为 | 复刻时必须保留 |
-| --- | --- | --- |
-| `category` | 全部/空间/物件/日常/已收藏切换 | 过滤真实数组；按钮 `aria-pressed` 同步 |
-| `article` + `dialog` | 点击封面、图片或标题阅读 | 原生 `showModal()`、具名标题、关闭与焦点返回 |
-| `saved` + `bookmark(id)` | 收藏、取消收藏 | `folio-saved` 中只接受有效 ID 数组并去重 |
-| `keepReaderFocus` | 阅读窗内 Tab/Shift+Tab | 首末控件循环；Escape 使用原生 dialog 行为 |
-| `email` / `subscribed` | 输入邮箱并提交 | HTML 邮箱校验、明确本地反馈、编辑后重置反馈 |
+| 状态/函数                | 用户行为                       | 复刻时必须保留                               |
+| ------------------------ | ------------------------------ | -------------------------------------------- |
+| `category`               | 全部/空间/物件/日常/已收藏切换 | 过滤真实数组；按钮 `aria-pressed` 同步       |
+| `article` + `dialog`     | 点击封面、图片或标题阅读       | 原生 `showModal()`、具名标题、关闭与焦点返回 |
+| `saved` + `bookmark(id)` | 收藏、取消收藏                 | `folio-saved` 中只接受有效 ID 数组并去重     |
+| `keepReaderFocus`        | 阅读窗内 Tab/Shift+Tab         | 首末控件循环；Escape 使用原生 dialog 行为    |
+| `email` / `subscribed`   | 输入邮箱并提交                 | HTML 邮箱校验、明确本地反馈、编辑后重置反馈  |
 
 打开阅读窗时锁定背景滚动，关闭后恢复之前的 `overflow`。遮罩点击先判断坐标是否真的在弹窗边界外，避免点正文留白就关窗。
 订阅意向写入 `folio-newsletter-demo`；它不会发邮件，也没有账户、CMS 或真实订阅服务。
