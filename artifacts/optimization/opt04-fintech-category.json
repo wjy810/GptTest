@@ -1,0 +1,24 @@
+[
+  {
+    "width": 390,
+    "client": 316,
+    "full": 316,
+    "left": 0,
+    "containerLeft": 37,
+    "containerRight": 353,
+    "buttonLeft": 285.03125,
+    "buttonRight": 351.046875,
+    "pass": true
+  },
+  {
+    "width": 320,
+    "client": 246,
+    "full": 314,
+    "left": 68,
+    "containerLeft": 37,
+    "containerRight": 283,
+    "buttonLeft": 217.03125,
+    "buttonRight": 283.046875,
+    "pass": true
+  }
+]

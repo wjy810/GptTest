@@ -1,0 +1,786 @@
+{
+  "site": "fintech",
+  "browser": "Chromium",
+  "url": "http://127.0.0.1:4173/fintech/",
+  "independent": true,
+  "views": [
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 3547,
+      "inputs": [
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "name": "",
+          "id": "",
+          "label": "搜索资产名称或代码",
+          "font": "16px",
+          "x": 70,
+          "right": 300,
+          "width": 230,
+          "height": 44
+        },
+        {
+          "tag": "SELECT",
+          "type": "select-one",
+          "name": "",
+          "id": "assumption",
+          "font": "16px",
+          "x": 37,
+          "right": 353,
+          "width": 316,
+          "height": 44
+        }
+      ],
+      "targets": [
+        {
+          "text": "打开导航",
+          "x": 20,
+          "right": 64,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "查看演示通知",
+          "x": 326,
+          "right": 370,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "导出当前周期演示数据CSV",
+          "x": 309,
+          "right": 353,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "模拟基准",
+          "x": 133,
+          "right": 189,
+          "width": 56,
+          "height": 44
+        },
+        {
+          "text": "1W",
+          "x": 41,
+          "right": 115,
+          "width": 74,
+          "height": 44
+        },
+        {
+          "text": "1M",
+          "x": 119,
+          "right": 193,
+          "width": 74,
+          "height": 44
+        },
+        {
+          "text": "3M",
+          "x": 197,
+          "right": 271,
+          "width": 74,
+          "height": 44
+        },
+        {
+          "text": "1Y",
+          "x": 275,
+          "right": 349,
+          "width": 74,
+          "height": 44
+        },
+        {
+          "text": "全部资产",
+          "x": 37,
+          "right": 85.015625,
+          "width": 48.015625,
+          "height": 44
+        },
+        {
+          "text": "股票",
+          "x": 101.015625,
+          "right": 145.015625,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "基金",
+          "x": 161.015625,
+          "right": 205.015625,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "数字资产",
+          "x": 221.015625,
+          "right": 269.03125,
+          "width": 48.015625,
+          "height": 44
+        },
+        {
+          "text": "我的关注2",
+          "x": 285.03125,
+          "right": 351.046875,
+          "width": 66.015625,
+          "height": 44
+        },
+        {
+          "text": "按涨幅降序排列",
+          "x": 309,
+          "right": 353,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "取消关注 AURA",
+          "x": 37,
+          "right": 81,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "取消关注 MWLD",
+          "x": 37,
+          "right": 81,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "关注 NOVA",
+          "x": 37,
+          "right": 81,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "关注 FLUX",
+          "x": 37,
+          "right": 81,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "关注 BOND",
+          "x": 37,
+          "right": 81,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "关注 ORBT",
+          "x": 37,
+          "right": 81,
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "regions": [
+        {
+          "class": "metric-card primary-metric",
+          "clientWidth": 170,
+          "scrollWidth": 170,
+          "x": 18,
+          "right": 190,
+          "width": 172,
+          "height": 147
+        },
+        {
+          "class": "metric-card",
+          "clientWidth": 170,
+          "scrollWidth": 170,
+          "x": 200,
+          "right": 372,
+          "width": 172,
+          "height": 147
+        },
+        {
+          "class": "metric-card",
+          "clientWidth": 170,
+          "scrollWidth": 170,
+          "x": 18,
+          "right": 190,
+          "width": 172,
+          "height": 144
+        },
+        {
+          "class": "metric-card",
+          "clientWidth": 170,
+          "scrollWidth": 170,
+          "x": 200,
+          "right": 372,
+          "width": 172,
+          "height": 144
+        },
+        {
+          "class": "chart-controls",
+          "clientWidth": 352,
+          "scrollWidth": 352,
+          "x": 19,
+          "right": 371,
+          "width": 352,
+          "height": 125
+        },
+        {
+          "class": "range-buttons",
+          "clientWidth": 314,
+          "scrollWidth": 314,
+          "x": 37,
+          "right": 353,
+          "width": 316,
+          "height": 52
+        },
+        {
+          "class": "market-toolbar",
+          "clientWidth": 316,
+          "scrollWidth": 316,
+          "x": 37,
+          "right": 353,
+          "width": 316,
+          "height": 114
+        },
+        {
+          "class": "table-tools",
+          "clientWidth": 316,
+          "scrollWidth": 316,
+          "x": 37,
+          "right": 353,
+          "width": 316,
+          "height": 46
+        }
+      ],
+      "chartDates": [
+        {
+          "period": "1W",
+          "labels": [
+            {
+              "text": "11.11",
+              "left": 42.98925018310547,
+              "right": 85.0517578125,
+              "width": 42.06250762939453,
+              "height": 16
+            },
+            {
+              "text": "11.13",
+              "left": 109.32050323486328,
+              "right": 151.38299560546875,
+              "width": 42.06249237060547,
+              "height": 16
+            },
+            {
+              "text": "11.17",
+              "left": 263.0142517089844,
+              "right": 305.0767517089844,
+              "width": 42.0625,
+              "height": 16
+            }
+          ],
+          "gaps": [
+            24.26874542236328,
+            111.63125610351562
+          ],
+          "minGap": 24.26874542236328
+        },
+        {
+          "period": "1M",
+          "labels": [
+            {
+              "text": "10.18",
+              "left": 42.98925018310547,
+              "right": 85.0517578125,
+              "width": 42.06250762939453,
+              "height": 16
+            },
+            {
+              "text": "10.30",
+              "left": 126.79300689697266,
+              "right": 168.8555145263672,
+              "width": 42.06250762939453,
+              "height": 16
+            },
+            {
+              "text": "11.17",
+              "left": 263.0142517089844,
+              "right": 305.0767517089844,
+              "width": 42.0625,
+              "height": 16
+            }
+          ],
+          "gaps": [
+            41.741249084472656,
+            94.15873718261719
+          ],
+          "minGap": 41.741249084472656
+        },
+        {
+          "period": "3M",
+          "labels": [
+            {
+              "text": "08.17",
+              "left": 42.98925018310547,
+              "right": 85.0517578125,
+              "width": 42.06250762939453,
+              "height": 16
+            },
+            {
+              "text": "10.04",
+              "left": 158.69931030273438,
+              "right": 200.76181030273438,
+              "width": 42.0625,
+              "height": 16
+            },
+            {
+              "text": "11.17",
+              "left": 263.0142517089844,
+              "right": 305.0767517089844,
+              "width": 42.0625,
+              "height": 16
+            }
+          ],
+          "gaps": [
+            73.64755249023438,
+            62.25244140625
+          ],
+          "minGap": 62.25244140625
+        },
+        {
+          "period": "1Y",
+          "labels": [
+            {
+              "text": "2025.11",
+              "left": 42.98925018310547,
+              "right": 101.86425018310547,
+              "width": 58.875,
+              "height": 16
+            },
+            {
+              "text": "2026.05",
+              "left": 143.5184326171875,
+              "right": 202.3934326171875,
+              "width": 58.875,
+              "height": 16
+            },
+            {
+              "text": "2026.11",
+              "left": 246.20175170898438,
+              "right": 305.0767517089844,
+              "width": 58.875,
+              "height": 16
+            }
+          ],
+          "gaps": [
+            41.65418243408203,
+            43.808319091796875
+          ],
+          "minGap": 41.65418243408203
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 3539,
+      "inputs": [
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "name": "",
+          "id": "",
+          "label": "搜索资产名称或代码",
+          "font": "16px",
+          "x": 70,
+          "right": 230,
+          "width": 160,
+          "height": 44
+        },
+        {
+          "tag": "SELECT",
+          "type": "select-one",
+          "name": "",
+          "id": "assumption",
+          "font": "16px",
+          "x": 37,
+          "right": 283,
+          "width": 246,
+          "height": 44
+        }
+      ],
+      "targets": [
+        {
+          "text": "打开导航",
+          "x": 12,
+          "right": 56,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "查看演示通知",
+          "x": 264,
+          "right": 308,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "导出当前周期演示数据CSV",
+          "x": 239,
+          "right": 283,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "模拟基准",
+          "x": 133,
+          "right": 189,
+          "width": 56,
+          "height": 44
+        },
+        {
+          "text": "1W",
+          "x": 41,
+          "right": 97.5,
+          "width": 56.5,
+          "height": 44
+        },
+        {
+          "text": "1M",
+          "x": 101.5,
+          "right": 158,
+          "width": 56.5,
+          "height": 44
+        },
+        {
+          "text": "3M",
+          "x": 162,
+          "right": 218.5,
+          "width": 56.5,
+          "height": 44
+        },
+        {
+          "text": "1Y",
+          "x": 222.5,
+          "right": 279,
+          "width": 56.5,
+          "height": 44
+        },
+        {
+          "text": "全部资产",
+          "x": 37,
+          "right": 85.015625,
+          "width": 48.015625,
+          "height": 44
+        },
+        {
+          "text": "股票",
+          "x": 101.015625,
+          "right": 145.015625,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "基金",
+          "x": 161.015625,
+          "right": 205.015625,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "数字资产",
+          "x": 221.015625,
+          "right": 269.03125,
+          "width": 48.015625,
+          "height": 44
+        },
+        {
+          "text": "我的关注2",
+          "x": 285.03125,
+          "right": 351.046875,
+          "width": 66.015625,
+          "height": 44
+        },
+        {
+          "text": "按涨幅降序排列",
+          "x": 239,
+          "right": 283,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "取消关注 AURA",
+          "x": 37,
+          "right": 81,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "取消关注 MWLD",
+          "x": 37,
+          "right": 81,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "关注 NOVA",
+          "x": 37,
+          "right": 81,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "关注 FLUX",
+          "x": 37,
+          "right": 81,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "关注 BOND",
+          "x": 37,
+          "right": 81,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "关注 ORBT",
+          "x": 37,
+          "right": 81,
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "regions": [
+        {
+          "class": "metric-card primary-metric",
+          "clientWidth": 135,
+          "scrollWidth": 135,
+          "x": 18,
+          "right": 155,
+          "width": 137,
+          "height": 148.390625
+        },
+        {
+          "class": "metric-card",
+          "clientWidth": 135,
+          "scrollWidth": 135,
+          "x": 165,
+          "right": 302,
+          "width": 137,
+          "height": 148.390625
+        },
+        {
+          "class": "metric-card",
+          "clientWidth": 135,
+          "scrollWidth": 135,
+          "x": 18,
+          "right": 155,
+          "width": 137,
+          "height": 141
+        },
+        {
+          "class": "metric-card",
+          "clientWidth": 135,
+          "scrollWidth": 135,
+          "x": 165,
+          "right": 302,
+          "width": 137,
+          "height": 141
+        },
+        {
+          "class": "chart-controls",
+          "clientWidth": 282,
+          "scrollWidth": 282,
+          "x": 19,
+          "right": 301,
+          "width": 282,
+          "height": 125
+        },
+        {
+          "class": "range-buttons",
+          "clientWidth": 244,
+          "scrollWidth": 244,
+          "x": 37,
+          "right": 283,
+          "width": 246,
+          "height": 52
+        },
+        {
+          "class": "market-toolbar",
+          "clientWidth": 246,
+          "scrollWidth": 246,
+          "x": 37,
+          "right": 283,
+          "width": 246,
+          "height": 114
+        },
+        {
+          "class": "table-tools",
+          "clientWidth": 246,
+          "scrollWidth": 246,
+          "x": 37,
+          "right": 283,
+          "width": 246,
+          "height": 46
+        }
+      ],
+      "chartDates": [
+        {
+          "period": "1W",
+          "labels": [
+            {
+              "text": "11.11",
+              "left": 40.03787612915039,
+              "right": 73.20975494384766,
+              "width": 33.171878814697266,
+              "height": 13
+            },
+            {
+              "text": "11.13",
+              "left": 92.39569091796875,
+              "right": 125.56756591796875,
+              "width": 33.171875,
+              "height": 13
+            },
+            {
+              "text": "11.17",
+              "left": 213.697265625,
+              "right": 246.869140625,
+              "width": 33.171875,
+              "height": 13
+            }
+          ],
+          "gaps": [
+            19.185935974121094,
+            88.12969970703125
+          ],
+          "minGap": 19.185935974121094
+        },
+        {
+          "period": "1M",
+          "labels": [
+            {
+              "text": "10.18",
+              "left": 40.03787612915039,
+              "right": 73.20975494384766,
+              "width": 33.171878814697266,
+              "height": 13
+            },
+            {
+              "text": "10.30",
+              "left": 106.18444061279297,
+              "right": 139.3563232421875,
+              "width": 33.17188262939453,
+              "height": 13
+            },
+            {
+              "text": "11.17",
+              "left": 213.697265625,
+              "right": 246.869140625,
+              "width": 33.171875,
+              "height": 13
+            }
+          ],
+          "gaps": [
+            32.97468566894531,
+            74.3409423828125
+          ],
+          "minGap": 32.97468566894531
+        },
+        {
+          "period": "3M",
+          "labels": [
+            {
+              "text": "08.17",
+              "left": 40.03787612915039,
+              "right": 73.20975494384766,
+              "width": 33.171878814697266,
+              "height": 13
+            },
+            {
+              "text": "10.04",
+              "left": 131.36390686035156,
+              "right": 164.8917999267578,
+              "width": 33.52789306640625,
+              "height": 13
+            },
+            {
+              "text": "11.17",
+              "left": 213.697265625,
+              "right": 246.869140625,
+              "width": 33.171875,
+              "height": 13
+            }
+          ],
+          "gaps": [
+            58.154151916503906,
+            48.80546569824219
+          ],
+          "minGap": 48.80546569824219
+        },
+        {
+          "period": "1Y",
+          "labels": [
+            {
+              "text": "2025.11",
+              "left": 40.03787612915039,
+              "right": 86.47537231445312,
+              "width": 46.437496185302734,
+              "height": 13
+            },
+            {
+              "text": "2026.05",
+              "left": 119.38475799560547,
+              "right": 165.822265625,
+              "width": 46.43750762939453,
+              "height": 13
+            },
+            {
+              "text": "2026.11",
+              "left": 200.43165588378906,
+              "right": 246.86917114257812,
+              "width": 46.43751525878906,
+              "height": 13
+            }
+          ],
+          "gaps": [
+            32.909385681152344,
+            34.60939025878906
+          ],
+          "minGap": 32.909385681152344
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "390: viewport, enlarged controls, native input scale and surrounding layout",
+      "pass": true
+    },
+    {
+      "name": "390: all four chart periods have separated visible date labels",
+      "pass": true
+    },
+    {
+      "name": "320: viewport, enlarged controls, native input scale and surrounding layout",
+      "pass": true
+    },
+    {
+      "name": "320: all four chart periods have separated visible date labels",
+      "pass": true
+    },
+    {
+      "name": "Keyboard period selection, matching CSV, local market scroll and scenario input",
+      "pass": true
+    },
+    {
+      "name": "No browser script errors during independent review",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "marketScroll": {
+    "viewport": 282,
+    "full": 686,
+    "left": 0,
+    "after": 37
+  },
+  "passed": 6
+}

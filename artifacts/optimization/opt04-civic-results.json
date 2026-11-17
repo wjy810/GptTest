@@ -1,0 +1,436 @@
+{
+  "site": "civic",
+  "browser": "Chromium",
+  "url": "http://127.0.0.1:4173/civic/",
+  "independent": true,
+  "views": [
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 5328,
+      "inputs": [
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "name": "",
+          "id": "city-search",
+          "font": "16px",
+          "x": 62.5,
+          "right": 269.5,
+          "width": 207,
+          "height": 44
+        },
+        {
+          "tag": "SELECT",
+          "type": "select-one",
+          "name": "service",
+          "id": "",
+          "label": "需要什么帮助？居住与社区 · 约 20 分钟健康关怀 · 约 30 分钟绿色出行 · 约 15 分钟学习与成长 · 约 20 分钟公园与自然 · 约 15 分钟",
+          "font": "16px",
+          "x": 38.5,
+          "right": 351.5,
+          "width": 313,
+          "height": 46
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "name": "name",
+          "id": "",
+          "label": "如何称呼你",
+          "font": "16px",
+          "x": 38.5,
+          "right": 351.5,
+          "width": 313,
+          "height": 46
+        },
+        {
+          "tag": "INPUT",
+          "type": "email",
+          "name": "email",
+          "id": "",
+          "label": "示例邮箱",
+          "font": "16px",
+          "x": 38.5,
+          "right": 351.5,
+          "width": 313,
+          "height": 46
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "name": "date",
+          "id": "",
+          "label": "预约日期",
+          "font": "16px",
+          "x": 38.5,
+          "right": 351.5,
+          "width": 313,
+          "height": 46
+        },
+        {
+          "tag": "SELECT",
+          "type": "select-one",
+          "name": "time",
+          "id": "",
+          "label": "方便的时段选择时间09:00 – 10:0010:00 – 11:0014:00 – 15:0015:00 – 16:00",
+          "font": "16px",
+          "x": 38.5,
+          "right": 351.5,
+          "width": 313,
+          "height": 46
+        }
+      ],
+      "targets": [
+        {
+          "text": "打开导航",
+          "x": 326.5,
+          "right": 370.5,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "查找服务",
+          "x": 284.5,
+          "right": 364.5,
+          "width": 80,
+          "height": 48
+        },
+        {
+          "text": "居住登记",
+          "x": 57.96875,
+          "right": 117.984375,
+          "width": 60.015625,
+          "height": 44
+        },
+        {
+          "text": "健康咨询",
+          "x": 123.984375,
+          "right": 184,
+          "width": 60.015625,
+          "height": 44
+        },
+        {
+          "text": "公共课堂",
+          "x": 190,
+          "right": 250.015625,
+          "width": 60.015625,
+          "height": 44
+        },
+        {
+          "text": "办事预约",
+          "x": 256.015625,
+          "right": 332.03125,
+          "width": 76.015625,
+          "height": 44
+        },
+        {
+          "text": "全部服务",
+          "x": 19.5,
+          "right": 75.5,
+          "width": 56,
+          "height": 49.390625
+        },
+        {
+          "text": "生活服务",
+          "x": 91.5,
+          "right": 147.5,
+          "width": 56,
+          "height": 49.390625
+        },
+        {
+          "text": "健康保障",
+          "x": 163.5,
+          "right": 219.5,
+          "width": 56,
+          "height": 49.390625
+        },
+        {
+          "text": "教育文化",
+          "x": 235.5,
+          "right": 291.5,
+          "width": 56,
+          "height": 49.390625
+        },
+        {
+          "text": "工作发展",
+          "x": 307.5,
+          "right": 363.5,
+          "width": 56,
+          "height": 49.390625
+        }
+      ],
+      "regions": [
+        {
+          "class": "hero-search",
+          "clientWidth": 349,
+          "scrollWidth": 349,
+          "x": 19.5,
+          "right": 370.5,
+          "width": 351,
+          "height": 60
+        },
+        {
+          "class": "quick-links",
+          "clientWidth": 351,
+          "scrollWidth": 351,
+          "x": 19.5,
+          "right": 370.5,
+          "width": 351,
+          "height": 67.59375
+        },
+        {
+          "class": "booking-panel",
+          "clientWidth": 349,
+          "scrollWidth": 349,
+          "x": 19.5,
+          "right": 370.5,
+          "width": 351,
+          "height": 827.703125
+        },
+        {
+          "class": "form-row",
+          "clientWidth": 313,
+          "scrollWidth": 313,
+          "x": 38.5,
+          "right": 351.5,
+          "width": 313,
+          "height": 190.78125
+        },
+        {
+          "class": "form-row",
+          "clientWidth": 313,
+          "scrollWidth": 313,
+          "x": 38.5,
+          "right": 351.5,
+          "width": 313,
+          "height": 190.78125
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 5772,
+      "inputs": [
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "name": "",
+          "id": "city-search",
+          "font": "16px",
+          "x": 50,
+          "right": 213,
+          "width": 163,
+          "height": 44
+        },
+        {
+          "tag": "SELECT",
+          "type": "select-one",
+          "name": "service",
+          "id": "",
+          "label": "需要什么帮助？居住与社区 · 约 20 分钟健康关怀 · 约 30 分钟绿色出行 · 约 15 分钟学习与成长 · 约 20 分钟公园与自然 · 约 15 分钟",
+          "font": "16px",
+          "x": 35,
+          "right": 285,
+          "width": 250,
+          "height": 46
+        },
+        {
+          "tag": "INPUT",
+          "type": "text",
+          "name": "name",
+          "id": "",
+          "label": "如何称呼你",
+          "font": "16px",
+          "x": 35,
+          "right": 285,
+          "width": 250,
+          "height": 46
+        },
+        {
+          "tag": "INPUT",
+          "type": "email",
+          "name": "email",
+          "id": "",
+          "label": "示例邮箱",
+          "font": "16px",
+          "x": 35,
+          "right": 285,
+          "width": 250,
+          "height": 46
+        },
+        {
+          "tag": "INPUT",
+          "type": "date",
+          "name": "date",
+          "id": "",
+          "label": "预约日期",
+          "font": "16px",
+          "x": 35,
+          "right": 285,
+          "width": 250,
+          "height": 46
+        },
+        {
+          "tag": "SELECT",
+          "type": "select-one",
+          "name": "time",
+          "id": "",
+          "label": "方便的时段选择时间09:00 – 10:0010:00 – 11:0014:00 – 15:0015:00 – 16:00",
+          "font": "16px",
+          "x": 35,
+          "right": 285,
+          "width": 250,
+          "height": 46
+        }
+      ],
+      "targets": [
+        {
+          "text": "打开导航",
+          "x": 260,
+          "right": 304,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "text": "查找服务",
+          "x": 225,
+          "right": 298,
+          "width": 73,
+          "height": 48
+        },
+        {
+          "text": "居住登记",
+          "x": 22.96875,
+          "right": 82.984375,
+          "width": 60.015625,
+          "height": 44
+        },
+        {
+          "text": "健康咨询",
+          "x": 88.984375,
+          "right": 149,
+          "width": 60.015625,
+          "height": 44
+        },
+        {
+          "text": "公共课堂",
+          "x": 155,
+          "right": 215.015625,
+          "width": 60.015625,
+          "height": 44
+        },
+        {
+          "text": "办事预约",
+          "x": 221.015625,
+          "right": 297.03125,
+          "width": 76.015625,
+          "height": 44
+        },
+        {
+          "text": "全部服务",
+          "x": 16,
+          "right": 72,
+          "width": 56,
+          "height": 49.390625
+        },
+        {
+          "text": "生活服务",
+          "x": 88,
+          "right": 144,
+          "width": 56,
+          "height": 49.390625
+        },
+        {
+          "text": "健康保障",
+          "x": 160,
+          "right": 216,
+          "width": 56,
+          "height": 49.390625
+        },
+        {
+          "text": "教育文化",
+          "x": 232,
+          "right": 288,
+          "width": 56,
+          "height": 49.390625
+        },
+        {
+          "text": "工作发展",
+          "x": 16,
+          "right": 72,
+          "width": 56,
+          "height": 49.390625
+        }
+      ],
+      "regions": [
+        {
+          "class": "hero-search",
+          "clientWidth": 286,
+          "scrollWidth": 286,
+          "x": 16,
+          "right": 304,
+          "width": 288,
+          "height": 60
+        },
+        {
+          "class": "quick-links",
+          "clientWidth": 288,
+          "scrollWidth": 288,
+          "x": 16,
+          "right": 304,
+          "width": 288,
+          "height": 67.59375
+        },
+        {
+          "class": "booking-panel",
+          "clientWidth": 286,
+          "scrollWidth": 286,
+          "x": 16,
+          "right": 304,
+          "width": 288,
+          "height": 894.46875
+        },
+        {
+          "class": "form-row",
+          "clientWidth": 250,
+          "scrollWidth": 250,
+          "x": 35,
+          "right": 285,
+          "width": 250,
+          "height": 190.78125
+        },
+        {
+          "class": "form-row",
+          "clientWidth": 250,
+          "scrollWidth": 250,
+          "x": 35,
+          "right": 285,
+          "width": 250,
+          "height": 190.78125
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "390: viewport, enlarged controls, native input scale and surrounding layout",
+      "pass": true
+    },
+    {
+      "name": "320: viewport, enlarged controls, native input scale and surrounding layout",
+      "pass": true
+    },
+    {
+      "name": "Keyboard search to prefilled service and local appointment summary",
+      "pass": true
+    },
+    {
+      "name": "No browser script errors during independent review",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "passed": 4
+}
