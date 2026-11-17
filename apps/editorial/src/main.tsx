@@ -4,55 +4,493 @@ import { ArrowUpRight, ArrowRight, X, Bookmark, Check, Plus } from 'lucide-react
 import './styles.css'
 
 const stories = [
-  { id: '01', category: '空间', title: '一间房子，如何盛放安静', en: 'A room of one’s own', color: 'sand', time: '8 分钟', intro: '光穿过窗，停在那把空着的椅子上。我们与建筑师林间，聊了聊那些没有被设计的地方。' },
-  { id: '02', category: '物件', title: '泥土的第二次生命', en: 'The shape of patience', color: 'clay', time: '6 分钟', intro: '手掌留在陶土上的纹路，是一个物件最诚实的签名。和手艺人一起，等待一只器皿成形。' },
-  { id: '03', category: '日常', title: '把星期天，过得再长一点', en: 'The art of doing less', color: 'olive', time: '5 分钟', intro: '没有任务清单，没有必须抵达的目的地。在平常的日子里，重新练习看见。' },
-  { id: '04', category: '空间', title: '在城市边缘，找到一片野', en: 'Where the city exhales', color: 'blue', time: '7 分钟', intro: '房屋与树林之间，留下一条风能经过的小路。边界不是一道墙，而是生活展开的方式。' },
+  {
+    id: '01',
+    category: '空间',
+    title: '一间房子，如何盛放安静',
+    en: 'A room of one’s own',
+    color: 'sand',
+    time: '8 分钟',
+    intro: '光穿过窗，停在那把空着的椅子上。我们与建筑师林间，聊了聊那些没有被设计的地方。',
+  },
+  {
+    id: '02',
+    category: '物件',
+    title: '泥土的第二次生命',
+    en: 'The shape of patience',
+    color: 'clay',
+    time: '6 分钟',
+    intro: '手掌留在陶土上的纹路，是一个物件最诚实的签名。和手艺人一起，等待一只器皿成形。',
+  },
+  {
+    id: '03',
+    category: '日常',
+    title: '把星期天，过得再长一点',
+    en: 'The art of doing less',
+    color: 'olive',
+    time: '5 分钟',
+    intro: '没有任务清单，没有必须抵达的目的地。在平常的日子里，重新练习看见。',
+  },
+  {
+    id: '04',
+    category: '空间',
+    title: '在城市边缘，找到一片野',
+    en: 'Where the city exhales',
+    color: 'blue',
+    time: '7 分钟',
+    intro: '房屋与树林之间，留下一条风能经过的小路。边界不是一道墙，而是生活展开的方式。',
+  },
 ]
 function Artwork({ type = 'sand', hero = false }: { type?: string; hero?: boolean }) {
   const uid = useId().replace(/:/g, '')
-  return <svg className={`artwork art-${type}`} viewBox="0 0 600 640" preserveAspectRatio="xMidYMid slice" role="img" aria-label={hero ? '原创建筑插画：日光、拱门与一株树' : `${type}色调的空间与器物插画`}>
-    <defs><linearGradient id={`wall-${uid}`} x1="0" x2="1" y2="1"><stop stopColor={type === 'blue' ? '#b4c4c4' : '#cdbb9e'}/><stop offset="1" stopColor={type === 'clay' ? '#9c6552' : '#e5d7be'}/></linearGradient><linearGradient id={`shadow-${uid}`}><stop stopColor="#202d21" stopOpacity=".35"/><stop offset="1" stopColor="#253c25" stopOpacity="0"/></linearGradient><filter id={`noise-${uid}`}><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".05"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter></defs>
-    <rect width="600" height="640" fill={`url(#wall-${uid})`}/>
-    {type === 'clay' ? <><path d="M0 454L600 380V640H0Z" fill="#c5a188"/><ellipse cx="328" cy="510" rx="172" ry="37" fill="#674535" opacity=".25"/><path d="M242 222Q250 252 214 332Q175 458 252 490Q326 517 385 464Q417 423 369 332Q333 265 344 222Z" fill="#93553d"/><ellipse cx="292" cy="222" rx="52" ry="15" fill="#593e31"/><path d="M248 279Q210 404 253 458" fill="none" stroke="#c48560" strokeWidth="14" opacity=".5"/><path d="M390 375Q490 355 455 463Q437 502 389 469" fill="none" stroke="#93553d" strokeWidth="20"/><path d="M65 428L174 405L204 498L99 526Z" fill="#e4d6b9"/></> : type === 'olive' ? <><rect fill="#535d3d" width="600" height="640"/><circle cx="420" cy="140" r="95" fill="#a2a271"/><path d="M0 560L600 402V640H0Z" fill="#7c8154"/><path d="M115 390L460 363L493 395L130 426Z" fill="#d5bd83"/><path d="M140 422V590M454 402V547" stroke="#b59863" strokeWidth="18"/><ellipse cx="285" cy="365" rx="56" ry="16" fill="#eee5cc"/><path d="M252 316H317L310 363Q286 377 260 363Z" fill="#e8dcc2"/><path d="M316 323Q350 315 340 345Q336 354 314 347" stroke="#e8dcc2" strokeWidth="7" fill="none"/><path d="M277 298Q263 280 283 261" stroke="#d8d7b7" strokeWidth="2" fill="none"/><path d="M369 360l57-17 35 12-61 20z" fill="#b8bd90"/></> : <><path d="M0 0H390V454L0 563Z" fill={type === 'blue' ? '#c7d5d1' : '#dfd0b4'}/><path d="M390 0H600V640L390 454Z" fill={type === 'blue' ? '#99aaa7' : '#b3a184'}/><path d="M0 563L390 454L600 640H0Z" fill={type === 'blue' ? '#dde5d8' : '#e9d8b6'}/><path d="M116 480V237A105 105 0 0 1 326 237V421Z" fill={type === 'blue' ? '#52696a' : '#596349'}/><path d="M141 474V246A83 83 0 0 1 307 246V427Z" fill={type === 'blue' ? '#b6cac4' : '#a5ac8b'}/><path d="M141 355Q191 301 237 357T307 345V427L141 474Z" fill="#5f6e4f"/><path d="M141 406Q221 344 307 397V427L141 474Z" fill="#73815b"/><path d="M326 421L562 640H252L116 480Z" fill="#f6eacb"/><path d="M390 454L568 640H600L410 448Z" fill={`url(#shadow-${uid})`}/><path d="M435 502V276M435 377Q383 331 389 288M435 350Q474 304 489 252" stroke="#4c5838" strokeWidth="5"/><g fill="#4e6041"><ellipse cx="392" cy="290" rx="18" ry="47" transform="rotate(-35 392 290)"/><ellipse cx="420" cy="276" rx="16" ry="44" transform="rotate(-16 420 276)"/><ellipse cx="484" cy="270" rx="19" ry="48" transform="rotate(34 484 270)"/><ellipse cx="460" cy="335" rx="17" ry="39" transform="rotate(45 460 335)"/></g><path d="M405 467H466L455 529Q435 541 416 529Z" fill="#8e654b"/><ellipse cx="435" cy="467" rx="31" ry="9" fill="#674b36"/></>}
-    <rect width="600" height="640" fill="#fff4df" opacity=".025"/>
-  </svg>
+  return (
+    <svg
+      className={`artwork art-${type}`}
+      viewBox="0 0 600 640"
+      preserveAspectRatio="xMidYMid slice"
+      role="img"
+      aria-label={hero ? '原创建筑插画：日光、拱门与一株树' : `${type}色调的空间与器物插画`}
+    >
+      <defs>
+        <linearGradient id={`wall-${uid}`} x1="0" x2="1" y2="1">
+          <stop stopColor={type === 'blue' ? '#b4c4c4' : '#cdbb9e'} />
+          <stop offset="1" stopColor={type === 'clay' ? '#9c6552' : '#e5d7be'} />
+        </linearGradient>
+        <linearGradient id={`shadow-${uid}`}>
+          <stop stopColor="#202d21" stopOpacity=".35" />
+          <stop offset="1" stopColor="#253c25" stopOpacity="0" />
+        </linearGradient>
+        <filter id={`noise-${uid}`}>
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency=".7"
+            numOctaves="3"
+            stitchTiles="stitch"
+          />
+          <feColorMatrix type="saturate" values="0" />
+          <feComponentTransfer>
+            <feFuncA type="linear" slope=".05" />
+          </feComponentTransfer>
+          <feBlend in="SourceGraphic" mode="multiply" />
+        </filter>
+      </defs>
+      <rect width="600" height="640" fill={`url(#wall-${uid})`} />
+      {type === 'clay' ? (
+        <>
+          <path d="M0 454L600 380V640H0Z" fill="#c5a188" />
+          <ellipse cx="328" cy="510" rx="172" ry="37" fill="#674535" opacity=".25" />
+          <path
+            d="M242 222Q250 252 214 332Q175 458 252 490Q326 517 385 464Q417 423 369 332Q333 265 344 222Z"
+            fill="#93553d"
+          />
+          <ellipse cx="292" cy="222" rx="52" ry="15" fill="#593e31" />
+          <path
+            d="M248 279Q210 404 253 458"
+            fill="none"
+            stroke="#c48560"
+            strokeWidth="14"
+            opacity=".5"
+          />
+          <path
+            d="M390 375Q490 355 455 463Q437 502 389 469"
+            fill="none"
+            stroke="#93553d"
+            strokeWidth="20"
+          />
+          <path d="M65 428L174 405L204 498L99 526Z" fill="#e4d6b9" />
+        </>
+      ) : type === 'olive' ? (
+        <>
+          <rect fill="#535d3d" width="600" height="640" />
+          <circle cx="420" cy="140" r="95" fill="#a2a271" />
+          <path d="M0 560L600 402V640H0Z" fill="#7c8154" />
+          <path d="M115 390L460 363L493 395L130 426Z" fill="#d5bd83" />
+          <path d="M140 422V590M454 402V547" stroke="#b59863" strokeWidth="18" />
+          <ellipse cx="285" cy="365" rx="56" ry="16" fill="#eee5cc" />
+          <path d="M252 316H317L310 363Q286 377 260 363Z" fill="#e8dcc2" />
+          <path
+            d="M316 323Q350 315 340 345Q336 354 314 347"
+            stroke="#e8dcc2"
+            strokeWidth="7"
+            fill="none"
+          />
+          <path d="M277 298Q263 280 283 261" stroke="#d8d7b7" strokeWidth="2" fill="none" />
+          <path d="M369 360l57-17 35 12-61 20z" fill="#b8bd90" />
+        </>
+      ) : (
+        <>
+          <path d="M0 0H390V454L0 563Z" fill={type === 'blue' ? '#c7d5d1' : '#dfd0b4'} />
+          <path d="M390 0H600V640L390 454Z" fill={type === 'blue' ? '#99aaa7' : '#b3a184'} />
+          <path d="M0 563L390 454L600 640H0Z" fill={type === 'blue' ? '#dde5d8' : '#e9d8b6'} />
+          <path
+            d="M116 480V237A105 105 0 0 1 326 237V421Z"
+            fill={type === 'blue' ? '#52696a' : '#596349'}
+          />
+          <path
+            d="M141 474V246A83 83 0 0 1 307 246V427Z"
+            fill={type === 'blue' ? '#b6cac4' : '#a5ac8b'}
+          />
+          <path d="M141 355Q191 301 237 357T307 345V427L141 474Z" fill="#5f6e4f" />
+          <path d="M141 406Q221 344 307 397V427L141 474Z" fill="#73815b" />
+          <path d="M326 421L562 640H252L116 480Z" fill="#f6eacb" />
+          <path d="M390 454L568 640H600L410 448Z" fill={`url(#shadow-${uid})`} />
+          <path
+            d="M435 502V276M435 377Q383 331 389 288M435 350Q474 304 489 252"
+            stroke="#4c5838"
+            strokeWidth="5"
+          />
+          <g fill="#4e6041">
+            <ellipse cx="392" cy="290" rx="18" ry="47" transform="rotate(-35 392 290)" />
+            <ellipse cx="420" cy="276" rx="16" ry="44" transform="rotate(-16 420 276)" />
+            <ellipse cx="484" cy="270" rx="19" ry="48" transform="rotate(34 484 270)" />
+            <ellipse cx="460" cy="335" rx="17" ry="39" transform="rotate(45 460 335)" />
+          </g>
+          <path d="M405 467H466L455 529Q435 541 416 529Z" fill="#8e654b" />
+          <ellipse cx="435" cy="467" rx="31" ry="9" fill="#674b36" />
+        </>
+      )}
+      <rect width="600" height="640" fill="#fff4df" opacity=".025" />
+    </svg>
+  )
 }
 function keepReaderFocus(event: KeyboardEvent<HTMLDialogElement>) {
   if (event.key !== 'Tab') return
-  const controls = event.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], input:not(:disabled), [tabindex="0"]')
-  const first = controls[0], last = controls[controls.length - 1]
+  const controls = event.currentTarget.querySelectorAll<HTMLElement>(
+    'button:not(:disabled), a[href], input:not(:disabled), [tabindex="0"]',
+  )
+  const first = controls[0],
+    last = controls[controls.length - 1]
   if (!first) return
-  if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus() }
-  else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus() }
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault()
+    first.focus()
+  }
 }
-function Starburst() { return <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">{Array.from({ length: 8 }, (_, i) => <rect key={i} x="47" y="4" width="6" height="92" transform={`rotate(${i * 22.5} 50 50)`}/>)}</svg> }
+function Starburst() {
+  return (
+    <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
+      {Array.from({ length: 8 }, (_, i) => (
+        <rect key={i} x="47" y="4" width="6" height="92" transform={`rotate(${i * 22.5} 50 50)`} />
+      ))}
+    </svg>
+  )
+}
 function App() {
   const [category, setCategory] = useState('全部')
   const [article, setArticle] = useState<(typeof stories)[number] | null>(null)
-  const [saved, setSaved] = useState<string[]>(() => { try { const parsed: unknown = JSON.parse(localStorage.getItem('folio-saved') || '[]'); return Array.isArray(parsed) ? [...new Set(parsed.filter((id): id is string => typeof id === 'string' && stories.some(story => story.id === id)))] : [] } catch { return [] } })
-  const [email, setEmail] = useState(''); const [subscribed, setSubscribed] = useState(false)
+  const [saved, setSaved] = useState<string[]>(() => {
+    try {
+      const parsed: unknown = JSON.parse(localStorage.getItem('folio-saved') || '[]')
+      return Array.isArray(parsed)
+        ? [
+            ...new Set(
+              parsed.filter(
+                (id): id is string =>
+                  typeof id === 'string' && stories.some((story) => story.id === id),
+              ),
+            ),
+          ]
+        : []
+    } catch {
+      return []
+    }
+  })
+  const [email, setEmail] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
   const dialog = useRef<HTMLDialogElement>(null)
   useEffect(() => {
-    if (!article) { dialog.current?.close(); return }
+    if (!article) {
+      dialog.current?.close()
+      return
+    }
     const overflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     dialog.current?.showModal()
-    return () => { document.body.style.overflow = overflow }
+    return () => {
+      document.body.style.overflow = overflow
+    }
   }, [article])
-  function bookmark(id: string) { const next = saved.includes(id) ? saved.filter(x => x !== id) : [...saved, id]; setSaved(next); try { localStorage.setItem('folio-saved', JSON.stringify(next)) } catch {} }
-  return <>
-    <a className="skip" href="#journal">跳至文章</a>
-    <div className="mast-meta"><span>AN INDEPENDENT JOURNAL OF EVERYDAY LIFE</span><span>VOL. 08 — THE QUIET ISSUE</span><span>慢下来，看见更多。</span></div>
-    <header className="folio-header"><a href="#" className="wordmark" aria-label="FOLIO 首页">folio<span>®</span></a><nav aria-label="主导航"><a href="#journal">阅读杂志 <span>JOURNAL</span></a><a href="#philosophy">关于我们 <span>ABOUT</span></a><a href="#letter">一封来信 <ArrowUpRight size={15}/></a></nav><span className="edition">独立观察 · 第八期</span></header>
-    <main>
-      <section className="hero"><div className="hero-copy"><div className="eyebrow"><span className="tiny-star"><Starburst/></span> THE QUIET ISSUE / 安静特刊</div><h1>留白之间，<br/>自有<span>生活。</span></h1><p className="hero-english">Room for the<br/><em>unhurried.</em></p><div className="hero-bottom"><p>关于空间、物件，和不必赶路的日常。<br/>在喧闹世界里，留下一点自己的节奏。</p><button onClick={() => setArticle(stories[0])} aria-label="阅读本期封面故事"><ArrowUpRight size={31}/></button></div></div><div className="hero-image"><Artwork hero/><span className="image-caption">FIG. 01 — 光，也是一种家具。</span><span className="image-label">SPACE<br/>& STILLNESS</span></div></section>
-      <div className="issue-strip"><span>本期关键词</span><p>空间的呼吸 <i>／</i> 手作的温度 <i>／</i> 日常的诗意</p><span className="strip-right">SCROLL TO DISCOVER <ArrowRight size={16}/></span></div>
-      <section className="journal" id="journal"><div className="section-head"><div><span className="eyebrow">01 / THE JOURNAL</span><h2>值得停留的故事<span>Selected readings</span></h2></div><div className="category-filter" role="group" aria-label="文章分类">{['全部', '空间', '物件', '日常', '已收藏'].map(c => <button key={c} aria-pressed={category === c} onClick={() => setCategory(c)}>{c}{c === '已收藏' && ` (${saved.length})`}</button>)}</div></div><div className="story-grid">{stories.filter(s => category === '全部' || (category === '已收藏' ? saved.includes(s.id) : s.category === category)).map(s => <article className="story" key={s.id}><button className="story-image" onClick={() => setArticle(s)} aria-label={`阅读 ${s.title}`}><Artwork type={s.color}/><span className="story-read"><ArrowUpRight size={25}/></span></button><div className="story-meta"><span>{s.category} / {s.en.toUpperCase()}</span><button aria-label={`${saved.includes(s.id) ? '取消收藏' : '收藏'} ${s.title}`} aria-pressed={saved.includes(s.id)} onClick={() => bookmark(s.id)}><Bookmark size={17} fill={saved.includes(s.id) ? 'currentColor' : 'none'}/></button></div><button className="story-title" onClick={() => setArticle(s)}>{s.title}</button><p>{s.intro}</p><span className="reading-time">{s.time}阅读 <span>— FOLIO 编辑部</span></span></article>)}</div>{category === '已收藏' && saved.length === 0 && <p className="empty-state">你的书架还很安静。点击文章旁的书签，留住想再读的故事。</p>}</section>
-      <section className="manifesto" id="philosophy"><div><span className="eyebrow">02 / OUR POINT OF VIEW</span><span className="big-asterisk"><Starburst/></span></div><div><p className="manifesto-quote">好的生活，<br/>不是拥有更多。<br/>是感受得<span>更深。</span></p><div className="manifesto-bottom"><p>FOLIO 是一本虚构的独立生活杂志，也是一场关于编辑设计的实验。我们相信，真正打动人的内容，需要一点留白，和一点耐心。</p><span>LESS, BUT<br/><em>MORE MEANINGFUL.</em></span></div></div></section>
-      <section className="letter" id="letter"><div><span className="eyebrow">LET’S KEEP IN TOUCH</span><h2>偶尔，写一封信给你。</h2><p>关于刚读到的故事、路过的风景，和一些不着急的想法。</p></div><form onSubmit={e => { e.preventDefault(); setSubscribed(true); try { localStorage.setItem('folio-newsletter-demo', email) } catch {} }}><label htmlFor="folio-email">你的电子邮箱</label><div className="email-input"><input id="folio-email" type="email" required placeholder="hello@yourworld.com" value={email} onChange={e => { setEmail(e.target.value); setSubscribed(false) }}/><button aria-label="保存订阅意向">{subscribed ? <Check/> : <ArrowRight/>}</button></div><small role="status">{subscribed ? '订阅意向已保存在此浏览器。演示站不会发送邮件。' : '本地体验演示 · 不会向服务器发送你的邮箱'}</small></form></section>
-    </main><footer><a className="wordmark" href="#">folio<span>®</span></a><p>一本关于好好生活的独立杂志。<br/><span>© 2026 FOLIO. An original design study.</span></p><a href="#">BACK TO TOP <ArrowUpRight size={16}/></a></footer>
-    <dialog ref={dialog} onKeyDown={keepReaderFocus} aria-labelledby="reader-title" onCancel={() => setArticle(null)} onClose={() => setArticle(null)} onClick={e => { if (e.target !== e.currentTarget) return; const r = e.currentTarget.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) setArticle(null) }} className="reader"><button className="reader-close" onClick={() => setArticle(null)} aria-label="关闭文章"><X/></button>{article && <><span className="eyebrow">FOLIO / {article.category} / {article.time}阅读</span><h2 id="reader-title">{article.title}</h2><p className="reader-subtitle">{article.en}</p><div className="reader-art"><Artwork type={article.color}/></div><p className="reader-lead">{article.intro}</p><p>我们走进这段日常时，先注意到了光。它没有试图解释什么，只是沿着物体的边缘慢慢移动。那些习以为常的轮廓，因为一次停留而显出新的层次。</p><h3>给没有安排的事情，留一个位置</h3><p>一个空间不必填满，才算完整。一张桌面上的空白，一段没有音乐的午后，一只略有不规则的杯子，都让我们有机会参与其中。设计的意义，有时正是退后一步，让生活自己发生。</p><blockquote>「慢，不是把时间拉长。而是让自己真正地在场。」</blockquote><p>从今天开始，试着观察一个很小的细节：杯壁的温度，叶片投下的影子，窗外每天不同的声音。那些没有被命名的感受，最终构成了我们与世界最亲近的关系。</p><p className="reader-note">本文为本项目原创的编辑设计示例文字，人物与场景均为虚构。插画使用 SVG 绘制。</p><button className="reader-save" onClick={() => bookmark(article.id)}>{saved.includes(article.id) ? <Check size={17}/> : <Plus size={17}/>} {saved.includes(article.id) ? '已存入书架' : '收藏这篇故事'}</button></>}</dialog>
-  </>
+  function bookmark(id: string) {
+    const next = saved.includes(id) ? saved.filter((x) => x !== id) : [...saved, id]
+    setSaved(next)
+    try {
+      localStorage.setItem('folio-saved', JSON.stringify(next))
+    } catch {}
+  }
+  return (
+    <>
+      <a className="skip" href="#journal">
+        跳至文章
+      </a>
+      <div className="mast-meta">
+        <span>AN INDEPENDENT JOURNAL OF EVERYDAY LIFE</span>
+        <span>VOL. 08 — THE QUIET ISSUE</span>
+        <span>慢下来，看见更多。</span>
+      </div>
+      <header className="folio-header">
+        <a href="#" className="wordmark" aria-label="FOLIO 首页">
+          folio<span>®</span>
+        </a>
+        <nav aria-label="主导航">
+          <a href="#journal">
+            阅读杂志 <span>JOURNAL</span>
+          </a>
+          <a href="#philosophy">
+            关于我们 <span>ABOUT</span>
+          </a>
+          <a href="#letter">
+            一封来信 <ArrowUpRight size={15} />
+          </a>
+        </nav>
+        <span className="edition">独立观察 · 第八期</span>
+      </header>
+      <main>
+        <section className="hero">
+          <div className="hero-copy">
+            <div className="eyebrow">
+              <span className="tiny-star">
+                <Starburst />
+              </span>{' '}
+              THE QUIET ISSUE / 安静特刊
+            </div>
+            <h1>
+              留白之间，
+              <br />
+              自有<span>生活。</span>
+            </h1>
+            <p className="hero-english">
+              Room for the
+              <br />
+              <em>unhurried.</em>
+            </p>
+            <div className="hero-bottom">
+              <p>
+                关于空间、物件，和不必赶路的日常。
+                <br />
+                在喧闹世界里，留下一点自己的节奏。
+              </p>
+              <button onClick={() => setArticle(stories[0])} aria-label="阅读本期封面故事">
+                <ArrowUpRight size={31} />
+              </button>
+            </div>
+          </div>
+          <div className="hero-image">
+            <Artwork hero />
+            <span className="image-caption">FIG. 01 — 光，也是一种家具。</span>
+            <span className="image-label">
+              SPACE
+              <br />& STILLNESS
+            </span>
+          </div>
+        </section>
+        <div className="issue-strip">
+          <span>本期关键词</span>
+          <p>
+            空间的呼吸 <i>／</i> 手作的温度 <i>／</i> 日常的诗意
+          </p>
+          <span className="strip-right">
+            SCROLL TO DISCOVER <ArrowRight size={16} />
+          </span>
+        </div>
+        <section className="journal" id="journal">
+          <div className="section-head">
+            <div>
+              <span className="eyebrow">01 / THE JOURNAL</span>
+              <h2>
+                值得停留的故事<span>Selected readings</span>
+              </h2>
+            </div>
+            <div className="category-filter" role="group" aria-label="文章分类">
+              {['全部', '空间', '物件', '日常', '已收藏'].map((c) => (
+                <button key={c} aria-pressed={category === c} onClick={() => setCategory(c)}>
+                  {c}
+                  {c === '已收藏' && ` (${saved.length})`}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="story-grid">
+            {stories
+              .filter(
+                (s) =>
+                  category === '全部' ||
+                  (category === '已收藏' ? saved.includes(s.id) : s.category === category),
+              )
+              .map((s) => (
+                <article className="story" key={s.id}>
+                  <button
+                    className="story-image"
+                    onClick={() => setArticle(s)}
+                    aria-label={`阅读 ${s.title}`}
+                  >
+                    <Artwork type={s.color} />
+                    <span className="story-read">
+                      <ArrowUpRight size={25} />
+                    </span>
+                  </button>
+                  <div className="story-meta">
+                    <span>
+                      {s.category} / {s.en.toUpperCase()}
+                    </span>
+                    <button
+                      aria-label={`${saved.includes(s.id) ? '取消收藏' : '收藏'} ${s.title}`}
+                      aria-pressed={saved.includes(s.id)}
+                      onClick={() => bookmark(s.id)}
+                    >
+                      <Bookmark size={17} fill={saved.includes(s.id) ? 'currentColor' : 'none'} />
+                    </button>
+                  </div>
+                  <button className="story-title" onClick={() => setArticle(s)}>
+                    {s.title}
+                  </button>
+                  <p>{s.intro}</p>
+                  <span className="reading-time">
+                    {s.time}阅读 <span>— FOLIO 编辑部</span>
+                  </span>
+                </article>
+              ))}
+          </div>
+          {category === '已收藏' && saved.length === 0 && (
+            <p className="empty-state">你的书架还很安静。点击文章旁的书签，留住想再读的故事。</p>
+          )}
+        </section>
+        <section className="manifesto" id="philosophy">
+          <div>
+            <span className="eyebrow">02 / OUR POINT OF VIEW</span>
+            <span className="big-asterisk">
+              <Starburst />
+            </span>
+          </div>
+          <div>
+            <p className="manifesto-quote">
+              好的生活，
+              <br />
+              不是拥有更多。
+              <br />
+              是感受得<span>更深。</span>
+            </p>
+            <div className="manifesto-bottom">
+              <p>
+                FOLIO
+                是一本虚构的独立生活杂志，也是一场关于编辑设计的实验。我们相信，真正打动人的内容，需要一点留白，和一点耐心。
+              </p>
+              <span>
+                LESS, BUT
+                <br />
+                <em>MORE MEANINGFUL.</em>
+              </span>
+            </div>
+          </div>
+        </section>
+        <section className="letter" id="letter">
+          <div>
+            <span className="eyebrow">LET’S KEEP IN TOUCH</span>
+            <h2>偶尔，写一封信给你。</h2>
+            <p>关于刚读到的故事、路过的风景，和一些不着急的想法。</p>
+          </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              setSubscribed(true)
+              try {
+                localStorage.setItem('folio-newsletter-demo', email)
+              } catch {}
+            }}
+          >
+            <label htmlFor="folio-email">你的电子邮箱</label>
+            <div className="email-input">
+              <input
+                id="folio-email"
+                type="email"
+                required
+                placeholder="hello@yourworld.com"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                  setSubscribed(false)
+                }}
+              />
+              <button aria-label="保存订阅意向">{subscribed ? <Check /> : <ArrowRight />}</button>
+            </div>
+            <small role="status">
+              {subscribed
+                ? '订阅意向已保存在此浏览器。演示站不会发送邮件。'
+                : '本地体验演示 · 不会向服务器发送你的邮箱'}
+            </small>
+          </form>
+        </section>
+      </main>
+      <footer>
+        <a className="wordmark" href="#">
+          folio<span>®</span>
+        </a>
+        <p>
+          一本关于好好生活的独立杂志。
+          <br />
+          <span>© 2026 FOLIO. An original design study.</span>
+        </p>
+        <a href="#">
+          BACK TO TOP <ArrowUpRight size={16} />
+        </a>
+      </footer>
+      <dialog
+        ref={dialog}
+        onKeyDown={keepReaderFocus}
+        aria-labelledby="reader-title"
+        onCancel={() => setArticle(null)}
+        onClose={() => setArticle(null)}
+        onClick={(e) => {
+          if (e.target !== e.currentTarget) return
+          const r = e.currentTarget.getBoundingClientRect()
+          if (
+            e.clientX < r.left ||
+            e.clientX > r.right ||
+            e.clientY < r.top ||
+            e.clientY > r.bottom
+          )
+            setArticle(null)
+        }}
+        className="reader"
+      >
+        <button className="reader-close" onClick={() => setArticle(null)} aria-label="关闭文章">
+          <X />
+        </button>
+        {article && (
+          <>
+            <span className="eyebrow">
+              FOLIO / {article.category} / {article.time}阅读
+            </span>
+            <h2 id="reader-title">{article.title}</h2>
+            <p className="reader-subtitle">{article.en}</p>
+            <div className="reader-art">
+              <Artwork type={article.color} />
+            </div>
+            <p className="reader-lead">{article.intro}</p>
+            <p>
+              我们走进这段日常时，先注意到了光。它没有试图解释什么，只是沿着物体的边缘慢慢移动。那些习以为常的轮廓，因为一次停留而显出新的层次。
+            </p>
+            <h3>给没有安排的事情，留一个位置</h3>
+            <p>
+              一个空间不必填满，才算完整。一张桌面上的空白，一段没有音乐的午后，一只略有不规则的杯子，都让我们有机会参与其中。设计的意义，有时正是退后一步，让生活自己发生。
+            </p>
+            <blockquote>「慢，不是把时间拉长。而是让自己真正地在场。」</blockquote>
+            <p>
+              从今天开始，试着观察一个很小的细节：杯壁的温度，叶片投下的影子，窗外每天不同的声音。那些没有被命名的感受，最终构成了我们与世界最亲近的关系。
+            </p>
+            <p className="reader-note">
+              本文为本项目原创的编辑设计示例文字，人物与场景均为虚构。插画使用 SVG 绘制。
+            </p>
+            <button className="reader-save" onClick={() => bookmark(article.id)}>
+              {saved.includes(article.id) ? <Check size={17} /> : <Plus size={17} />}{' '}
+              {saved.includes(article.id) ? '已存入书架' : '收藏这篇故事'}
+            </button>
+          </>
+        )}
+      </dialog>
+    </>
+  )
 }
-createRoot(document.getElementById('root')!).render(<App/> )
+createRoot(document.getElementById('root')!).render(<App />)
