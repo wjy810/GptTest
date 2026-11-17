@@ -1,0 +1,3413 @@
+{
+  "startedAt": "2026-11-17T06:21:42.853Z",
+  "base": "http://127.0.0.1:4173/",
+  "method": "Actual Chromium computed styles, Web Animations API, native anchor activation; 390×844 and 1440×900. Font below 16px is an iOS focus-zoom risk, not an iOS reproduction. Only initially rendered controls are sampled. No source edits or server mutations.",
+  "sites": [
+    {
+      "site": "brutalist",
+      "errors": [],
+      "views": [
+        {
+          "width": 390,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#budget",
+                "type": "select-one",
+                "label": "02 / 预算范围",
+                "fontSize": 13,
+                "lineHeight": "normal",
+                "width": 343.2,
+                "height": 47
+              },
+              {
+                "selector": "#brief",
+                "type": "textarea",
+                "label": "03 / 说说你的想法",
+                "fontSize": 14,
+                "lineHeight": "25.2px",
+                "width": 343.2,
+                "height": 120
+              }
+            ],
+            "anchors": [
+              "#work",
+              "#about",
+              "#contact"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/brutalist/assets/index-BcYoiCB4.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#work",
+              "targetTop": 0,
+              "heading": "SELECTEDWORK.(04)",
+              "headingTop": 55,
+              "headingBottom": 156,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 587
+            },
+            {
+              "href": "#about",
+              "targetTop": 0,
+              "heading": "正常很安全。我们选有趣。",
+              "headingTop": 102,
+              "headingBottom": 209,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2982
+            },
+            {
+              "href": "#contact",
+              "targetTop": 0,
+              "heading": "GOT ANODD IDEA?",
+              "headingTop": 100,
+              "headingBottom": 311,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 4249
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#budget",
+                "type": "select-one",
+                "label": "02 / 预算范围",
+                "fontSize": 13,
+                "lineHeight": "normal",
+                "width": 574.9,
+                "height": 47
+              },
+              {
+                "selector": "#brief",
+                "type": "textarea",
+                "label": "03 / 说说你的想法",
+                "fontSize": 12,
+                "lineHeight": "21.6px",
+                "width": 574.9,
+                "height": 120
+              }
+            ],
+            "anchors": [
+              "#work",
+              "#about",
+              "#contact"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/brutalist/assets/index-BcYoiCB4.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#work",
+              "targetTop": 0,
+              "heading": "SELECTEDWORK.(04)",
+              "headingTop": 90,
+              "headingBottom": 226,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 828
+            },
+            {
+              "href": "#about",
+              "targetTop": 0,
+              "heading": "正常很安全。我们选有趣。",
+              "headingTop": 156,
+              "headingBottom": 366,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2539
+            },
+            {
+              "href": "#contact",
+              "targetTop": 35,
+              "heading": "GOT ANODD IDEA?",
+              "headingTop": 160,
+              "headingBottom": 330,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3606
+            }
+          ]
+        }
+      ],
+      "normalMotionControl": {
+        "initial": {
+          "animations": [],
+          "inputs": [
+            {
+              "selector": "#budget",
+              "type": "select-one",
+              "label": "02 / 预算范围",
+              "fontSize": 13,
+              "lineHeight": "normal",
+              "width": 574.9,
+              "height": 47
+            },
+            {
+              "selector": "#brief",
+              "type": "textarea",
+              "label": "03 / 说说你的想法",
+              "fontSize": 12,
+              "lineHeight": "21.6px",
+              "width": 574.9,
+              "height": 120
+            }
+          ],
+          "anchors": [
+            "#work",
+            "#about",
+            "#contact"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/brutalist/assets/index-BcYoiCB4.js"
+          ]
+        },
+        "playing": null
+      }
+    },
+    {
+      "site": "glass",
+      "errors": [],
+      "views": [
+        {
+          "width": 390,
+          "initial": {
+            "animations": [],
+            "inputs": [],
+            "anchors": [
+              "#main-content",
+              "#discover",
+              "#philosophy",
+              "#rituals",
+              "#player"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/glass/assets/index-ClNt-J-R.js"
+            ]
+          },
+          "playing": {
+            "animations": [],
+            "inputs": [],
+            "anchors": [
+              "#main-content",
+              "#discover",
+              "#philosophy",
+              "#rituals",
+              "#player"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/glass/assets/index-ClNt-J-R.js"
+            ]
+          },
+          "anchors": [
+            {
+              "href": "#main-content",
+              "targetTop": 35,
+              "heading": "Less noise.More you.",
+              "headingTop": 128,
+              "headingBottom": 285,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 43
+            },
+            {
+              "href": "#discover",
+              "targetTop": 35,
+              "heading": "每一种心情，都有它的声音。",
+              "headingTop": 128,
+              "headingBottom": 196,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1266
+            },
+            {
+              "href": "#philosophy",
+              "targetTop": 35,
+              "heading": "你不需要时刻都在前进。",
+              "headingTop": 375,
+              "headingBottom": 481,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2243
+            },
+            {
+              "href": "#rituals",
+              "targetTop": 35,
+              "heading": "从一个小小的仪式开始。",
+              "headingTop": 128,
+              "headingBottom": 162,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2861
+            },
+            {
+              "href": "#player",
+              "targetTop": 35,
+              "heading": "Less noise.More you.",
+              "headingTop": 128,
+              "headingBottom": 285,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 43
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "initial": {
+            "animations": [],
+            "inputs": [],
+            "anchors": [
+              "#main-content",
+              "#discover",
+              "#philosophy",
+              "#rituals",
+              "#player"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/glass/assets/index-ClNt-J-R.js"
+            ]
+          },
+          "playing": {
+            "animations": [],
+            "inputs": [],
+            "anchors": [
+              "#main-content",
+              "#discover",
+              "#philosophy",
+              "#rituals",
+              "#player"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/glass/assets/index-ClNt-J-R.js"
+            ]
+          },
+          "anchors": [
+            {
+              "href": "#main-content",
+              "targetTop": 35,
+              "heading": "Less noise.More you.",
+              "headingTop": 222,
+              "headingBottom": 421,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 69
+            },
+            {
+              "href": "#discover",
+              "targetTop": 35,
+              "heading": "每一种心情，都有它的声音。",
+              "headingTop": 165,
+              "headingBottom": 209,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 894
+            },
+            {
+              "href": "#philosophy",
+              "targetTop": 35,
+              "heading": "你不需要时刻都在前进。",
+              "headingTop": 111,
+              "headingBottom": 222,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1634
+            },
+            {
+              "href": "#rituals",
+              "targetTop": 35,
+              "heading": "从一个小小的仪式开始。",
+              "headingTop": 165,
+              "headingBottom": 209,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2034
+            },
+            {
+              "href": "#player",
+              "targetTop": 35,
+              "heading": "Less noise.More you.",
+              "headingTop": 222,
+              "headingBottom": 421,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 69
+            }
+          ]
+        }
+      ],
+      "normalMotionControl": {
+        "initial": {
+          "animations": [],
+          "inputs": [],
+          "anchors": [
+            "#main-content",
+            "#discover",
+            "#philosophy",
+            "#rituals",
+            "#player"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/glass/assets/index-ClNt-J-R.js"
+          ]
+        },
+        "playing": {
+          "animations": [
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.record.record-playing:nth-of-type(2)",
+              "name": "record-spin",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 16000,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(1)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(2)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(3)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(4)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(5)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(6)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(7)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(8)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(9)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(10)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(11)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(12)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(13)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(14)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(15)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(16)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(17)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(18)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(19)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(20)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(21)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(22)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(23)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(24)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(25)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(26)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(27)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(28)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(29)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(30)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(31)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(32)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(33)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(34)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(35)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(36)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(37)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(38)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            },
+            {
+              "selector": "#player > div.player-scene:nth-of-type(2) > div.player-card.violet:nth-of-type(4) > div.waveform:nth-of-type(3) > i.bar-active:nth-of-type(39)",
+              "name": "wave",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 850,
+              "currentTime": 83.34199999961389,
+              "visible": true
+            }
+          ],
+          "inputs": [],
+          "anchors": [
+            "#main-content",
+            "#discover",
+            "#philosophy",
+            "#rituals",
+            "#player"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/glass/assets/index-ClNt-J-R.js"
+          ]
+        }
+      }
+    },
+    {
+      "site": "terminal",
+      "errors": [],
+      "views": [
+        {
+          "width": 390,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#command-input",
+                "type": "text",
+                "label": "输入演示命令",
+                "fontSize": 11,
+                "lineHeight": "normal",
+                "width": 267.4,
+                "height": 22
+              }
+            ],
+            "anchors": [
+              "#main-content",
+              "#features",
+              "#workflow",
+              "#pricing",
+              "#faq"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/terminal/assets/index-Dejahi-r.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#main-content",
+              "targetTop": 35,
+              "heading": "Less friction.More flow_",
+              "headingTop": 109,
+              "headingBottom": 246,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 73
+            },
+            {
+              "href": "#features",
+              "targetTop": 35,
+              "heading": "Your stack. In sync.",
+              "headingTop": 129,
+              "headingBottom": 167,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1131
+            },
+            {
+              "href": "#workflow",
+              "targetTop": 35,
+              "heading": "A small config.A clear path.",
+              "headingTop": 134,
+              "headingBottom": 220,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2369
+            },
+            {
+              "href": "#pricing",
+              "targetTop": 35,
+              "heading": "Start small. Think big.",
+              "headingTop": 129,
+              "headingBottom": 167,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3642
+            },
+            {
+              "href": "#faq",
+              "targetTop": 35,
+              "heading": "A littlemore clarity.",
+              "headingTop": 134,
+              "headingBottom": 172,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 5324
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#command-input",
+                "type": "text",
+                "label": "输入演示命令",
+                "fontSize": 11,
+                "lineHeight": "normal",
+                "width": 857.4,
+                "height": 22
+              }
+            ],
+            "anchors": [
+              "#main-content",
+              "#features",
+              "#workflow",
+              "#pricing",
+              "#faq"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/terminal/assets/index-Dejahi-r.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#main-content",
+              "targetTop": 35,
+              "heading": "Less friction.More flow_",
+              "headingTop": 131,
+              "headingBottom": 308,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 85
+            },
+            {
+              "href": "#features",
+              "targetTop": 35,
+              "heading": "Your stack. In sync.",
+              "headingTop": 159,
+              "headingBottom": 208,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1095
+            },
+            {
+              "href": "#workflow",
+              "targetTop": 35,
+              "heading": "A small config.A clear path.",
+              "headingTop": 169,
+              "headingBottom": 269,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1686
+            },
+            {
+              "href": "#pricing",
+              "targetTop": 35,
+              "heading": "Start small. Think big.",
+              "headingTop": 159,
+              "headingBottom": 207,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2642
+            },
+            {
+              "href": "#faq",
+              "targetTop": 35,
+              "heading": "A littlemore clarity.",
+              "headingTop": 169,
+              "headingBottom": 261,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3383
+            }
+          ]
+        }
+      ],
+      "normalMotionControl": {
+        "initial": {
+          "animations": [
+            {
+              "selector": "div.hero-heading:nth-of-type(2) > h1 > span > span.cursor",
+              "name": "blink",
+              "state": "running",
+              "iterations": "infinite",
+              "duration": 1200,
+              "currentTime": 499.91699999979465,
+              "visible": true
+            }
+          ],
+          "inputs": [
+            {
+              "selector": "#command-input",
+              "type": "text",
+              "label": "输入演示命令",
+              "fontSize": 11,
+              "lineHeight": "normal",
+              "width": 857.4,
+              "height": 22
+            }
+          ],
+          "anchors": [
+            "#main-content",
+            "#features",
+            "#workflow",
+            "#pricing",
+            "#faq"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/terminal/assets/index-Dejahi-r.js"
+          ]
+        },
+        "playing": null
+      }
+    },
+    {
+      "site": "restaurant",
+      "errors": [],
+      "views": [
+        {
+          "width": 390,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#booking-date",
+                "type": "date",
+                "label": "哪一天",
+                "fontSize": 11,
+                "lineHeight": "normal",
+                "width": 144.1,
+                "height": 43
+              },
+              {
+                "selector": "#booking-time",
+                "type": "select-one",
+                "label": "几点见17:3018:0018:3019:0019:3020:0020:30",
+                "fontSize": 11,
+                "lineHeight": "normal",
+                "width": 144.1,
+                "height": 43
+              }
+            ],
+            "anchors": [
+              "#menu",
+              "#story",
+              "#visit",
+              "#reserve"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/restaurant/assets/index-Czjjbkqe.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#menu",
+              "targetTop": 0,
+              "heading": "今天，想吃点什么？",
+              "headingTop": 75,
+              "headingBottom": 116,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1076
+            },
+            {
+              "href": "#story",
+              "targetTop": 0,
+              "heading": "一团火。一张桌。一些好时光。",
+              "headingTop": 405,
+              "headingBottom": 556,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2224
+            },
+            {
+              "href": "#visit",
+              "targetTop": 360,
+              "heading": "在拐角处，循着香气来。",
+              "headingTop": 425,
+              "headingBottom": 506,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3305
+            },
+            {
+              "href": "#reserve",
+              "targetTop": 0,
+              "heading": "把今晚，留给一顿好饭。",
+              "headingTop": 74,
+              "headingBottom": 178,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3006
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#booking-date",
+                "type": "date",
+                "label": "哪一天",
+                "fontSize": 12,
+                "lineHeight": "normal",
+                "width": 229.2,
+                "height": 43
+              },
+              {
+                "selector": "#booking-time",
+                "type": "select-one",
+                "label": "几点见17:3018:0018:3019:0019:3020:0020:30",
+                "fontSize": 12,
+                "lineHeight": "normal",
+                "width": 229.2,
+                "height": 43
+              }
+            ],
+            "anchors": [
+              "#menu",
+              "#story",
+              "#visit",
+              "#reserve"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/restaurant/assets/index-Czjjbkqe.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#menu",
+              "targetTop": 0,
+              "heading": "今天，想吃点什么？",
+              "headingTop": 117,
+              "headingBottom": 178,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 990
+            },
+            {
+              "href": "#story",
+              "targetTop": 0,
+              "heading": "一团火。一张桌。一些好时光。",
+              "headingTop": 105,
+              "headingBottom": 290,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2353
+            },
+            {
+              "href": "#visit",
+              "targetTop": 490,
+              "heading": "在拐角处，循着香气来。",
+              "headingTop": 585,
+              "headingBottom": 669,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3027
+            },
+            {
+              "href": "#reserve",
+              "targetTop": 0,
+              "heading": "把今晚，留给一顿好饭。",
+              "headingTop": 125,
+              "headingBottom": 253,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2980
+            }
+          ]
+        }
+      ],
+      "normalMotionControl": {
+        "initial": {
+          "animations": [],
+          "inputs": [
+            {
+              "selector": "#booking-date",
+              "type": "date",
+              "label": "哪一天",
+              "fontSize": 12,
+              "lineHeight": "normal",
+              "width": 229.2,
+              "height": 43
+            },
+            {
+              "selector": "#booking-time",
+              "type": "select-one",
+              "label": "几点见17:3018:0018:3019:0019:3020:0020:30",
+              "fontSize": 12,
+              "lineHeight": "normal",
+              "width": 229.2,
+              "height": 43
+            }
+          ],
+          "anchors": [
+            "#menu",
+            "#story",
+            "#visit",
+            "#reserve"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/restaurant/assets/index-Czjjbkqe.js"
+          ]
+        },
+        "playing": null
+      }
+    },
+    {
+      "site": "travel",
+      "errors": [],
+      "views": [
+        {
+          "width": 390,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#destination",
+                "type": "select-one",
+                "label": "01 / 想去哪里？",
+                "fontSize": 12,
+                "lineHeight": "normal",
+                "width": 310,
+                "height": 49
+              }
+            ],
+            "anchors": [
+              "#destinations",
+              "#journal",
+              "#philosophy",
+              "#plan"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/travel/assets/index-BM8NJCrA.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#destinations",
+              "targetTop": 30,
+              "heading": "总有一个地方，让你想出发。",
+              "headingTop": 112,
+              "headingBottom": 201,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1001
+            },
+            {
+              "href": "#journal",
+              "targetTop": 30,
+              "heading": "出发前，读一点。",
+              "headingTop": 112,
+              "headingBottom": 157,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 4651
+            },
+            {
+              "href": "#philosophy",
+              "targetTop": 30,
+              "heading": "少一点打卡，多一点在场。",
+              "headingTop": 452,
+              "headingBottom": 545,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3870
+            },
+            {
+              "href": "#plan",
+              "targetTop": 30,
+              "heading": "“改天吧”，就从这次开始。",
+              "headingTop": 104,
+              "headingBottom": 196,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 5510
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#destination",
+                "type": "select-one",
+                "label": "01 / 想去哪里？",
+                "fontSize": 13,
+                "lineHeight": "normal",
+                "width": 546.8,
+                "height": 49
+              }
+            ],
+            "anchors": [
+              "#destinations",
+              "#journal",
+              "#philosophy",
+              "#plan"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/travel/assets/index-BM8NJCrA.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#destinations",
+              "targetTop": 30,
+              "heading": "总有一个地方，让你想出发。",
+              "headingTop": 153,
+              "headingBottom": 265,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 861
+            },
+            {
+              "href": "#journal",
+              "targetTop": 30,
+              "heading": "出发前，读一点。",
+              "headingTop": 153,
+              "headingBottom": 209,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2697
+            },
+            {
+              "href": "#philosophy",
+              "targetTop": 30,
+              "heading": "少一点打卡，多一点在场。",
+              "headingTop": 131,
+              "headingBottom": 250,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2175
+            },
+            {
+              "href": "#plan",
+              "targetTop": 30,
+              "heading": "“改天吧”，就从这次开始。",
+              "headingTop": 139,
+              "headingBottom": 262,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3268
+            }
+          ]
+        }
+      ],
+      "normalMotionControl": {
+        "initial": {
+          "animations": [],
+          "inputs": [
+            {
+              "selector": "#destination",
+              "type": "select-one",
+              "label": "01 / 想去哪里？",
+              "fontSize": 13,
+              "lineHeight": "normal",
+              "width": 546.8,
+              "height": 49
+            }
+          ],
+          "anchors": [
+            "#destinations",
+            "#journal",
+            "#philosophy",
+            "#plan"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/travel/assets/index-BM8NJCrA.js"
+          ]
+        },
+        "playing": null
+      }
+    },
+    {
+      "site": "fintech",
+      "errors": [],
+      "views": [
+        {
+          "width": 390,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#market > div.market-toolbar:nth-of-type(2) > div.table-tools:nth-of-type(2) > label.asset-search > input",
+                "type": "text",
+                "label": "搜索资产名称或代码",
+                "fontSize": 11,
+                "lineHeight": "normal",
+                "width": 236,
+                "height": 14
+              },
+              {
+                "selector": "#assumption",
+                "type": "select-one",
+                "label": "假设名义年增长率",
+                "fontSize": 10,
+                "lineHeight": "normal",
+                "width": 122,
+                "height": 35
+              }
+            ],
+            "anchors": [
+              "#overview",
+              "#market",
+              "#planner",
+              "#notes"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/fintech/assets/index-BOiu7jEK.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#overview",
+              "targetTop": 85,
+              "heading": "资产概览↗",
+              "headingTop": 103,
+              "headingBottom": 142,
+              "overlayBottom": 62,
+              "overlays": [
+                {
+                  "selector": "header.topbar",
+                  "top": 0,
+                  "bottom": 62,
+                  "height": 62
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 6
+            },
+            {
+              "href": "#market",
+              "targetTop": 95,
+              "heading": "市场观察 YOUR WATCHLIST",
+              "headingTop": 117,
+              "headingBottom": 137,
+              "overlayBottom": 62,
+              "overlays": [
+                {
+                  "selector": "header.topbar",
+                  "top": 0,
+                  "bottom": 62,
+                  "height": 62
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 1155
+            },
+            {
+              "href": "#planner",
+              "targetTop": 85,
+              "heading": "给未来，一点想象。",
+              "headingTop": 107,
+              "headingBottom": 139,
+              "overlayBottom": 62,
+              "overlays": [
+                {
+                  "selector": "header.topbar",
+                  "top": 0,
+                  "bottom": 62,
+                  "height": 62
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 1885
+            },
+            {
+              "href": "#notes",
+              "targetTop": 423,
+              "heading": "少一点噪音，多一点理解。",
+              "headingTop": 456,
+              "headingBottom": 486,
+              "overlayBottom": 62,
+              "overlays": [
+                {
+                  "selector": "header.topbar",
+                  "top": 0,
+                  "bottom": 62,
+                  "height": 62
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 2319
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#market > div.market-toolbar:nth-of-type(2) > div.table-tools:nth-of-type(2) > label.asset-search > input",
+                "type": "text",
+                "label": "搜索资产名称或代码",
+                "fontSize": 9,
+                "lineHeight": "normal",
+                "width": 116,
+                "height": 12
+              },
+              {
+                "selector": "#assumption",
+                "type": "select-one",
+                "label": "假设名义年增长率",
+                "fontSize": 10,
+                "lineHeight": "normal",
+                "width": 140,
+                "height": 33
+              }
+            ],
+            "anchors": [
+              "#overview",
+              "#market",
+              "#planner",
+              "#notes"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/fintech/assets/index-BOiu7jEK.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#overview",
+              "targetTop": 95,
+              "heading": "资产概览↗",
+              "headingTop": 116,
+              "headingBottom": 158,
+              "overlayBottom": 73,
+              "overlays": [
+                {
+                  "selector": "header.topbar",
+                  "top": 0,
+                  "bottom": 73,
+                  "height": 73
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 16
+            },
+            {
+              "href": "#market",
+              "targetTop": 105,
+              "heading": "市场观察 YOUR WATCHLIST",
+              "headingTop": 130,
+              "headingBottom": 150,
+              "overlayBottom": 73,
+              "overlays": [
+                {
+                  "selector": "header.topbar",
+                  "top": 0,
+                  "bottom": 73,
+                  "height": 73
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 796
+            },
+            {
+              "href": "#planner",
+              "targetTop": 308,
+              "heading": "给未来，一点想象。",
+              "headingTop": 333,
+              "headingBottom": 362,
+              "overlayBottom": 73,
+              "overlays": [
+                {
+                  "selector": "header.topbar",
+                  "top": 0,
+                  "bottom": 73,
+                  "height": 73
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 1198
+            },
+            {
+              "href": "#notes",
+              "targetTop": 673,
+              "heading": "少一点噪音，多一点理解。",
+              "headingTop": 749,
+              "headingBottom": 806,
+              "overlayBottom": 73,
+              "overlays": [
+                {
+                  "selector": "header.topbar",
+                  "top": 0,
+                  "bottom": 73,
+                  "height": 73
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 1198
+            }
+          ]
+        }
+      ],
+      "normalMotionControl": {
+        "initial": {
+          "animations": [],
+          "inputs": [
+            {
+              "selector": "#market > div.market-toolbar:nth-of-type(2) > div.table-tools:nth-of-type(2) > label.asset-search > input",
+              "type": "text",
+              "label": "搜索资产名称或代码",
+              "fontSize": 9,
+              "lineHeight": "normal",
+              "width": 116,
+              "height": 12
+            },
+            {
+              "selector": "#assumption",
+              "type": "select-one",
+              "label": "假设名义年增长率",
+              "fontSize": 10,
+              "lineHeight": "normal",
+              "width": 140,
+              "height": 33
+            }
+          ],
+          "anchors": [
+            "#overview",
+            "#market",
+            "#planner",
+            "#notes"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/fintech/assets/index-BOiu7jEK.js"
+          ]
+        },
+        "playing": null
+      }
+    },
+    {
+      "site": "civic",
+      "errors": [],
+      "views": [
+        {
+          "width": 390,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#city-search",
+                "type": "text",
+                "label": "搜索城市服务",
+                "fontSize": 13,
+                "lineHeight": "20.8px",
+                "width": 207,
+                "height": 40
+              },
+              {
+                "selector": "form > label:nth-of-type(1) > span.select-wrap > select",
+                "type": "select-one",
+                "label": "需要什么帮助？居住与社区 · 约 20 分钟健康关怀 · 约 30 分钟绿色出行 · 约 15 分钟学习与成长 · 约 20 分钟公园与自然",
+                "fontSize": 14,
+                "lineHeight": "22.4px",
+                "width": 313,
+                "height": 46
+              },
+              {
+                "selector": "form > div.form-row:nth-of-type(2) > label:nth-of-type(1) > input",
+                "type": "text",
+                "label": "如何称呼你",
+                "fontSize": 14,
+                "lineHeight": "22.4px",
+                "width": 313,
+                "height": 46
+              },
+              {
+                "selector": "form > div.form-row:nth-of-type(2) > label:nth-of-type(2) > input",
+                "type": "email",
+                "label": "示例邮箱",
+                "fontSize": 14,
+                "lineHeight": "22.4px",
+                "width": 313,
+                "height": 46
+              },
+              {
+                "selector": "form > div.form-row:nth-of-type(3) > label:nth-of-type(1) > input",
+                "type": "date",
+                "label": "预约日期",
+                "fontSize": 14,
+                "lineHeight": "22.4px",
+                "width": 313,
+                "height": 46
+              },
+              {
+                "selector": "div.form-row:nth-of-type(3) > label:nth-of-type(2) > span.select-wrap > select",
+                "type": "select-one",
+                "label": "方便的时段选择时间09:00 – 10:0010:00 – 11:0014:00 – 15:0015:00 – 16:00",
+                "fontSize": 14,
+                "lineHeight": "22.4px",
+                "width": 313,
+                "height": 46
+              }
+            ],
+            "anchors": [
+              "#services",
+              "#community",
+              "#appointment",
+              "#faq"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/civic/assets/index-B9BKoo4K.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#services",
+              "targetTop": 80,
+              "heading": "你需要哪一种帮助？",
+              "headingTop": 134,
+              "headingBottom": 170,
+              "overlayBottom": 74,
+              "overlays": [
+                {
+                  "selector": "header.site-header",
+                  "top": 0,
+                  "bottom": 74,
+                  "height": 74
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 491
+            },
+            {
+              "href": "#community",
+              "targetTop": 80,
+              "heading": "城市的好，正在发生。",
+              "headingTop": 148,
+              "headingBottom": 185,
+              "overlayBottom": 74,
+              "overlays": [
+                {
+                  "selector": "header.site-header",
+                  "top": 0,
+                  "bottom": 74,
+                  "height": 74
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 1528
+            },
+            {
+              "href": "#appointment",
+              "targetTop": 80,
+              "heading": "少一点等待。多一点从容。",
+              "headingTop": 161,
+              "headingBottom": 254,
+              "overlayBottom": 74,
+              "overlays": [
+                {
+                  "selector": "header.site-header",
+                  "top": 0,
+                  "bottom": 74,
+                  "height": 74
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 2906
+            },
+            {
+              "href": "#faq",
+              "targetTop": 80,
+              "heading": "你可能还想知道。",
+              "headingTop": 162,
+              "headingBottom": 198,
+              "overlayBottom": 74,
+              "overlays": [
+                {
+                  "selector": "header.site-header",
+                  "top": 0,
+                  "bottom": 74,
+                  "height": 74
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 4297
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#city-search",
+                "type": "text",
+                "label": "搜索城市服务",
+                "fontSize": 15,
+                "lineHeight": "24px",
+                "width": 537,
+                "height": 44
+              },
+              {
+                "selector": "form > label:nth-of-type(1) > span.select-wrap > select",
+                "type": "select-one",
+                "label": "需要什么帮助？居住与社区 · 约 20 分钟健康关怀 · 约 30 分钟绿色出行 · 约 15 分钟学习与成长 · 约 20 分钟公园与自然",
+                "fontSize": 14,
+                "lineHeight": "22.4px",
+                "width": 514.6,
+                "height": 46
+              },
+              {
+                "selector": "form > div.form-row:nth-of-type(2) > label:nth-of-type(1) > input",
+                "type": "text",
+                "label": "如何称呼你",
+                "fontSize": 14,
+                "lineHeight": "22.4px",
+                "width": 248.3,
+                "height": 46
+              },
+              {
+                "selector": "form > div.form-row:nth-of-type(2) > label:nth-of-type(2) > input",
+                "type": "email",
+                "label": "示例邮箱",
+                "fontSize": 14,
+                "lineHeight": "22.4px",
+                "width": 248.3,
+                "height": 46
+              },
+              {
+                "selector": "form > div.form-row:nth-of-type(3) > label:nth-of-type(1) > input",
+                "type": "date",
+                "label": "预约日期",
+                "fontSize": 14,
+                "lineHeight": "22.4px",
+                "width": 248.3,
+                "height": 46
+              },
+              {
+                "selector": "div.form-row:nth-of-type(3) > label:nth-of-type(2) > span.select-wrap > select",
+                "type": "select-one",
+                "label": "方便的时段选择时间09:00 – 10:0010:00 – 11:0014:00 – 15:0015:00 – 16:00",
+                "fontSize": 14,
+                "lineHeight": "22.4px",
+                "width": 248.3,
+                "height": 46
+              }
+            ],
+            "anchors": [
+              "#services",
+              "#community",
+              "#appointment",
+              "#faq"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/civic/assets/index-B9BKoo4K.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#services",
+              "targetTop": 95,
+              "heading": "你需要哪一种帮助？",
+              "headingTop": 160,
+              "headingBottom": 203,
+              "overlayBottom": 92,
+              "overlays": [
+                {
+                  "selector": "header.site-header",
+                  "top": 0,
+                  "bottom": 92,
+                  "height": 92
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 456
+            },
+            {
+              "href": "#community",
+              "targetTop": 95,
+              "heading": "城市的好，正在发生。",
+              "headingTop": 208,
+              "headingBottom": 251,
+              "overlayBottom": 92,
+              "overlays": [
+                {
+                  "selector": "header.site-header",
+                  "top": 0,
+                  "bottom": 92,
+                  "height": 92
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 1196
+            },
+            {
+              "href": "#appointment",
+              "targetTop": 95,
+              "heading": "少一点等待。多一点从容。",
+              "headingTop": 221,
+              "headingBottom": 339,
+              "overlayBottom": 92,
+              "overlays": [
+                {
+                  "selector": "header.site-header",
+                  "top": 0,
+                  "bottom": 92,
+                  "height": 92
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 1909
+            },
+            {
+              "href": "#faq",
+              "targetTop": 95,
+              "heading": "你可能还想知道。",
+              "headingTop": 223,
+              "headingBottom": 276,
+              "overlayBottom": 92,
+              "overlays": [
+                {
+                  "selector": "header.site-header",
+                  "top": 0,
+                  "bottom": 92,
+                  "height": 92
+                }
+              ],
+              "coveredHeading": false,
+              "scrollY": 2700
+            }
+          ]
+        }
+      ],
+      "normalMotionControl": {
+        "initial": {
+          "animations": [],
+          "inputs": [
+            {
+              "selector": "#city-search",
+              "type": "text",
+              "label": "搜索城市服务",
+              "fontSize": 15,
+              "lineHeight": "24px",
+              "width": 537,
+              "height": 44
+            },
+            {
+              "selector": "form > label:nth-of-type(1) > span.select-wrap > select",
+              "type": "select-one",
+              "label": "需要什么帮助？居住与社区 · 约 20 分钟健康关怀 · 约 30 分钟绿色出行 · 约 15 分钟学习与成长 · 约 20 分钟公园与自然",
+              "fontSize": 14,
+              "lineHeight": "22.4px",
+              "width": 514.6,
+              "height": 46
+            },
+            {
+              "selector": "form > div.form-row:nth-of-type(2) > label:nth-of-type(1) > input",
+              "type": "text",
+              "label": "如何称呼你",
+              "fontSize": 14,
+              "lineHeight": "22.4px",
+              "width": 248.3,
+              "height": 46
+            },
+            {
+              "selector": "form > div.form-row:nth-of-type(2) > label:nth-of-type(2) > input",
+              "type": "email",
+              "label": "示例邮箱",
+              "fontSize": 14,
+              "lineHeight": "22.4px",
+              "width": 248.3,
+              "height": 46
+            },
+            {
+              "selector": "form > div.form-row:nth-of-type(3) > label:nth-of-type(1) > input",
+              "type": "date",
+              "label": "预约日期",
+              "fontSize": 14,
+              "lineHeight": "22.4px",
+              "width": 248.3,
+              "height": 46
+            },
+            {
+              "selector": "div.form-row:nth-of-type(3) > label:nth-of-type(2) > span.select-wrap > select",
+              "type": "select-one",
+              "label": "方便的时段选择时间09:00 – 10:0010:00 – 11:0014:00 – 15:0015:00 – 16:00",
+              "fontSize": 14,
+              "lineHeight": "22.4px",
+              "width": 248.3,
+              "height": 46
+            }
+          ],
+          "anchors": [
+            "#services",
+            "#community",
+            "#appointment",
+            "#faq"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/civic/assets/index-B9BKoo4K.js"
+          ]
+        },
+        "playing": null
+      }
+    },
+    {
+      "site": "arcade",
+      "errors": [],
+      "views": [
+        {
+          "width": 390,
+          "initial": {
+            "animations": [],
+            "inputs": [],
+            "anchors": [
+              "#games",
+              "#play",
+              "#scoreboard"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/arcade/assets/index-DK2Aq-7y.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#games",
+              "targetTop": 25,
+              "heading": "你的下一局，在这里。",
+              "headingTop": 119,
+              "headingBottom": 191,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 981
+            },
+            {
+              "href": "#play",
+              "targetTop": 25,
+              "heading": "别眨眼。就是现在。",
+              "headingTop": 103,
+              "headingBottom": 175,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2109
+            },
+            {
+              "href": "#scoreboard",
+              "targetTop": 25,
+              "heading": "最好的对手，是上一局的你。",
+              "headingTop": 119,
+              "headingBottom": 191,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3369
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "initial": {
+            "animations": [],
+            "inputs": [],
+            "anchors": [
+              "#games",
+              "#play",
+              "#scoreboard"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/arcade/assets/index-DK2Aq-7y.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#games",
+              "targetTop": 25,
+              "heading": "你的下一局，在这里。",
+              "headingTop": 149,
+              "headingBottom": 195,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 757
+            },
+            {
+              "href": "#play",
+              "targetTop": 25,
+              "heading": "别眨眼。就是现在。",
+              "headingTop": 125,
+              "headingBottom": 171,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1524
+            },
+            {
+              "href": "#scoreboard",
+              "targetTop": 25,
+              "heading": "最好的对手，是上一局的你。",
+              "headingTop": 149,
+              "headingBottom": 195,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2280
+            }
+          ]
+        }
+      ],
+      "normalMotionControl": {
+        "initial": {
+          "animations": [],
+          "inputs": [],
+          "anchors": [
+            "#games",
+            "#play",
+            "#scoreboard"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/arcade/assets/index-DK2Aq-7y.js"
+          ]
+        },
+        "playing": null
+      }
+    },
+    {
+      "site": "architecture",
+      "errors": [],
+      "views": [
+        {
+          "width": 390,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#contact > form > div.form-row > label:nth-of-type(1) > select",
+                "type": "select-one",
+                "label": "项目方向住宅与居住空间文化与艺术空间社区与公共空间其他空间研究",
+                "fontSize": 12,
+                "lineHeight": "normal",
+                "width": 165.5,
+                "height": 42
+              },
+              {
+                "selector": "#contact > form > div.form-row > label:nth-of-type(2) > select",
+                "type": "select-one",
+                "label": "预估面积100 m² 以下100–300 m²300–1000 m²1000 m² 以上尚未确定",
+                "fontSize": 12,
+                "lineHeight": "normal",
+                "width": 165.5,
+                "height": 42
+              },
+              {
+                "selector": "#contact > form > label:nth-of-type(1) > input",
+                "type": "text",
+                "label": "项目地点",
+                "fontSize": 13,
+                "lineHeight": "normal",
+                "width": 350,
+                "height": 41
+              },
+              {
+                "selector": "#contact > form > label:nth-of-type(2) > textarea",
+                "type": "textarea",
+                "label": "关于这个空间，你有什么想法？",
+                "fontSize": 13,
+                "lineHeight": "24.7px",
+                "width": 350,
+                "height": 110
+              }
+            ],
+            "anchors": [
+              "#work",
+              "#practice",
+              "#journal",
+              "#contact"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/architecture/assets/index-D2C8eVkg.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#work",
+              "targetTop": 25,
+              "heading": "一些关于空间的回答。",
+              "headingTop": 78,
+              "headingBottom": 112,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1121
+            },
+            {
+              "href": "#practice",
+              "targetTop": 25,
+              "heading": "不急于表达。先认真理解。",
+              "headingTop": 144,
+              "headingBottom": 243,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3100
+            },
+            {
+              "href": "#journal",
+              "targetTop": 25,
+              "heading": "在设计之外，继续观察。",
+              "headingTop": 123,
+              "headingBottom": 222,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 4451
+            },
+            {
+              "href": "#contact",
+              "targetTop": 25,
+              "heading": "Every spacestarts witha conversation.",
+              "headingTop": 118,
+              "headingBottom": 255,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 5083
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#contact > form > div.form-row > label:nth-of-type(1) > select",
+                "type": "select-one",
+                "label": "项目方向住宅与居住空间文化与艺术空间社区与公共空间其他空间研究",
+                "fontSize": 12,
+                "lineHeight": "normal",
+                "width": 305.5,
+                "height": 42
+              },
+              {
+                "selector": "#contact > form > div.form-row > label:nth-of-type(2) > select",
+                "type": "select-one",
+                "label": "预估面积100 m² 以下100–300 m²300–1000 m²1000 m² 以上尚未确定",
+                "fontSize": 12,
+                "lineHeight": "normal",
+                "width": 305.5,
+                "height": 42
+              },
+              {
+                "selector": "#contact > form > label:nth-of-type(1) > input",
+                "type": "text",
+                "label": "项目地点",
+                "fontSize": 12,
+                "lineHeight": "normal",
+                "width": 639.1,
+                "height": 40
+              },
+              {
+                "selector": "#contact > form > label:nth-of-type(2) > textarea",
+                "type": "textarea",
+                "label": "关于这个空间，你有什么想法？",
+                "fontSize": 12,
+                "lineHeight": "22.8px",
+                "width": 639.1,
+                "height": 110
+              }
+            ],
+            "anchors": [
+              "#work",
+              "#practice",
+              "#journal",
+              "#contact"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/architecture/assets/index-D2C8eVkg.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#work",
+              "targetTop": 25,
+              "heading": "一些关于空间的回答。",
+              "headingTop": 56,
+              "headingBottom": 88,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1330
+            },
+            {
+              "href": "#practice",
+              "targetTop": 25,
+              "heading": "不急于表达。先认真理解。",
+              "headingTop": 176,
+              "headingBottom": 303,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2781
+            },
+            {
+              "href": "#journal",
+              "targetTop": 25,
+              "heading": "在设计之外，继续观察。",
+              "headingTop": 158,
+              "headingBottom": 271,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3605
+            },
+            {
+              "href": "#contact",
+              "targetTop": 25,
+              "heading": "Every spacestarts witha conversation.",
+              "headingTop": 141,
+              "headingBottom": 301,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 4105
+            }
+          ]
+        }
+      ],
+      "normalMotionControl": {
+        "initial": {
+          "animations": [],
+          "inputs": [
+            {
+              "selector": "#contact > form > div.form-row > label:nth-of-type(1) > select",
+              "type": "select-one",
+              "label": "项目方向住宅与居住空间文化与艺术空间社区与公共空间其他空间研究",
+              "fontSize": 12,
+              "lineHeight": "normal",
+              "width": 305.5,
+              "height": 42
+            },
+            {
+              "selector": "#contact > form > div.form-row > label:nth-of-type(2) > select",
+              "type": "select-one",
+              "label": "预估面积100 m² 以下100–300 m²300–1000 m²1000 m² 以上尚未确定",
+              "fontSize": 12,
+              "lineHeight": "normal",
+              "width": 305.5,
+              "height": 42
+            },
+            {
+              "selector": "#contact > form > label:nth-of-type(1) > input",
+              "type": "text",
+              "label": "项目地点",
+              "fontSize": 12,
+              "lineHeight": "normal",
+              "width": 639.1,
+              "height": 40
+            },
+            {
+              "selector": "#contact > form > label:nth-of-type(2) > textarea",
+              "type": "textarea",
+              "label": "关于这个空间，你有什么想法？",
+              "fontSize": 12,
+              "lineHeight": "22.8px",
+              "width": 639.1,
+              "height": 110
+            }
+          ],
+          "anchors": [
+            "#work",
+            "#practice",
+            "#journal",
+            "#contact"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/architecture/assets/index-D2C8eVkg.js"
+          ]
+        },
+        "playing": null
+      }
+    },
+    {
+      "site": "editorial",
+      "errors": [],
+      "views": [
+        {
+          "width": 390,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#folio-email",
+                "type": "email",
+                "label": "你的电子邮箱",
+                "fontSize": 22,
+                "lineHeight": "normal",
+                "width": 303,
+                "height": 57
+              }
+            ],
+            "anchors": [
+              "#journal",
+              "#philosophy",
+              "#letter"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/editorial/assets/index-BcRcwoVG.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#journal",
+              "targetTop": 0,
+              "heading": "值得停留的故事Selected readings",
+              "headingTop": 70,
+              "headingBottom": 141,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 952
+            },
+            {
+              "href": "#philosophy",
+              "targetTop": 0,
+              "headingTop": null,
+              "headingBottom": null,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2525
+            },
+            {
+              "href": "#letter",
+              "targetTop": 318,
+              "heading": "偶尔，写一封信给你。",
+              "headingTop": 392,
+              "headingBottom": 433,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2629
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#folio-email",
+                "type": "email",
+                "label": "你的电子邮箱",
+                "fontSize": 23,
+                "lineHeight": "normal",
+                "width": 549.5,
+                "height": 59
+              }
+            ],
+            "anchors": [
+              "#journal",
+              "#philosophy",
+              "#letter"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/editorial/assets/index-BcRcwoVG.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#journal",
+              "targetTop": 0,
+              "heading": "值得停留的故事Selected readings",
+              "headingTop": 97,
+              "headingBottom": 181,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 846
+            },
+            {
+              "href": "#philosophy",
+              "targetTop": 0,
+              "headingTop": null,
+              "headingBottom": null,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1823
+            },
+            {
+              "href": "#letter",
+              "targetTop": 473,
+              "heading": "偶尔，写一封信给你。",
+              "headingTop": 584,
+              "headingBottom": 630,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1859
+            }
+          ]
+        }
+      ],
+      "normalMotionControl": {
+        "initial": {
+          "animations": [],
+          "inputs": [
+            {
+              "selector": "#folio-email",
+              "type": "email",
+              "label": "你的电子邮箱",
+              "fontSize": 23,
+              "lineHeight": "normal",
+              "width": 549.5,
+              "height": 59
+            }
+          ],
+          "anchors": [
+            "#journal",
+            "#philosophy",
+            "#letter"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/editorial/assets/index-BcRcwoVG.js"
+          ]
+        },
+        "playing": null
+      }
+    },
+    {
+      "site": "swiss",
+      "errors": [],
+      "views": [
+        {
+          "width": 390,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#tickets > form.ticket-form > div.ticket-settings:nth-of-type(1) > label > select",
+                "type": "select-one",
+                "label": "02 / 入场日期12 月 18 日 · 星期五12 月 19 日 · 星期六12 月 20 日 · 星期日",
+                "fontSize": 12,
+                "lineHeight": "normal",
+                "width": 188.8,
+                "height": 48
+              }
+            ],
+            "anchors": [
+              "#exhibitions",
+              "#programme",
+              "#about",
+              "#tickets"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/swiss/assets/index-OONr7iNs.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#exhibitions",
+              "targetTop": 20,
+              "heading": "不同视角。同一种好奇。",
+              "headingTop": 108,
+              "headingBottom": 204,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 640
+            },
+            {
+              "href": "#programme",
+              "targetTop": 20,
+              "heading": "把时间，留给新鲜事。",
+              "headingTop": 108,
+              "headingBottom": 208,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3343
+            },
+            {
+              "href": "#about",
+              "targetTop": 20,
+              "heading": "好的设计，始于一个好问题。",
+              "headingTop": 119,
+              "headingBottom": 213,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2791
+            },
+            {
+              "href": "#tickets",
+              "targetTop": 20,
+              "heading": "下一种可能，等你入场。",
+              "headingTop": 97,
+              "headingBottom": 193,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 4459
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#tickets > form.ticket-form > div.ticket-settings:nth-of-type(1) > label > select",
+                "type": "select-one",
+                "label": "02 / 入场日期12 月 18 日 · 星期五12 月 19 日 · 星期六12 月 20 日 · 星期日",
+                "fontSize": 13,
+                "lineHeight": "normal",
+                "width": 334,
+                "height": 48
+              }
+            ],
+            "anchors": [
+              "#exhibitions",
+              "#programme",
+              "#about",
+              "#tickets"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/swiss/assets/index-OONr7iNs.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#exhibitions",
+              "targetTop": 90,
+              "heading": "不同视角。同一种好奇。",
+              "headingTop": 216,
+              "headingBottom": 361,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 711
+            },
+            {
+              "href": "#programme",
+              "targetTop": 90,
+              "heading": "把时间，留给新鲜事。",
+              "headingTop": 216,
+              "headingBottom": 332,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2377
+            },
+            {
+              "href": "#about",
+              "targetTop": 90,
+              "heading": "好的设计，始于一个好问题。",
+              "headingTop": 156,
+              "headingBottom": 326,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 1814
+            },
+            {
+              "href": "#tickets",
+              "targetTop": 90,
+              "heading": "下一种可能，等你入场。",
+              "headingTop": 199,
+              "headingBottom": 353,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3249
+            }
+          ]
+        }
+      ],
+      "normalMotionControl": {
+        "initial": {
+          "animations": [],
+          "inputs": [
+            {
+              "selector": "#tickets > form.ticket-form > div.ticket-settings:nth-of-type(1) > label > select",
+              "type": "select-one",
+              "label": "02 / 入场日期12 月 18 日 · 星期五12 月 19 日 · 星期六12 月 20 日 · 星期日",
+              "fontSize": 13,
+              "lineHeight": "normal",
+              "width": 334,
+              "height": 48
+            }
+          ],
+          "anchors": [
+            "#exhibitions",
+            "#programme",
+            "#about",
+            "#tickets"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/swiss/assets/index-OONr7iNs.js"
+          ]
+        },
+        "playing": null
+      }
+    },
+    {
+      "site": "organic",
+      "errors": [],
+      "views": [
+        {
+          "width": 390,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#collection > div.collection-toolbar:nth-of-type(2) > div.collection-options:nth-of-type(2) > label > select",
+                "type": "select-one",
+                "label": "商品排序",
+                "fontSize": 11,
+                "lineHeight": "normal",
+                "width": 94,
+                "height": 32
+              },
+              {
+                "selector": "#email",
+                "type": "email",
+                "label": "你的电子邮箱",
+                "fontSize": 14,
+                "lineHeight": "21px",
+                "width": 291.4,
+                "height": 30
+              }
+            ],
+            "anchors": [
+              "#collection",
+              "#story",
+              "#care"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 390,
+            "viewportWidth": 390,
+            "bundles": [
+              "http://127.0.0.1:4173/organic/assets/index-Bqdzi-Fo.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#collection",
+              "targetTop": 200,
+              "heading": "让自然，住进日常。",
+              "headingTop": 270,
+              "headingBottom": 311,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 766
+            },
+            {
+              "href": "#story",
+              "targetTop": 200,
+              "heading": "生活不必很满，有生长就好。",
+              "headingTop": 572,
+              "headingBottom": 668,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2284
+            },
+            {
+              "href": "#care",
+              "targetTop": 200,
+              "heading": "养绿，也是在养自己。",
+              "headingTop": 270,
+              "headingBottom": 310,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 3101
+            }
+          ]
+        },
+        {
+          "width": 1440,
+          "initial": {
+            "animations": [],
+            "inputs": [
+              {
+                "selector": "#collection > div.collection-toolbar:nth-of-type(2) > div.collection-options:nth-of-type(2) > label > select",
+                "type": "select-one",
+                "label": "商品排序",
+                "fontSize": 12,
+                "lineHeight": "normal",
+                "width": 128,
+                "height": 44
+              },
+              {
+                "selector": "#email",
+                "type": "email",
+                "label": "你的电子邮箱",
+                "fontSize": 14,
+                "lineHeight": "21px",
+                "width": 379.4,
+                "height": 30
+              }
+            ],
+            "anchors": [
+              "#collection",
+              "#story",
+              "#care"
+            ],
+            "reduced": true,
+            "scrollBehavior": {
+              "html": "auto",
+              "body": "auto"
+            },
+            "documentWidth": 1440,
+            "viewportWidth": 1440,
+            "bundles": [
+              "http://127.0.0.1:4173/organic/assets/index-Bqdzi-Fo.js"
+            ]
+          },
+          "playing": null,
+          "anchors": [
+            {
+              "href": "#collection",
+              "targetTop": 200,
+              "heading": "让自然，住进日常。",
+              "headingTop": 320,
+              "headingBottom": 375,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 658
+            },
+            {
+              "href": "#story",
+              "targetTop": 200,
+              "heading": "生活不必很满，有生长就好。",
+              "headingTop": 304,
+              "headingBottom": 431,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2200
+            },
+            {
+              "href": "#care",
+              "targetTop": 200,
+              "heading": "养绿，也是在养自己。",
+              "headingTop": 320,
+              "headingBottom": 375,
+              "overlayBottom": 0,
+              "overlays": [],
+              "coveredHeading": false,
+              "scrollY": 2808
+            }
+          ]
+        }
+      ],
+      "normalMotionControl": {
+        "initial": {
+          "animations": [],
+          "inputs": [
+            {
+              "selector": "#collection > div.collection-toolbar:nth-of-type(2) > div.collection-options:nth-of-type(2) > label > select",
+              "type": "select-one",
+              "label": "商品排序",
+              "fontSize": 12,
+              "lineHeight": "normal",
+              "width": 128,
+              "height": 44
+            },
+            {
+              "selector": "#email",
+              "type": "email",
+              "label": "你的电子邮箱",
+              "fontSize": 14,
+              "lineHeight": "21px",
+              "width": 379.4,
+              "height": 30
+            }
+          ],
+          "anchors": [
+            "#collection",
+            "#story",
+            "#care"
+          ],
+          "reduced": false,
+          "scrollBehavior": {
+            "html": "smooth",
+            "body": "auto"
+          },
+          "documentWidth": 1440,
+          "viewportWidth": 1440,
+          "bundles": [
+            "http://127.0.0.1:4173/organic/assets/index-Bqdzi-Fo.js"
+          ]
+        },
+        "playing": null
+      }
+    }
+  ],
+  "issues": [
+    {
+      "site": "brutalist",
+      "width": 343.2,
+      "category": "small-mobile-input",
+      "selector": "#budget",
+      "type": "select-one",
+      "label": "02 / 预算范围",
+      "fontSize": 13,
+      "lineHeight": "normal",
+      "height": 47,
+      "viewportWidth": 390
+    },
+    {
+      "site": "brutalist",
+      "width": 343.2,
+      "category": "small-mobile-input",
+      "selector": "#brief",
+      "type": "textarea",
+      "label": "03 / 说说你的想法",
+      "fontSize": 14,
+      "lineHeight": "25.2px",
+      "height": 120,
+      "viewportWidth": 390
+    },
+    {
+      "site": "terminal",
+      "width": 267.4,
+      "category": "small-mobile-input",
+      "selector": "#command-input",
+      "type": "text",
+      "label": "输入演示命令",
+      "fontSize": 11,
+      "lineHeight": "normal",
+      "height": 22,
+      "viewportWidth": 390
+    },
+    {
+      "site": "restaurant",
+      "width": 144.1,
+      "category": "small-mobile-input",
+      "selector": "#booking-date",
+      "type": "date",
+      "label": "哪一天",
+      "fontSize": 11,
+      "lineHeight": "normal",
+      "height": 43,
+      "viewportWidth": 390
+    },
+    {
+      "site": "restaurant",
+      "width": 144.1,
+      "category": "small-mobile-input",
+      "selector": "#booking-time",
+      "type": "select-one",
+      "label": "几点见17:3018:0018:3019:0019:3020:0020:30",
+      "fontSize": 11,
+      "lineHeight": "normal",
+      "height": 43,
+      "viewportWidth": 390
+    },
+    {
+      "site": "travel",
+      "width": 310,
+      "category": "small-mobile-input",
+      "selector": "#destination",
+      "type": "select-one",
+      "label": "01 / 想去哪里？",
+      "fontSize": 12,
+      "lineHeight": "normal",
+      "height": 49,
+      "viewportWidth": 390
+    },
+    {
+      "site": "fintech",
+      "width": 236,
+      "category": "small-mobile-input",
+      "selector": "#market > div.market-toolbar:nth-of-type(2) > div.table-tools:nth-of-type(2) > label.asset-search > input",
+      "type": "text",
+      "label": "搜索资产名称或代码",
+      "fontSize": 11,
+      "lineHeight": "normal",
+      "height": 14,
+      "viewportWidth": 390
+    },
+    {
+      "site": "fintech",
+      "width": 122,
+      "category": "small-mobile-input",
+      "selector": "#assumption",
+      "type": "select-one",
+      "label": "假设名义年增长率",
+      "fontSize": 10,
+      "lineHeight": "normal",
+      "height": 35,
+      "viewportWidth": 390
+    },
+    {
+      "site": "civic",
+      "width": 207,
+      "category": "small-mobile-input",
+      "selector": "#city-search",
+      "type": "text",
+      "label": "搜索城市服务",
+      "fontSize": 13,
+      "lineHeight": "20.8px",
+      "height": 40,
+      "viewportWidth": 390
+    },
+    {
+      "site": "civic",
+      "width": 313,
+      "category": "small-mobile-input",
+      "selector": "form > label:nth-of-type(1) > span.select-wrap > select",
+      "type": "select-one",
+      "label": "需要什么帮助？居住与社区 · 约 20 分钟健康关怀 · 约 30 分钟绿色出行 · 约 15 分钟学习与成长 · 约 20 分钟公园与自然",
+      "fontSize": 14,
+      "lineHeight": "22.4px",
+      "height": 46,
+      "viewportWidth": 390
+    },
+    {
+      "site": "civic",
+      "width": 313,
+      "category": "small-mobile-input",
+      "selector": "form > div.form-row:nth-of-type(2) > label:nth-of-type(1) > input",
+      "type": "text",
+      "label": "如何称呼你",
+      "fontSize": 14,
+      "lineHeight": "22.4px",
+      "height": 46,
+      "viewportWidth": 390
+    },
+    {
+      "site": "civic",
+      "width": 313,
+      "category": "small-mobile-input",
+      "selector": "form > div.form-row:nth-of-type(2) > label:nth-of-type(2) > input",
+      "type": "email",
+      "label": "示例邮箱",
+      "fontSize": 14,
+      "lineHeight": "22.4px",
+      "height": 46,
+      "viewportWidth": 390
+    },
+    {
+      "site": "civic",
+      "width": 313,
+      "category": "small-mobile-input",
+      "selector": "form > div.form-row:nth-of-type(3) > label:nth-of-type(1) > input",
+      "type": "date",
+      "label": "预约日期",
+      "fontSize": 14,
+      "lineHeight": "22.4px",
+      "height": 46,
+      "viewportWidth": 390
+    },
+    {
+      "site": "civic",
+      "width": 313,
+      "category": "small-mobile-input",
+      "selector": "div.form-row:nth-of-type(3) > label:nth-of-type(2) > span.select-wrap > select",
+      "type": "select-one",
+      "label": "方便的时段选择时间09:00 – 10:0010:00 – 11:0014:00 – 15:0015:00 – 16:00",
+      "fontSize": 14,
+      "lineHeight": "22.4px",
+      "height": 46,
+      "viewportWidth": 390
+    },
+    {
+      "site": "architecture",
+      "width": 165.5,
+      "category": "small-mobile-input",
+      "selector": "#contact > form > div.form-row > label:nth-of-type(1) > select",
+      "type": "select-one",
+      "label": "项目方向住宅与居住空间文化与艺术空间社区与公共空间其他空间研究",
+      "fontSize": 12,
+      "lineHeight": "normal",
+      "height": 42,
+      "viewportWidth": 390
+    },
+    {
+      "site": "architecture",
+      "width": 165.5,
+      "category": "small-mobile-input",
+      "selector": "#contact > form > div.form-row > label:nth-of-type(2) > select",
+      "type": "select-one",
+      "label": "预估面积100 m² 以下100–300 m²300–1000 m²1000 m² 以上尚未确定",
+      "fontSize": 12,
+      "lineHeight": "normal",
+      "height": 42,
+      "viewportWidth": 390
+    },
+    {
+      "site": "architecture",
+      "width": 350,
+      "category": "small-mobile-input",
+      "selector": "#contact > form > label:nth-of-type(1) > input",
+      "type": "text",
+      "label": "项目地点",
+      "fontSize": 13,
+      "lineHeight": "normal",
+      "height": 41,
+      "viewportWidth": 390
+    },
+    {
+      "site": "architecture",
+      "width": 350,
+      "category": "small-mobile-input",
+      "selector": "#contact > form > label:nth-of-type(2) > textarea",
+      "type": "textarea",
+      "label": "关于这个空间，你有什么想法？",
+      "fontSize": 13,
+      "lineHeight": "24.7px",
+      "height": 110,
+      "viewportWidth": 390
+    },
+    {
+      "site": "swiss",
+      "width": 188.8,
+      "category": "small-mobile-input",
+      "selector": "#tickets > form.ticket-form > div.ticket-settings:nth-of-type(1) > label > select",
+      "type": "select-one",
+      "label": "02 / 入场日期12 月 18 日 · 星期五12 月 19 日 · 星期六12 月 20 日 · 星期日",
+      "fontSize": 12,
+      "lineHeight": "normal",
+      "height": 48,
+      "viewportWidth": 390
+    },
+    {
+      "site": "organic",
+      "width": 94,
+      "category": "small-mobile-input",
+      "selector": "#collection > div.collection-toolbar:nth-of-type(2) > div.collection-options:nth-of-type(2) > label > select",
+      "type": "select-one",
+      "label": "商品排序",
+      "fontSize": 11,
+      "lineHeight": "normal",
+      "height": 32,
+      "viewportWidth": 390
+    },
+    {
+      "site": "organic",
+      "width": 291.4,
+      "category": "small-mobile-input",
+      "selector": "#email",
+      "type": "email",
+      "label": "你的电子邮箱",
+      "fontSize": 14,
+      "lineHeight": "21px",
+      "height": 30,
+      "viewportWidth": 390
+    }
+  ],
+  "completedAt": "2026-11-17T06:22:14.864Z",
+  "summary": {
+    "sites": 12,
+    "auditErrors": 0,
+    "scriptErrors": 0,
+    "reducedMotionViolations": 0,
+    "smallMobileInputs": 21,
+    "coveredAnchorHeadings": 0
+  }
+}

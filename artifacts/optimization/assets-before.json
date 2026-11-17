@@ -1,0 +1,200 @@
+{
+  "checkedAt": "2026-11-17T06:18:14.287Z",
+  "sites": [
+    {
+      "site": "catalogue",
+      "assets": [
+        {
+          "file": "index-CCR-jMJU.css",
+          "bytes": 37156,
+          "gzipBytes": 8919
+        },
+        {
+          "file": "index-DUdffAk9.js",
+          "bytes": 491981,
+          "gzipBytes": 160151
+        }
+      ]
+    },
+    {
+      "site": "editorial",
+      "assets": [
+        {
+          "file": "index-BC1DysGo.js",
+          "bytes": 238216,
+          "gzipBytes": 76274
+        },
+        {
+          "file": "index-D-Ehm4jn.css",
+          "bytes": 9873,
+          "gzipBytes": 2818
+        }
+      ]
+    },
+    {
+      "site": "brutalist",
+      "assets": [
+        {
+          "file": "index-BcYoiCB4.js",
+          "bytes": 237290,
+          "gzipBytes": 75847
+        },
+        {
+          "file": "index-DJFJmnQU.css",
+          "bytes": 16896,
+          "gzipBytes": 4444
+        }
+      ]
+    },
+    {
+      "site": "swiss",
+      "assets": [
+        {
+          "file": "index-C4-3sejA.js",
+          "bytes": 241213,
+          "gzipBytes": 76309
+        },
+        {
+          "file": "index-DrDwi2qO.css",
+          "bytes": 20713,
+          "gzipBytes": 4988
+        }
+      ]
+    },
+    {
+      "site": "glass",
+      "assets": [
+        {
+          "file": "index-ClNt-J-R.js",
+          "bytes": 242036,
+          "gzipBytes": 76550
+        },
+        {
+          "file": "index-Cw5VkcuJ.css",
+          "bytes": 21419,
+          "gzipBytes": 5805
+        }
+      ]
+    },
+    {
+      "site": "terminal",
+      "assets": [
+        {
+          "file": "index-C20gHcLS.css",
+          "bytes": 33061,
+          "gzipBytes": 7632
+        },
+        {
+          "file": "index-Dejahi-r.js",
+          "bytes": 248438,
+          "gzipBytes": 78569
+        }
+      ]
+    },
+    {
+      "site": "organic",
+      "assets": [
+        {
+          "file": "index-BXx4KWOr.js",
+          "bytes": 249074,
+          "gzipBytes": 79980
+        },
+        {
+          "file": "index-Bzmm45U7.css",
+          "bytes": 19795,
+          "gzipBytes": 5133
+        }
+      ]
+    },
+    {
+      "site": "restaurant",
+      "assets": [
+        {
+          "file": "index-Czjjbkqe.js",
+          "bytes": 240088,
+          "gzipBytes": 76731
+        },
+        {
+          "file": "index-s77d6mX3.css",
+          "bytes": 14954,
+          "gzipBytes": 3860
+        }
+      ]
+    },
+    {
+      "site": "travel",
+      "assets": [
+        {
+          "file": "index-BM8NJCrA.js",
+          "bytes": 253636,
+          "gzipBytes": 81434
+        },
+        {
+          "file": "index-CdX_YWGS.css",
+          "bytes": 29034,
+          "gzipBytes": 6749
+        }
+      ]
+    },
+    {
+      "site": "fintech",
+      "assets": [
+        {
+          "file": "index-BOiu7jEK.js",
+          "bytes": 254403,
+          "gzipBytes": 80456
+        },
+        {
+          "file": "index-Bgdnb9q7.css",
+          "bytes": 32903,
+          "gzipBytes": 7709
+        }
+      ]
+    },
+    {
+      "site": "civic",
+      "assets": [
+        {
+          "file": "index-B9BKoo4K.js",
+          "bytes": 244493,
+          "gzipBytes": 77611
+        },
+        {
+          "file": "index-UyQKB0kd.css",
+          "bytes": 27265,
+          "gzipBytes": 6322
+        }
+      ]
+    },
+    {
+      "site": "arcade",
+      "assets": [
+        {
+          "file": "index-DK2Aq-7y.js",
+          "bytes": 247761,
+          "gzipBytes": 78513
+        },
+        {
+          "file": "index-s7Pdvmc7.css",
+          "bytes": 28353,
+          "gzipBytes": 6930
+        }
+      ]
+    },
+    {
+      "site": "architecture",
+      "assets": [
+        {
+          "file": "index-D2C8eVkg.js",
+          "bytes": 250093,
+          "gzipBytes": 80718
+        },
+        {
+          "file": "index-Ds4i5n-P.css",
+          "bytes": 23358,
+          "gzipBytes": 5382
+        }
+      ]
+    }
+  ]
+}
