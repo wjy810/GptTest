@@ -1,0 +1,76 @@
+
+> form-field-independent-sites@1.0.0 test
+> playwright test
+
+
+Running 56 tests using 3 workers
+
+(node:28347) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28346) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 tests/sites.spec.ts:25:1 › catalogue: root entry redirects to the independently served catalogue (1.7s)
+  ✓   4 tests/sites.spec.ts:45:5 › editorial / desktop: standalone document, resources and layout (1.7s)
+  ✓   2 tests/sites.spec.ts:45:5 › catalogue / mobile: standalone document, resources and layout (3.9s)
+  ✓   3 tests/sites.spec.ts:45:5 › catalogue / desktop: standalone document, resources and layout (4.6s)
+  ✓   5 tests/sites.spec.ts:45:5 › editorial / mobile: standalone document, resources and layout (1.3s)
+  ✓   6 tests/sites.spec.ts:45:5 › brutalist / desktop: standalone document, resources and layout (1.8s)
+  ✓   7 tests/sites.spec.ts:45:5 › brutalist / mobile: standalone document, resources and layout (1.3s)
+  ✓   8 tests/sites.spec.ts:45:5 › swiss / desktop: standalone document, resources and layout (1.7s)
+  ✓   9 tests/sites.spec.ts:45:5 › swiss / mobile: standalone document, resources and layout (1.4s)
+  ✓  10 tests/sites.spec.ts:45:5 › glass / desktop: standalone document, resources and layout (2.0s)
+  ✓  11 tests/sites.spec.ts:45:5 › glass / mobile: standalone document, resources and layout (1.6s)
+  ✓  12 tests/sites.spec.ts:45:5 › terminal / desktop: standalone document, resources and layout (2.0s)
+  ✓  13 tests/sites.spec.ts:45:5 › terminal / mobile: standalone document, resources and layout (1.7s)
+  ✓  14 tests/sites.spec.ts:45:5 › organic / desktop: standalone document, resources and layout (1.8s)
+  ✓  15 tests/sites.spec.ts:45:5 › organic / mobile: standalone document, resources and layout (1.4s)
+  ✓  17 tests/sites.spec.ts:45:5 › restaurant / mobile: standalone document, resources and layout (1.4s)
+  ✓  16 tests/sites.spec.ts:45:5 › restaurant / desktop: standalone document, resources and layout (2.1s)
+  ✓  18 tests/sites.spec.ts:45:5 › travel / desktop: standalone document, resources and layout (2.1s)
+  ✓  19 tests/sites.spec.ts:45:5 › travel / mobile: standalone document, resources and layout (1.5s)
+  ✓  20 tests/sites.spec.ts:45:5 › arcade / desktop: standalone document, resources and layout (1.9s)
+  ✓  21 tests/sites.spec.ts:45:5 › arcade / mobile: standalone document, resources and layout (1.4s)
+  ✓  22 tests/sites.spec.ts:45:5 › civic / desktop: standalone document, resources and layout (1.7s)
+  ✓  23 tests/sites.spec.ts:45:5 › civic / mobile: standalone document, resources and layout (1.5s)
+  ✓  25 tests/sites.spec.ts:45:5 › architecture / mobile: standalone document, resources and layout (1.6s)
+  ✓  26 tests/sites.spec.ts:45:5 › fintech / desktop: standalone document, resources and layout (1.6s)
+  ✓  24 tests/sites.spec.ts:45:5 › architecture / desktop: standalone document, resources and layout (3.1s)
+  ✓  27 tests/sites.spec.ts:45:5 › fintech / mobile: standalone document, resources and layout (1.6s)
+  ✓  28 tests/sites.spec.ts:116:1 › editorial: filter stories, read a story, and persist a bookmark (1.4s)
+  ✓  29 tests/sites.spec.ts:134:1 › editorial: subscription feedback stays explicitly local (1.8s)
+  ✓  30 tests/sites.spec.ts:144:1 › brutalist: category filter opens and closes the matching case study (1.1s)
+  ✓  31 tests/sites.spec.ts:156:1 › brutalist: a project brief downloads the selected service and budget (1.5s)
+  ✓  33 tests/sites.spec.ts:192:1 › swiss: ticket type and quantity change both price and reservation summary (1.7s)
+  ✓  32 tests/sites.spec.ts:175:1 › swiss: date tabs support arrow keys and exhibition details close with Escape (1.9s)
+  ✓  35 tests/sites.spec.ts:236:1 › organic: removing the last item restores the empty cart (1.6s)
+  ✓  34 tests/sites.spec.ts:211:1 › organic: product filter, product details, persistent bag and recalculated totals (2.8s)
+  ✓  37 tests/sites.spec.ts:263:1 › glass: mood and favorite filters show the correct sounds (1.5s)
+  ✓  36 tests/sites.spec.ts:245:1 › glass: Web Audio player starts, advances time, switches sound and pauses (3.4s)
+  ✓  39 tests/sites.spec.ts:292:1 › terminal: annual billing changes price and plan preview (1.6s)
+  ✓  40 tests/sites.spec.ts:310:1 › catalogue: independent links, evidence filtering, search and source record (1.5s)
+  ✓  38 tests/sites.spec.ts:275:1 › terminal: typed commands produce local output and unknown-command feedback (3.5s)
+  ✓  41 tests/sites.spec.ts:343:1 › catalogue: handbook opens and downloads substantive Markdown (2.1s)
+  ✓  42 tests/sites.spec.ts:364:1 › catalogue: design system GFM tables render and scroll inside the mobile reader (2.1s)
+  ✓  43 tests/sites.spec.ts:397:1 › restaurant: menu filtering and reservation details reflect the selected date, time and guests (2.8s)
+  ✓  44 tests/sites.spec.ts:418:1 › restaurant: missing and past dates do not create a reservation (1.4s)
+  ✓  45 tests/sites.spec.ts:434:1 › travel: category filters, saved places survive reload and destination detail closes (2.1s)
+  ✓  47 tests/sites.spec.ts:479:1 › arcade: early clicks are rejected and concept rules remain clearly marked (1.9s)
+  ✓  46 tests/sites.spec.ts:453:1 › travel: budget, day-by-day summary and downloaded itinerary use chosen inputs (2.5s)
+  ✓  49 tests/sites.spec.ts:523:1 › civic: search intersects category filters and an empty result can be reset (2.0s)
+  ✓  48 tests/sites.spec.ts:495:1 › arcade: a completed reaction round persists and exports its actual score (4.0s)
+  ✓  50 tests/sites.spec.ts:540:1 › civic: choosing a service prefills a local booking and refresh clears its summary (3.1s)
+  ✓  51 tests/sites.spec.ts:572:3 › civic: city service timezone › uses UTC+8 calendar date across midnight and rejects the preceding date (2.8s)
+  ✓  52 tests/sites.spec.ts:595:1 › architecture: hero scenes change, category filters narrow projects, and project details close (1.9s)
+  ✓  53 tests/sites.spec.ts:619:1 › architecture: downloaded project brief contains the chosen design requirements (2.4s)
+  ✓  54 tests/sites.spec.ts:644:1 › fintech: range selection synchronizes chart, summary, accessible data and exported CSV (1.8s)
+  ✓  55 tests/sites.spec.ts:676:1 › fintech: search, category and sorting work together while watchlist persists (2.7s)
+  ✓  56 tests/sites.spec.ts:712:1 › fintech: zero and negative growth scenarios preserve principal arithmetic and invalidate old marks (1.7s)
+
+  56 passed (40.1s)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

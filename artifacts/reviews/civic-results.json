@@ -1,0 +1,147 @@
+{
+  "site": "civic",
+  "results": [
+    {
+      "name": "portal is centered and has no marketing illustration",
+      "passed": true
+    },
+    {
+      "name": "directory appears early",
+      "passed": true
+    },
+    {
+      "name": "six initial services",
+      "passed": true
+    },
+    {
+      "name": "date uses UTC+8 even in US browser",
+      "passed": true
+    },
+    {
+      "name": "search matches one service",
+      "passed": true
+    },
+    {
+      "name": "search moves focus to directory",
+      "passed": true
+    },
+    {
+      "name": "category and search use intersection",
+      "passed": true
+    },
+    {
+      "name": "empty result offers recovery",
+      "passed": true
+    },
+    {
+      "name": "reset restores both filters",
+      "passed": true
+    },
+    {
+      "name": "education category has two services",
+      "passed": true
+    },
+    {
+      "name": "service preselected in form",
+      "passed": true
+    },
+    {
+      "name": "service choice receives focus",
+      "passed": true
+    },
+    {
+      "name": "required instructions visible",
+      "passed": true
+    },
+    {
+      "name": "empty required form prevented",
+      "passed": true
+    },
+    {
+      "name": "past date invalid in native form",
+      "passed": true
+    },
+    {
+      "name": "submit independently validates date",
+      "passed": true
+    },
+    {
+      "name": "error receives focus",
+      "passed": true
+    },
+    {
+      "name": "editing clears obsolete error",
+      "passed": true
+    },
+    {
+      "name": "summary includes selected service",
+      "passed": true
+    },
+    {
+      "name": "summary includes date time and local status",
+      "passed": true
+    },
+    {
+      "name": "summary receives focus",
+      "passed": true
+    },
+    {
+      "name": "rearrange restores form focus",
+      "passed": true
+    },
+    {
+      "name": "notice expands actual content",
+      "passed": true
+    },
+    {
+      "name": "notice collapses",
+      "passed": true
+    },
+    {
+      "name": "FAQ expands",
+      "passed": true
+    },
+    {
+      "name": "reload keeps no booking data",
+      "passed": true
+    },
+    {
+      "name": "skip link first",
+      "passed": true
+    },
+    {
+      "name": "reduced motion respects system",
+      "passed": true
+    },
+    {
+      "name": "no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "no horizontal overflow 320",
+      "passed": true
+    },
+    {
+      "name": "mobile menu state exposed",
+      "passed": true
+    },
+    {
+      "name": "Escape closes navigation and restores toggle focus",
+      "passed": true
+    },
+    {
+      "name": "no information POST requests",
+      "passed": true
+    },
+    {
+      "name": "no browser exceptions",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "posts": []
+}

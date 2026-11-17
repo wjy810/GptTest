@@ -1,0 +1,96 @@
+{
+  "checkedAt": "2026-11-17T05:44:35.753Z",
+  "results": [
+    {
+      "site": "catalogue",
+      "port": 5173,
+      "status": 200,
+      "heading": "十二种视角。\n十二个独立世界\n。",
+      "errors": []
+    },
+    {
+      "site": "editorial",
+      "port": 5174,
+      "status": 200,
+      "heading": "留白之间，\n自有生活。",
+      "errors": []
+    },
+    {
+      "site": "brutalist",
+      "port": 5175,
+      "status": 200,
+      "heading": "GOOD IS\nBORING.",
+      "errors": []
+    },
+    {
+      "site": "swiss",
+      "port": 5176,
+      "status": 200,
+      "heading": "FORM.\nFOLLOWS.\nCURIOSITY.",
+      "errors": []
+    },
+    {
+      "site": "glass",
+      "port": 5177,
+      "status": 200,
+      "heading": "Less noise.\nMore you.",
+      "errors": []
+    },
+    {
+      "site": "terminal",
+      "port": 5178,
+      "status": 200,
+      "heading": "Less friction.\nMore flow_",
+      "errors": []
+    },
+    {
+      "site": "organic",
+      "port": 5179,
+      "status": 200,
+      "heading": "把日子，\n慢慢种好\n。",
+      "errors": []
+    },
+    {
+      "site": "restaurant",
+      "port": 5180,
+      "status": 200,
+      "heading": "炉火之间，\n风味发生。",
+      "errors": []
+    },
+    {
+      "site": "travel",
+      "port": 5181,
+      "status": 200,
+      "heading": "Somewhere\nfeels like\nfreedom.",
+      "errors": []
+    },
+    {
+      "site": "fintech",
+      "port": 5182,
+      "status": 200,
+      "heading": "资产概览\n↗",
+      "errors": []
+    },
+    {
+      "site": "civic",
+      "port": 5183,
+      "status": 200,
+      "heading": "让办事，少绕一点路。",
+      "errors": []
+    },
+    {
+      "site": "arcade",
+      "port": 5184,
+      "status": 200,
+      "heading": "ONE MORE\nROUND.↗",
+      "errors": []
+    },
+    {
+      "site": "architecture",
+      "port": 5185,
+      "status": 200,
+      "heading": "what matters.",
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "site": "restaurant",
+  "results": [
+    {
+      "name": "initial six menu dishes",
+      "passed": true
+    },
+    {
+      "name": "garden filter shows two dishes",
+      "passed": true
+    },
+    {
+      "name": "garden includes pumpkin",
+      "passed": true
+    },
+    {
+      "name": "dessert filter shows two dishes",
+      "passed": true
+    },
+    {
+      "name": "empty date prevents confirmation",
+      "passed": true
+    },
+    {
+      "name": "past date rejected by browser",
+      "passed": true
+    },
+    {
+      "name": "submit independently rejects past date",
+      "passed": true
+    },
+    {
+      "name": "Monday closure matches published opening days",
+      "passed": true
+    },
+    {
+      "name": "booking includes chosen date time guests",
+      "passed": true
+    },
+    {
+      "name": "confirmation has modal semantics",
+      "passed": true
+    },
+    {
+      "name": "Escape closes and restores submit focus",
+      "passed": true
+    },
+    {
+      "name": "editing guests clears stale confirmation",
+      "passed": true
+    },
+    {
+      "name": "guest lower bound is one",
+      "passed": true
+    },
+    {
+      "name": "guest upper bound is eight",
+      "passed": true
+    },
+    {
+      "name": "booking explicitly local demo",
+      "passed": true
+    },
+    {
+      "name": "keyboard focus stays inside modal",
+      "passed": true
+    },
+    {
+      "name": "skip link is first keyboard stop",
+      "passed": true
+    },
+    {
+      "name": "skip link targets menu",
+      "passed": true
+    },
+    {
+      "name": "reduced motion disables smooth scrolling",
+      "passed": true
+    },
+    {
+      "name": "no horizontal overflow 1440",
+      "passed": true
+    },
+    {
+      "name": "no horizontal overflow 390",
+      "passed": true
+    },
+    {
+      "name": "no horizontal overflow 320",
+      "passed": true
+    },
+    {
+      "name": "no browser exceptions",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

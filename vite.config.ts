@@ -5,9 +5,11 @@ import sites from './sites.json'
 
 export default defineConfig(({ mode }) => {
   const site = ['development', 'production', 'test'].includes(mode) ? 'catalogue' : mode
-  if (!sites.includes(site)) throw new Error(`Unknown website "${site}". Choose: ${sites.join(', ')}`)
+  if (!sites.includes(site))
+    throw new Error(`Unknown website "${site}". Choose: ${sites.join(', ')}`)
   return {
     root: resolve(import.meta.dirname, 'apps', site),
+    cacheDir: resolve(import.meta.dirname, 'node_modules/.vite', site),
     base: './',
     plugins: [react()],
     server: {

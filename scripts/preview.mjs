@@ -30,8 +30,9 @@ const server = createServer(async (req, res) => {
       }
       file = resolve(file, 'index.html')
     }
+    const contents = await readFile(file)
     res.writeHead(200, { 'Content-Type': mime[extname(file)] || 'application/octet-stream' })
-    res.end(await readFile(file))
+    res.end(contents)
   } catch {
     res.writeHead(404).end('Not found')
   }
