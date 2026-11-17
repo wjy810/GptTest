@@ -1,0 +1,28 @@
+{
+  "desktop": {
+    "documentHeight": 6519,
+    "sourceHeight": 2491.40625,
+    "cardColumns": "413.406px 413.422px 413.406px",
+    "cardText": "11px",
+    "menuHeight": 0,
+    "js": [
+      {
+        "url": "http://127.0.0.1:4173/catalogue/assets/index-DUdffAk9.js",
+        "size": 491981
+      }
+    ]
+  },
+  "mobile": {
+    "documentHeight": 7946,
+    "sourceHeight": 3952.375,
+    "cardColumns": "162.609px 162.609px",
+    "cardText": "10px",
+    "menuHeight": 36,
+    "js": [
+      {
+        "url": "http://127.0.0.1:4173/catalogue/assets/index-DUdffAk9.js",
+        "size": 491981
+      }
+    ]
+  }
+}

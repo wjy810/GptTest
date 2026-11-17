@@ -1,4 +1,4 @@
-import json,re,pathlib,urllib.parse
+import json,re,pathlib,urllib.parse,sys
 root=pathlib.Path(__file__).resolve().parents[2]
 sites=json.loads((root/'sites.json').read_text())
 excluded={'.git','node_modules','dist','artifacts'}
@@ -25,5 +25,7 @@ for i,site in enumerate(sites):
   readmes.append({'site':site,'expectedDevPort':5173+i,'portsMentioned':ports,'hasDevMode':f'npm run dev -- --mode {site}' in text,'hasBuildMode':f'npm run build -- --mode {site}' in text,'hasStandaloneOutput':bool(re.search(r'dist/'+re.escape(site)+r'(?:/|`|\s|$)',text))})
  else:readmes.append({'site':site,'README':'missing'})
 result={'markdownFiles':len(files),'relativeLinks':len(links),'missingRelativeLinks':missing,'unknownModes':unknown_modes,'siteReadmes':readmes}
-(root/'artifacts/reviews/doc-consistency.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
+output=root/(sys.argv[1] if len(sys.argv)>1 else 'artifacts/reviews/doc-consistency.json')
+output.parent.mkdir(parents=True,exist_ok=True)
+output.write_text(json.dumps(result,ensure_ascii=False,indent=2))
 print(json.dumps(result,ensure_ascii=False,indent=2))

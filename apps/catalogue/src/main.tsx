@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Component, lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   ArrowUpRight,
@@ -11,12 +11,10 @@ import {
   Download,
   Menu,
 } from 'lucide-react'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
 import sourcesData from '../../../src/data/sources.json'
-import replication from '../../../docs/REPLICATION.md?raw'
-import designSystem from '../../../docs/DESIGN-SYSTEM.md?raw'
-import researchMethod from '../../../docs/RESEARCH-METHOD.md?raw'
+import replicationUrl from '../../../docs/REPLICATION.md?url'
+import designSystemUrl from '../../../docs/DESIGN-SYSTEM.md?url'
+import researchMethodUrl from '../../../docs/RESEARCH-METHOD.md?url'
 import './styles.css'
 
 type Source = {
@@ -161,22 +159,22 @@ const docs = [
     id: 'replication',
     title: '从观察到复刻',
     subtitle: '多种风格的逐步实现指南',
-    text: replication,
     filename: 'REPLICATION.md',
+    downloadUrl: replicationUrl,
   },
   {
     id: 'system',
     title: '拆解设计语言',
     subtitle: '布局、色彩、文字与交互参数',
-    text: designSystem,
     filename: 'DESIGN-SYSTEM.md',
+    downloadUrl: designSystemUrl,
   },
   {
     id: 'research',
     title: '建立自己的灵感库',
     subtitle: '来源取证、视频笔记与研究方法',
-    text: researchMethod,
     filename: 'RESEARCH-METHOD.md',
+    downloadUrl: researchMethodUrl,
   },
 ]
 function siteUrl(site: (typeof sites)[number]) {
@@ -201,303 +199,9 @@ function StarMark() {
     </svg>
   )
 }
-function Sketch({ kind }: { kind: string }) {
-  if (kind === 'editorial')
-    return (
-      <div className="sketch editorial-sketch">
-        <div className="sketch-masthead">
-          FOLIO <span>INDEPENDENT JOURNAL · VOL. 01</span>
-        </div>
-        <div className="editorial-layout">
-          <div>
-            <small>THE ART OF SEEING</small>
-            <h3>
-              Less,
-              <br />
-              <i>but better.</i>
-            </h3>
-            <div className="sketch-lines" />
-            <span>Stories worth slowing down for ↗</span>
-          </div>
-          <div className="editorial-art">
-            <div className="editorial-vase" />
-            <span>OBJECT No. 018</span>
-          </div>
-        </div>
-        <div className="sketch-bottom">DESIGN · CULTURE · EVERYDAY LIFE</div>
-      </div>
-    )
-  if (kind === 'brutalist')
-    return (
-      <div className="sketch brutalist-sketch">
-        <div className="brutal-nav">
-          ODD® <span>MAKE SOME NOISE ↗</span>
-        </div>
-        <div className="brutal-heading">
-          GOOD
-          <br />
-          IS BORING
-          <span>
-            <StarMark />
-          </span>
-        </div>
-        <div className="brutal-tape">IDEAS WITH AN ATTITUDE. IDEAS WITH AN ATTITUDE.</div>
-        <div className="brutal-footer">
-          INDEPENDENT DESIGN STUDIO <span>EST. 2026</span>
-        </div>
-      </div>
-    )
-  if (kind === 'swiss')
-    return (
-      <div className="sketch swiss-sketch">
-        <div className="swiss-top">
-          INTERNATIONAL
-          <br />
-          DESIGN EXHIBITION{' '}
-          <span>
-            07—18
-            <br />
-            NOVEMBER
-          </span>
-        </div>
-        <div className="swiss-number">
-          26<span>↗</span>
-        </div>
-        <div className="swiss-footer">
-          GRID /<br />A NEW PERSPECTIVE.
-          <span>
-            ZURICH
-            <br />
-            2026
-          </span>
-        </div>
-      </div>
-    )
-  if (kind === 'glass')
-    return (
-      <div className="sketch glass-sketch">
-        <div className="glass-masthead">
-          aura<span>FEEL YOUR FREQUENCY</span>
-        </div>
-        <div className="glass-orb one" />
-        <div className="glass-orb two" />
-        <div className="glass-window">
-          <div className="glass-art">a</div>
-          <div>
-            <small>YOUR DAILY ESCAPE</small>
-            <h3>
-              Between
-              <br />
-              the waves.
-            </h3>
-            <div className="glass-controls">
-              <span>◁</span>
-              <b>Ⅱ</b>
-              <span>▷</span>
-            </div>
-            <div className="glass-progress" />
-          </div>
-        </div>
-        <div className="glass-bottom">LESS NOISE. MORE FEELING.</div>
-      </div>
-    )
-  if (kind === 'terminal')
-    return (
-      <div className="sketch terminal-sketch">
-        <div className="terminal-nav">
-          TRACE_<span>BUILD. SHIP. REPEAT.</span>
-        </div>
-        <h3>
-          Less friction.
-          <br />
-          <span>More flow.</span>
-        </h3>
-        <div className="terminal-window">
-          <div>
-            <i />
-            <i />
-            <i />
-            <span>trace — local demo</span>
-          </div>
-          <p>
-            <b>❯</b> trace deploy --preview
-          </p>
-          <p className="terminal-muted">Analyzing your next big idea…</p>
-          <p>
-            <b>✓</b> 128 modules transformed
-          </p>
-          <p>
-            <b>✓</b> Ready when you are<span className="terminal-cursor">_</span>
-          </p>
-        </div>
-      </div>
-    )
-  if (kind === 'restaurant')
-    return (
-      <div className="sketch restaurant-sketch">
-        <div className="special-masthead">
-          EMBER<span>FIRE. SEASON. SOUL.</span>
-        </div>
-        <h3>
-          A table.
-          <br />A moment.
-        </h3>
-        <div className="plate">
-          <div />
-          <i />
-        </div>
-        <small>SEASONAL DINING — 2026</small>
-      </div>
-    )
-  if (kind === 'travel')
-    return (
-      <div className="sketch travel-sketch">
-        <div className="special-masthead">
-          ROAM<span>GO A LITTLE FURTHER ↗</span>
-        </div>
-        <h3>
-          Find your
-          <br />
-          <i>somewhere.</i>
-        </h3>
-        <div className="travel-sun" />
-        <div className="travel-hill back" />
-        <div className="travel-hill front" />
-        <small>LESS PLANNING. MORE WANDERING.</small>
-      </div>
-    )
-  if (kind === 'fintech')
-    return (
-      <div className="sketch fintech-sketch">
-        <div className="special-masthead">
-          MONO<span>MONEY, MADE CLEAR.</span>
-        </div>
-        <h3>
-          Your money.
-          <br />
-          In perspective.
-        </h3>
-        <div className="money-card">
-          <small>TOTAL BALANCE</small>
-          <strong>
-            $24,680<span>.00</span>
-          </strong>
-          <div className="mini-bars">
-            {[30, 45, 38, 65, 58, 78, 90, 82, 100].map((n, i) => (
-              <i key={i} style={{ height: `${n}%` }} />
-            ))}
-          </div>
-        </div>
-        <small>A LITTLE MORE CLARITY.</small>
-      </div>
-    )
-  if (kind === 'civic')
-    return (
-      <div className="sketch civic-sketch">
-        <div className="special-masthead">
-          OPEN CITY<span>FOR ALL OF US.</span>
-        </div>
-        <h3>
-          A better city.
-          <br />
-          Starts with you.
-        </h3>
-        <div className="city-blocks">
-          <i />
-          <i />
-          <i />
-          <i />
-          <i />
-        </div>
-        <div className="civic-search">
-          What can we help you with? <ArrowRight size={11} />
-        </div>
-      </div>
-    )
-  if (kind === 'arcade')
-    return (
-      <div className="sketch arcade-sketch">
-        <div className="arcade-score">
-          HI-SCORE 024800 <span>1UP</span>
-        </div>
-        <h3>
-          INSERT
-          <br />
-          <span>COIN</span>
-        </h3>
-        <div className="pixel-alien">
-          ▟▙
-          <br />
-          ▞▚▞▚
-        </div>
-        <small>PRESS START TO PLAY _</small>
-      </div>
-    )
-  if (kind === 'architecture')
-    return (
-      <div className="sketch architecture-sketch">
-        <div className="special-masthead">
-          STILL<span>SPACE. LIGHT. TIME.</span>
-        </div>
-        <h3>
-          Quiet
-          <br />
-          <i>by design.</i>
-        </h3>
-        <div className="building-art">
-          <div />
-          <i />
-          <b />
-        </div>
-        <small>SELECTED WORKS / 2026</small>
-      </div>
-    )
-  return (
-    <div className="sketch organic-sketch">
-      <div className="organic-nav">
-        mori<span>A LITTLE CLOSER TO NATURE</span>
-      </div>
-      <div className="organic-layout">
-        <div>
-          <small>ROOTED IN THE EVERYDAY</small>
-          <h3>
-            Make room
-            <br />
-            for <i>green.</i>
-          </h3>
-          <span>Find your plant companion ↗</span>
-        </div>
-        <div className="plant-art">
-          <div className="stem" />
-          <i className="leaf l1" />
-          <i className="leaf l2" />
-          <i className="leaf l3" />
-          <i className="leaf l4" />
-          <div className="pot" />
-        </div>
-      </div>
-      <div className="organic-bottom">GROW SLOW. LIVE WELL.</div>
-    </div>
-  )
-}
-
-const screenshotSites = new Set([
-  'editorial',
-  'brutalist',
-  'swiss',
-  'glass',
-  'terminal',
-  'organic',
-  'restaurant',
-  'travel',
-  'fintech',
-  'civic',
-  'arcade',
-  'architecture',
-])
 function SitePreview({ site }: { site: (typeof sites)[number] }) {
   const [unavailable, setUnavailable] = useState(false)
-  const hasScreenshot = screenshotSites.has(site.id) && !unavailable
+  const hasScreenshot = !unavailable
   return (
     <>
       {hasScreenshot ? (
@@ -511,33 +215,133 @@ function SitePreview({ site }: { site: (typeof sites)[number] }) {
           onError={() => setUnavailable(true)}
         />
       ) : (
-        <Sketch kind={site.id} />
+        <div className="preview-unavailable">
+          <span>{site.name}</span>
+          <p>预览图片暂不可用</p>
+          <span>
+            仍可打开独立网站 <ArrowUpRight size={18} />
+          </span>
+        </div>
       )}
       <span className="preview-open">
         <ArrowUpRight size={24} />
       </span>
       <span className="preview-caption">
-        {hasScreenshot ? 'ACTUAL PAGE / 实际页面截图' : 'DESIGN SKETCH / 风格示意'}
+        {hasScreenshot ? 'ACTUAL PAGE / 实际页面截图' : 'OPEN THE SITE / 直接探索'}
       </span>
     </>
   )
 }
 
+const DocumentReader = lazy(() => import('./DocumentReader'))
+function ReaderError() {
+  const retry = useRef<HTMLButtonElement>(null)
+  useEffect(() => {
+    retry.current?.focus()
+  }, [])
+  return (
+    <div className="reader-error" role="alert">
+      <BookOpen size={28} />
+      <h2>资料暂时没有加载完成</h2>
+      <p>可以先下载上方的 Markdown 原文，或刷新页面后再次打开手册。</p>
+      <button ref={retry} onClick={() => window.location.reload()}>
+        刷新页面
+      </button>
+    </div>
+  )
+}
+class ReaderBoundary extends Component<{ children: React.ReactNode }, { failed: boolean }> {
+  state = { failed: false }
+  static getDerivedStateFromError() {
+    return { failed: true }
+  }
+  render() {
+    return this.state.failed ? <ReaderError /> : this.props.children
+  }
+}
+
 function App() {
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState('all')
+  const [topic, setTopic] = useState('all')
+  const [sourcePage, setSourcePage] = useState(1)
+  const [documentText, setDocumentText] = useState<string | null>(null)
   const [doc, setDoc] = useState<(typeof docs)[number] | null>(null)
   const [selected, setSelected] = useState<Source | null>(null)
   const [mobile, setMobile] = useState(false)
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const menuRef = useRef<HTMLButtonElement>(null)
+  const navigationRef = useRef<HTMLElement>(null)
+  const searchRef = useRef<HTMLInputElement>(null)
+  const resultsRef = useRef<HTMLParagraphElement>(null)
+  const topics = [...new Set(sources.map((source) => source.category))]
+  const hasFilters = Boolean(query.trim() || filter !== 'all' || topic !== 'all')
   const visibleSources = sources.filter(
     (s) =>
       (filter === 'all' || s.status === filter) &&
+      (topic === 'all' || s.category === topic) &&
       `${s.title} ${s.platform} ${s.category} ${s.summary} ${s.styles.join(' ')}`
         .toLowerCase()
-        .includes(query.toLowerCase()),
+        .includes(query.trim().toLowerCase()),
   )
+  const pageSize = 9
+  const pageCount = Math.max(1, Math.ceil(visibleSources.length / pageSize))
+  const currentPage = Math.min(sourcePage, pageCount)
+  const pageSources = visibleSources.slice((currentPage - 1) * pageSize, currentPage * pageSize)
   const verified = sources.filter((s) => s.status === 'verified').length
+  useEffect(() => {
+    setSourcePage(1)
+  }, [query, filter, topic])
+  useEffect(() => {
+    if (!mobile) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobile(false)
+        menuRef.current?.focus()
+      }
+    }
+    const onClick = (event: PointerEvent) => {
+      if (
+        event.target instanceof Node &&
+        !navigationRef.current?.contains(event.target) &&
+        !menuRef.current?.contains(event.target)
+      )
+        setMobile(false)
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('pointerdown', onClick)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('pointerdown', onClick)
+    }
+  }, [mobile])
+  function navigateTo(id: string) {
+    setMobile(false)
+    requestAnimationFrame(() => {
+      const target = document.getElementById(id)
+      target?.focus({ preventScroll: true })
+      target?.scrollIntoView({
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+        block: 'start',
+      })
+    })
+  }
+  function resetSources() {
+    setQuery('')
+    setFilter('all')
+    setTopic('all')
+    setSourcePage(1)
+    searchRef.current?.focus()
+  }
+  function changePage(next: number) {
+    setSourcePage(next)
+    requestAnimationFrame(() => {
+      resultsRef.current?.focus({ preventScroll: true })
+      document
+        .querySelector('.source-toolbar')
+        ?.scrollIntoView({ behavior: 'instant', block: 'start' })
+    })
+  }
   useEffect(() => {
     const d = dialogRef.current
     if (doc || selected) {
@@ -557,7 +361,16 @@ function App() {
   }
   function downloadDoc() {
     if (!doc) return
-    const url = URL.createObjectURL(new Blob([doc.text], { type: 'text/markdown;charset=utf-8' }))
+    if (!documentText) {
+      const original = document.createElement('a')
+      original.href = doc.downloadUrl
+      original.download = doc.filename
+      original.click()
+      return
+    }
+    const url = URL.createObjectURL(
+      new Blob([documentText], { type: 'text/markdown;charset=utf-8' }),
+    )
     const a = document.createElement('a')
     a.href = url
     a.download = doc.filename
@@ -566,7 +379,7 @@ function App() {
   }
   return (
     <>
-      <a href="#main" className="skip-link">
+      <a href="#main" className="skip-link" onClick={() => navigateTo('main')}>
         跳到内容
       </a>
       <header className="header">
@@ -577,14 +390,19 @@ function App() {
           FORM<span className="wordmark-light">INDEX</span>
           <sup>®</sup>
         </a>
-        <nav aria-label="主导航" className={mobile ? 'nav open' : 'nav'}>
-          <a onClick={() => setMobile(false)} href="#sites">
+        <nav
+          ref={navigationRef}
+          id="catalogue-navigation"
+          aria-label="主导航"
+          className={mobile ? 'nav open' : 'nav'}
+        >
+          <a onClick={() => navigateTo('sites')} href="#sites">
             独立网站 <span>12</span>
           </a>
-          <a onClick={() => setMobile(false)} href="#sources">
+          <a onClick={() => navigateTo('sources')} href="#sources">
             灵感来源
           </a>
-          <a onClick={() => setMobile(false)} href="#notes">
+          <a onClick={() => navigateTo('notes')} href="#notes">
             复刻手册
           </a>
         </nav>
@@ -592,6 +410,8 @@ function App() {
           从这里开始 <ArrowUpRight size={16} />
         </a>
         <button
+          ref={menuRef}
+          aria-controls="catalogue-navigation"
           className="mobile-menu"
           onClick={() => setMobile(!mobile)}
           aria-expanded={mobile}
@@ -600,7 +420,7 @@ function App() {
           {mobile ? <X /> : <Menu />}
         </button>
       </header>
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         <section className="hero">
           <div className="hero-main">
             <div className="eyebrow">
@@ -670,7 +490,7 @@ function App() {
           <p>不同美学 · 独立体验 · 可以动手复刻</p>
           <span>SCROLL TO DISCOVER ↓</span>
         </div>
-        <section className="sites-section" id="sites">
+        <section className="sites-section" id="sites" tabIndex={-1}>
           <div className="section-heading">
             <div>
               <span className="section-kicker">01 / THE COLLECTION</span>
@@ -727,7 +547,7 @@ function App() {
             ))}
           </div>
         </section>
-        <section className="notes-section" id="notes">
+        <section className="notes-section" id="notes" tabIndex={-1}>
           <div className="notes-intro">
             <span className="section-kicker">02 / FIELD NOTES</span>
             <h2>
@@ -744,7 +564,14 @@ function App() {
           </div>
           <div className="notes-list">
             {docs.map((item, i) => (
-              <button className="note-item" key={item.id} onClick={() => setDoc(item)}>
+              <button
+                className="note-item"
+                key={item.id}
+                onClick={() => {
+                  setDocumentText(null)
+                  setDoc(item)
+                }}
+              >
                 <span className="note-number">0{i + 1}</span>
                 <div>
                   <h3>{item.title}</h3>
@@ -759,7 +586,7 @@ function App() {
             </div>
           </div>
         </section>
-        <section className="sources-section" id="sources">
+        <section className="sources-section" id="sources" tabIndex={-1}>
           <div className="section-heading">
             <div>
               <span className="section-kicker">03 / OPEN RESEARCH</span>
@@ -807,23 +634,60 @@ function App() {
             <label className="search-box">
               <Search size={16} />
               <input
+                ref={searchRef}
                 placeholder="搜索平台、主题或风格…"
                 aria-label="搜索灵感来源"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
               {query && (
-                <button aria-label="清空搜索" onClick={() => setQuery('')}>
+                <button
+                  type="button"
+                  aria-label="清空搜索"
+                  onClick={() => {
+                    setQuery('')
+                    searchRef.current?.focus()
+                  }}
+                >
                   <X size={14} />
                 </button>
               )}
             </label>
           </div>
-          <p className="result-count" aria-live="polite">
-            显示 {visibleSources.length} 个来源
-          </p>
+          <div className="source-refinement">
+            <label className="topic-select">
+              主题
+              <select
+                value={topic}
+                onChange={(event) => setTopic(event.target.value)}
+                aria-label="筛选来源主题"
+              >
+                <option value="all">全部主题</option>
+                {topics.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <p ref={resultsRef} tabIndex={-1} className="result-count" aria-live="polite">
+              共 {visibleSources.length} 个来源
+              {visibleSources.length > 0 && (
+                <span>
+                  {' '}
+                  · 显示 {(currentPage - 1) * pageSize + 1}–
+                  {Math.min(currentPage * pageSize, visibleSources.length)}
+                </span>
+              )}
+            </p>
+            {hasFilters && (
+              <button className="reset-sources" onClick={resetSources}>
+                重置筛选 <X size={14} />
+              </button>
+            )}
+          </div>
           <div className="source-grid">
-            {visibleSources.map((source) => (
+            {pageSources.map((source) => (
               <button className="source-card" key={source.id} onClick={() => setSelected(source)}>
                 <div className="source-card-head">
                   <span>{source.platform}</span>
@@ -845,17 +709,48 @@ function App() {
               </button>
             ))}
           </div>
+          {pageCount > 1 && (
+            <nav className="source-pagination" aria-label="来源分页">
+              <span>
+                第 {currentPage} / {pageCount} 页
+              </span>
+              <div>
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => changePage(currentPage - 1)}
+                  aria-label="上一页来源"
+                >
+                  <ArrowRight className="previous-icon" size={17} />
+                  <span>上一页</span>
+                </button>
+                {Array.from({ length: pageCount }, (_, index) => (
+                  <button
+                    key={index}
+                    className={currentPage === index + 1 ? 'current-page' : ''}
+                    aria-label={`第 ${index + 1} 页来源`}
+                    aria-current={currentPage === index + 1 ? 'page' : undefined}
+                    onClick={() => changePage(index + 1)}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+                <button
+                  disabled={currentPage === pageCount}
+                  onClick={() => changePage(currentPage + 1)}
+                  aria-label="下一页来源"
+                >
+                  <span>下一页</span>
+                  <ArrowRight size={17} />
+                </button>
+              </div>
+            </nav>
+          )}
           {visibleSources.length === 0 && (
             <div className="empty-state">
               <Search size={32} />
               <h3>暂时没有匹配的资料</h3>
               <p>试试「动效」「B站」「设计系统」，或清除筛选。</p>
-              <button
-                onClick={() => {
-                  setQuery('')
-                  setFilter('all')
-                }}
-              >
+              <button onClick={resetSources}>
                 显示全部来源 <ArrowRight size={16} />
               </button>
             </div>
@@ -892,7 +787,15 @@ function App() {
         className="reading-dialog"
         onCancel={close}
         onClick={(e) => {
-          if (e.target === dialogRef.current) close()
+          if (e.target !== e.currentTarget) return
+          const rect = e.currentTarget.getBoundingClientRect()
+          if (
+            e.clientX < rect.left ||
+            e.clientX > rect.right ||
+            e.clientY < rect.top ||
+            e.clientY > rect.bottom
+          )
+            close()
         }}
       >
         <div className="dialog-shell">
@@ -911,36 +814,18 @@ function App() {
             </div>
           </div>
           {doc ? (
-            <article className="markdown">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  table: ({ children }) => (
-                    <div
-                      className="markdown-table-scroll"
-                      role="region"
-                      aria-label="文档表格，可横向滚动"
-                      tabIndex={0}
-                    >
-                      <table>{children}</table>
-                    </div>
-                  ),
-                  a: ({ href, children }) =>
-                    href && /^https?:\/\//i.test(href) ? (
-                      <a href={href} target="_blank" rel="noreferrer">
-                        {children}
-                      </a>
-                    ) : (
-                      <span className="repository-reference" title={`仓库内引用：${href || ''}`}>
-                        {children}
-                        <small>（仓库内文件）</small>
-                      </span>
-                    ),
-                }}
+            <ReaderBoundary key={doc.id}>
+              <Suspense
+                fallback={
+                  <div className="reader-loading" role="status">
+                    <BookOpen size={26} />
+                    <span>正在打开手册…</span>
+                  </div>
+                }
               >
-                {doc.text}
-              </ReactMarkdown>
-            </article>
+                <DocumentReader id={doc.id} onReady={setDocumentText} />
+              </Suspense>
+            </ReaderBoundary>
           ) : selected ? (
             <article className="source-detail">
               <span

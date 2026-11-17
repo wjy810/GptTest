@@ -18,7 +18,7 @@
 
 ## 验收与提交
 
-- 阅读最近的 `docs/reviews/BATCH-XX.md`，每三套实施一次新的反刍。
+- 阅读最近的 `docs/reviews/BATCH-XX.md` 和 `docs/reviews/OPTIMIZATION-XX.md`；新建与优化现有站点都按每三套一次的节奏反刍。
 - 运行 TypeScript、受影响站点生产构建和有意义的浏览器流程检查，审阅桌面与移动截图。
 - 修复后复跑对应失败场景。全批交付前 `npm run typecheck && npm run build:all && npm test`。
 - 截图与报告保留在 `artifacts/reviews/`；不要把未执行的检查写成通过。

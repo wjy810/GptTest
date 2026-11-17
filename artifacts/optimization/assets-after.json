@@ -1,0 +1,205 @@
+{
+  "checkedAt": "2026-11-17T06:55:12.590Z",
+  "sites": [
+    {
+      "site": "catalogue",
+      "assets": [
+        {
+          "file": "DocumentReader-BDCO-emy.js",
+          "bytes": 226363,
+          "gzipBytes": 77675
+        },
+        {
+          "file": "index-C4FXgOie.css",
+          "bytes": 28343,
+          "gzipBytes": 6702
+        },
+        {
+          "file": "index-DBIsBDZy.js",
+          "bytes": 267560,
+          "gzipBytes": 85569
+        }
+      ]
+    },
+    {
+      "site": "editorial",
+      "assets": [
+        {
+          "file": "index-1cjKN_7O.js",
+          "bytes": 239278,
+          "gzipBytes": 76591
+        },
+        {
+          "file": "index-DmzjXLnU.css",
+          "bytes": 19589,
+          "gzipBytes": 4594
+        }
+      ]
+    },
+    {
+      "site": "brutalist",
+      "assets": [
+        {
+          "file": "index-BxboPP9K.css",
+          "bytes": 17228,
+          "gzipBytes": 4514
+        },
+        {
+          "file": "index-ujbjftPX.js",
+          "bytes": 237290,
+          "gzipBytes": 75847
+        }
+      ]
+    },
+    {
+      "site": "swiss",
+      "assets": [
+        {
+          "file": "index-D4S-bvmm.js",
+          "bytes": 243208,
+          "gzipBytes": 76841
+        },
+        {
+          "file": "index-DfJD2io3.css",
+          "bytes": 30633,
+          "gzipBytes": 6718
+        }
+      ]
+    },
+    {
+      "site": "glass",
+      "assets": [
+        {
+          "file": "index-BH9dSofB.css",
+          "bytes": 24611,
+          "gzipBytes": 6423
+        },
+        {
+          "file": "index-H_5idgEe.js",
+          "bytes": 242036,
+          "gzipBytes": 76550
+        }
+      ]
+    },
+    {
+      "site": "terminal",
+      "assets": [
+        {
+          "file": "index-BlVOawO-.css",
+          "bytes": 35351,
+          "gzipBytes": 8043
+        },
+        {
+          "file": "index-DrT01LGZ.js",
+          "bytes": 248428,
+          "gzipBytes": 78573
+        }
+      ]
+    },
+    {
+      "site": "organic",
+      "assets": [
+        {
+          "file": "index-B6vtQTey.css",
+          "bytes": 32846,
+          "gzipBytes": 7692
+        },
+        {
+          "file": "index-Dnfrzhrd.js",
+          "bytes": 252868,
+          "gzipBytes": 81219
+        }
+      ]
+    },
+    {
+      "site": "restaurant",
+      "assets": [
+        {
+          "file": "index-CvFAkhRu.css",
+          "bytes": 15232,
+          "gzipBytes": 3925
+        },
+        {
+          "file": "index-D2o8FO_O.js",
+          "bytes": 240088,
+          "gzipBytes": 76731
+        }
+      ]
+    },
+    {
+      "site": "travel",
+      "assets": [
+        {
+          "file": "index-AKbNlVYq.js",
+          "bytes": 253800,
+          "gzipBytes": 81473
+        },
+        {
+          "file": "index-DJoNr4A3.css",
+          "bytes": 30682,
+          "gzipBytes": 7037
+        }
+      ]
+    },
+    {
+      "site": "fintech",
+      "assets": [
+        {
+          "file": "index-B8MtfCJm.css",
+          "bytes": 35903,
+          "gzipBytes": 8227
+        },
+        {
+          "file": "index-CC6x8SbU.js",
+          "bytes": 254403,
+          "gzipBytes": 80456
+        }
+      ]
+    },
+    {
+      "site": "civic",
+      "assets": [
+        {
+          "file": "index-BdYlS9Dv.js",
+          "bytes": 244466,
+          "gzipBytes": 77594
+        },
+        {
+          "file": "index-DZqYzvWD.css",
+          "bytes": 27469,
+          "gzipBytes": 6352
+        }
+      ]
+    },
+    {
+      "site": "arcade",
+      "assets": [
+        {
+          "file": "index-C7l50MGn.css",
+          "bytes": 32146,
+          "gzipBytes": 7607
+        },
+        {
+          "file": "index-V5IiLOOc.js",
+          "bytes": 247810,
+          "gzipBytes": 78520
+        }
+      ]
+    },
+    {
+      "site": "architecture",
+      "assets": [
+        {
+          "file": "index-9_HK6p9w.js",
+          "bytes": 250093,
+          "gzipBytes": 80718
+        },
+        {
+          "file": "index-CO2Csp4B.css",
+          "bytes": 24876,
+          "gzipBytes": 5660
+        }
+      ]
+    }
+  ]
+}

@@ -353,11 +353,15 @@ textarea {
 
 视觉基线是米白 `#f5f2e9`、深绿 `#35482f` 与原创植物/器物 SVG。复制时先保留商品信息、价格、养护说明和购物袋数量的阅读顺序，再调装饰。当前没有实时库存状态。订阅只更新当前页面内的反馈，不保存邮箱、不发送邮件。
 
+当前实现还可以沿 `specimens → specimen → currentSpecimen` 阅读首屏三株标本切换；`sort` 只改变过滤后商品顺序。商品图片应保留完整轮廓，名称、价格和养护信息留在图框外。手机购物袋浮条提供可见购买入口；打开弹窗时浮条会卸载，因此关闭不能只对旧 DOM 引用调用 `focus()`，需要找到重新出现的浮条或稳定的顶部入口。存储写入失败时，`storageUnavailable` 提示只在当前页保留操作。
+
 ### GRID/26 / swiss
 
 从 `apps/swiss/src/main.tsx` 的展览与日程数据入手，分别跟踪原生 `<dialog>` 详情、三天九场日程筛选，以及票种/人数/日期生成的本地预约摘要。原生对话框提供了基础焦点行为，但仍需校验可见关闭入口与手机滚动。
 
 红黑米白排版与三张原创几何海报构成视觉识别。复刻时保持标题、日期、编号的对齐线；到窄屏先重排信息，不把整个桌面画布等比缩小。
+
+日程宽屏采用说明栏与日期/时间表分栏，手机保留时间列；海报的图形区和标题区各有可用高度。窄屏验收除了检查页面溢出，还要测海报内部标题是否处于图框边界内：外层 `overflow: hidden` 会隐藏错误，而不会让页面溢出检查失败。本轮实际修复记录见 [第一批优化复盘](reviews/OPTIMIZATION-01.md)。
 
 ### FOLIO / editorial：深梅紫与铜粉
 
@@ -368,26 +372,28 @@ FOLIO 的封面为左右双栏：左侧文章标题与导读，右侧原创空�
 ```css
 /* apps/editorial/src/styles.css */
 .hero-copy {
-  background: #322b38;
+  background: var(--plum); /* #322b38 */
   color: #f5eee4;
-  padding: 40px 43px 35px;
+  padding: 39px 42px 34px;
   display: flex;
   flex-direction: column;
 }
 .hero h1 {
   font-family: 'Songti SC', 'Noto Serif CJK SC', Georgia, serif;
-  font-size: clamp(44px, 4.4vw, 74px);
-  line-height: 1.35;
-  letter-spacing: 3px;
+  font-size: clamp(44px, 4.6vw, 74px);
+  line-height: 1.32;
+  letter-spacing: 2px;
   font-weight: 500;
-  margin: 39px 0 0;
+  margin: 35px 0 0;
 }
 .hero h1 span {
-  color: #dfbaa8;
+  color: var(--copper); /* #dfbaa8 */
 }
 ```
 
 文章有“空间 / 物件 / 日常 / 已收藏”筛选；`folio-saved` 只保存文章 ID。阅读面板使用原生 `<dialog>`，正文和 SVG 均为本项目原创。跟踪 `bookmark()` 理解收藏状态，再跟踪 `article` 状态与 `showModal()` 的联动。修改颜色时同时检查封面标题、焦点轮廓和选中文字，而不是只改一块背景。
+
+默认列表由 `.story-grid-curated` 提供一篇大幅主故事和三篇图文索引，筛选结果使用 `.story-grid-filtered`，避免只有一两篇文章时仍强行占据主文跨行布局。手机保留主故事完整宽度，其余条目采用缩略图加正文；中文标题使用平衡换行。收藏及订阅写入被浏览器拒绝时有可见反馈，当前会话仍可操作，不能向用户承诺刷新后恢复。
 
 ### MORI 与 GRID/26 的实际网格对比
 
@@ -402,7 +408,7 @@ FOLIO 的封面为左右双栏：左侧文章标题与导读，右侧原创空�
 .exhibition-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 28px;
 }
 ```
 

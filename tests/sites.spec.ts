@@ -41,6 +41,7 @@ for (const site of sites) {
   for (const viewport of [
     { name: 'desktop', width: 1440, height: 1000 },
     { name: 'mobile', width: 390, height: 844 },
+    { name: 'narrow mobile', width: 320, height: 740 },
   ]) {
     test(`${site} / ${viewport.name}: standalone document, resources and layout`, async ({
       page,
@@ -77,6 +78,21 @@ for (const site of sites) {
         overflow.document,
         `${site} must not scroll horizontally at ${viewport.width}px`,
       ).toBeLessThanOrEqual(overflow.viewport)
+      if (viewport.width === 320) {
+        const editableFields = page.locator(
+          'input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea',
+        )
+        for (const field of await editableFields.all()) {
+          if (!(await field.isVisible())) continue
+          const fontSize = await field.evaluate((element) =>
+            Number.parseFloat(getComputedStyle(element).fontSize),
+          )
+          expect(
+            fontSize,
+            `${site}: editable mobile text must remain readable`,
+          ).toBeGreaterThanOrEqual(16)
+        }
+      }
       for (const image of await page.locator('img').all()) {
         await image.scrollIntoViewIfNeeded()
         await expect
@@ -242,6 +258,28 @@ test('organic: removing the last item restores the empty cart', async ({ page })
   await expect(bag).toContainText('购物袋还是空的')
 })
 
+test('organic: a mobile bag opened from its temporary dock restores keyboard focus', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await openSite(page, 'organic')
+  const add = page.locator('.product-card .quick-add').first()
+  await add.focus()
+  await page.keyboard.press('Enter')
+  const opener = page.locator('.mobile-bag-dock').getByRole('button', { name: '查看购物袋' })
+  await expect(opener).toBeVisible()
+  await opener.focus()
+  await page.keyboard.press('Enter')
+  const bag = page.getByRole('dialog', { name: '你的购物袋', exact: true })
+  await expect(bag).toBeVisible()
+  await expect(page.locator('.mobile-bag-dock')).toHaveCount(0)
+  await page.keyboard.press('Escape')
+  await expect(bag).not.toBeVisible()
+  await expect(opener).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(bag).toBeVisible()
+})
+
 test('glass: Web Audio player starts, advances time, switches sound and pauses', async ({
   page,
 }) => {
@@ -312,19 +350,22 @@ test('catalogue: independent links, evidence filtering, search and source record
 }) => {
   await openSite(page, 'catalogue')
   await expect(page.locator('.site-card')).toHaveCount(12)
-  const links = await page
-    .locator('.site-preview')
-    .evaluateAll((elements) =>
-      elements.map((element) => ({
-        path: new URL((element as HTMLAnchorElement).href).pathname,
-        target: (element as HTMLAnchorElement).target,
-      })),
-    )
+  const links = await page.locator('.site-preview').evaluateAll((elements) =>
+    elements.map((element) => ({
+      path: new URL((element as HTMLAnchorElement).href).pathname,
+      target: (element as HTMLAnchorElement).target,
+    })),
+  )
   expect(new Set(links.map((link) => link.path)).size).toBe(12)
   expect(links.every((link) => link.target === '_blank')).toBe(true)
   await page.locator('.source-filters button').nth(2).click()
   const cards = page.locator('.source-card')
-  await expect(cards).toHaveCount(13)
+  await expect(cards).toHaveCount(9)
+  await expect(page.locator('.result-count')).toContainText('共 13 个来源')
+  await page.getByRole('button', { name: '下一页来源' }).click()
+  await expect(cards).toHaveCount(4)
+  await expect(page.locator('.result-count')).toBeFocused()
+  await expect(page.getByRole('button', { name: '下一页来源' })).toBeDisabled()
   await page.getByRole('textbox', { name: '搜索灵感来源' }).fill('B站')
   await expect(cards).toHaveCount(1)
   await cards.click()
@@ -338,6 +379,62 @@ test('catalogue: independent links, evidence filtering, search and source record
   await expect(dialog).not.toBeVisible()
   await page.getByRole('textbox', { name: '搜索灵感来源' }).fill('not-a-real-research-source')
   await expect(page.getByText('暂时没有匹配的资料')).toBeVisible()
+})
+
+test('catalogue: pagination covers every source and combined filters reset coherently', async ({
+  page,
+}) => {
+  await openSite(page, 'catalogue')
+  const titles: string[] = []
+  for (let index = 1; index <= 4; index++) {
+    await expect(page.locator('.source-card')).toHaveCount(index === 4 ? 3 : 9)
+    titles.push(...(await page.locator('.source-card h3').allTextContents()))
+    if (index < 4) await page.getByRole('button', { name: '下一页来源' }).click()
+  }
+  expect(new Set(titles).size).toBe(30)
+  const topic = page.getByRole('combobox', { name: '筛选来源主题' })
+  await topic.selectOption('视频平台')
+  await expect(page.locator('.source-card')).toHaveCount(2)
+  await expect(page.locator('.result-count')).toContainText('显示 1–2')
+  await page.locator('.source-filters button').nth(1).click()
+  await expect(page.locator('.source-card')).toHaveCount(0)
+  await expect(page.getByText('暂时没有匹配的资料')).toBeVisible()
+  await page.getByRole('button', { name: '重置筛选' }).click()
+  await expect(topic).toHaveValue('all')
+  await expect(page.getByRole('textbox', { name: '搜索灵感来源' })).toBeFocused()
+  await expect(page.locator('.result-count')).toContainText('共 30 个来源')
+  await expect(page.locator('.source-card')).toHaveCount(9)
+})
+
+test('catalogue: a deferred reader failure preserves the page and original document download', async ({
+  page,
+}) => {
+  let readerRequests = 0
+  await page.route('**/DocumentReader-*.js', async (route) => {
+    readerRequests++
+    await route.abort()
+  })
+  await openSite(page, 'catalogue')
+  await page.waitForLoadState('networkidle')
+  expect(readerRequests).toBe(0)
+  const opener = page.locator('.note-item').first()
+  await opener.click()
+  const dialog = page.getByRole('dialog')
+  await expect(dialog.getByRole('alert')).toContainText('资料暂时没有加载完成')
+  expect(readerRequests).toBeGreaterThan(0)
+  await expect(dialog.getByRole('button', { name: '刷新页面' })).toBeFocused()
+  const downloadEvent = page.waitForEvent('download')
+  await dialog.getByRole('button', { name: '下载 Markdown' }).click()
+  const download = await downloadEvent
+  expect(download.suggestedFilename()).toBe('REPLICATION.md')
+  const stream = await download.createReadStream()
+  const chunks: Buffer[] = []
+  for await (const chunk of stream!) chunks.push(Buffer.from(chunk))
+  expect(Buffer.concat(chunks).toString('utf8')).toContain('apps/editorial')
+  await page.keyboard.press('Escape')
+  await expect(dialog).not.toBeVisible()
+  await expect(opener).toBeFocused()
+  await expect(page.locator('.site-card')).toHaveCount(12)
 })
 
 test('catalogue: handbook opens and downloads substantive Markdown', async ({ page }) => {
@@ -671,6 +768,45 @@ test('fintech: range selection synchronizes chart, summary, accessible data and 
     'aria-pressed',
     'false',
   )
+})
+
+test('fintech: mobile chart dates stay readable and separated in every period', async ({
+  page,
+}) => {
+  await openSite(page, 'fintech')
+  for (const width of [320, 390]) {
+    await page.setViewportSize({ width, height: 844 })
+    for (const range of ['1W', '1M', '3M', '1Y']) {
+      const button = page.getByRole('button', { name: range, exact: true })
+      await button.click()
+      await expect(button).toHaveAttribute('aria-pressed', 'true')
+      const labels = await page.locator('.chart-area svg text').evaluateAll((elements) =>
+        elements
+          .filter((element) => /^\d{2,4}\.\d{2}$/.test(element.textContent || ''))
+          .map((element) => {
+            const rect = element.getBoundingClientRect()
+            return {
+              text: element.textContent,
+              left: rect.left,
+              right: rect.right,
+              width: rect.width,
+            }
+          })
+          .filter((label) => label.width > 0)
+          .sort((a, b) => a.left - b.left),
+      )
+      expect(
+        labels.length,
+        `${width}px / ${range}: dates must remain visible`,
+      ).toBeGreaterThanOrEqual(2)
+      for (let index = 1; index < labels.length; index++) {
+        expect(
+          labels[index].left - labels[index - 1].right,
+          `${width}px / ${range}: ${labels[index - 1].text} and ${labels[index].text} must not collide`,
+        ).toBeGreaterThanOrEqual(6)
+      }
+    }
+  }
 })
 
 test('fintech: search, category and sorting work together while watchlist persists', async ({

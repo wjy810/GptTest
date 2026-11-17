@@ -1,0 +1,70 @@
+{
+  "desktop": {
+    "documentHeight": 5364,
+    "sourceHeight": 1264.09375,
+    "cardColumns": "413.406px 413.422px 413.406px",
+    "cardText": "13px",
+    "searchText": "13px",
+    "selectText": "12px",
+    "menuHeight": 0,
+    "overflow": false,
+    "previewImages": 12,
+    "js": [
+      {
+        "url": "http://127.0.0.1:4173/catalogue/assets/index-DME3oQ_P.js",
+        "size": 267560
+      }
+    ]
+  },
+  "mobile": {
+    "documentHeight": 10577,
+    "sourceHeight": 2564.28125,
+    "cardColumns": "343.219px",
+    "cardText": "14px",
+    "searchText": "16px",
+    "selectText": "16px",
+    "menuHeight": 44,
+    "overflow": false,
+    "previewImages": 12,
+    "js": [
+      {
+        "url": "http://127.0.0.1:4173/catalogue/assets/index-DME3oQ_P.js",
+        "size": 267560
+      }
+    ]
+  },
+  "narrow": {
+    "documentHeight": 10225,
+    "sourceHeight": 2586.46875,
+    "cardColumns": "281.625px",
+    "cardText": "14px",
+    "searchText": "16px",
+    "selectText": "16px",
+    "menuHeight": 44,
+    "overflow": false,
+    "previewImages": 12,
+    "js": [
+      {
+        "url": "http://127.0.0.1:4173/catalogue/assets/index-DME3oQ_P.js",
+        "size": 267560
+      }
+    ]
+  },
+  "tablet": {
+    "documentHeight": 6554,
+    "sourceHeight": 1842.078125,
+    "cardColumns": "333.078px 333.078px",
+    "cardText": "13px",
+    "searchText": "13px",
+    "selectText": "12px",
+    "menuHeight": 0,
+    "overflow": false,
+    "previewImages": 12,
+    "js": [
+      {
+        "url": "http://127.0.0.1:4173/catalogue/assets/index-DME3oQ_P.js",
+        "size": 267560
+      }
+    ]
+  }
+}

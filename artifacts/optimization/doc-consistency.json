@@ -1,0 +1,141 @@
+{
+  "markdownFiles": 31,
+  "relativeLinks": 280,
+  "missingRelativeLinks": [],
+  "unknownModes": [],
+  "siteReadmes": [
+    {
+      "site": "catalogue",
+      "expectedDevPort": 5173,
+      "portsMentioned": [
+        "5173"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    },
+    {
+      "site": "editorial",
+      "expectedDevPort": 5174,
+      "portsMentioned": [
+        "5174"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    },
+    {
+      "site": "brutalist",
+      "expectedDevPort": 5175,
+      "portsMentioned": [
+        "5175"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    },
+    {
+      "site": "swiss",
+      "expectedDevPort": 5176,
+      "portsMentioned": [
+        "5176"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    },
+    {
+      "site": "glass",
+      "expectedDevPort": 5177,
+      "portsMentioned": [
+        "5177"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    },
+    {
+      "site": "terminal",
+      "expectedDevPort": 5178,
+      "portsMentioned": [
+        "5178"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    },
+    {
+      "site": "organic",
+      "expectedDevPort": 5179,
+      "portsMentioned": [
+        "5179"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    },
+    {
+      "site": "restaurant",
+      "expectedDevPort": 5180,
+      "portsMentioned": [
+        "5180"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    },
+    {
+      "site": "travel",
+      "expectedDevPort": 5181,
+      "portsMentioned": [
+        "5181",
+        "5159"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    },
+    {
+      "site": "fintech",
+      "expectedDevPort": 5182,
+      "portsMentioned": [
+        "5182"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    },
+    {
+      "site": "civic",
+      "expectedDevPort": 5183,
+      "portsMentioned": [
+        "5183"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    },
+    {
+      "site": "arcade",
+      "expectedDevPort": 5184,
+      "portsMentioned": [
+        "5184",
+        "5173"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    },
+    {
+      "site": "architecture",
+      "expectedDevPort": 5185,
+      "portsMentioned": [
+        "5185",
+        "5173"
+      ],
+      "hasDevMode": true,
+      "hasBuildMode": true,
+      "hasStandaloneOutput": true
+    }
+  ]
+}

@@ -69,7 +69,9 @@ Playwright 优先使用 `CHROMIUM_PATH`，其次检测 `/usr/bin/chromium`，否
 
 复盘记录会列出实际发现、修复与验证，不把构建成功等同于设计或功能通过。截图与部分可重复审核脚本保存在 `artifacts/reviews/`；各站独立 Git 提交方便回看与提取。
 
-[本轮最终验证](docs/VALIDATION.md)：56 项生产浏览器测试通过，13 个独立构建及开发入口通过。多站开发使用各自的 Vite 缓存，避免依赖预打包相互覆盖。
+[最新优化记录](docs/OPTIMIZATION.md)：十二站经过四轮独立复盘，73 项生产浏览器测试通过，13 个独立构建通过；目录首屏 JavaScript 减少约45.6%。查看[优化后设计总览](artifacts/optimization/catalogue-final-desktop.png)。
+
+[初版安装与启动验证](docs/VALIDATION.md)另行保留。多站开发使用各自的 Vite 缓存，避免依赖预打包相互覆盖。
 
 ## 复刻知识库
 

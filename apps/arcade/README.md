@@ -11,7 +11,7 @@ npm ci
 npm run dev -- --mode arcade
 ```
 
-开发服务会持续运行，端口由根目录 `sites.json` 的顺序与 `5173 + index` 决定；以终端输出为准。构建时另开终端：
+开发服务会持续运行，当前端口为5184；由根目录 `sites.json` 的顺序与 `5173 + index` 决定。构建时另开终端：
 
 ```bash
 npm run typecheck
