@@ -1,0 +1,213 @@
+{
+  "checks": [
+    {
+      "site": "glass",
+      "name": "skip link keyboard focus",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "audio keyboard start",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "volume output updates",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "track advance",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "favorites filter",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "favorites empty state",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "focus timer status",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "timer cancel",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "audio pause",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "mobile no horizontal overflow",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "mobile nav opens",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "mobile nav closes",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "reduced motion honored",
+      "pass": true
+    },
+    {
+      "site": "glass",
+      "name": "no runtime errors",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "skip link keyboard focus",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "quality simulation output",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "clear command",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "help command",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "config keyboard shortcut",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "terminal keyboard shortcut",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "annual pricing keyboard",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "plan dialog accessible name",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "plan escape close",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "mobile no horizontal overflow",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "mobile nav opens",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "mobile nav closes",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "reduced motion honored",
+      "pass": true
+    },
+    {
+      "site": "terminal",
+      "name": "no runtime errors",
+      "pass": true
+    },
+    {
+      "site": "brutalist",
+      "name": "skip link keyboard focus",
+      "pass": true
+    },
+    {
+      "site": "brutalist",
+      "name": "project category filter",
+      "pass": true
+    },
+    {
+      "site": "brutalist",
+      "name": "project keyboard open",
+      "pass": true
+    },
+    {
+      "site": "brutalist",
+      "name": "project escape close",
+      "pass": true
+    },
+    {
+      "site": "brutalist",
+      "name": "service details keyboard",
+      "pass": true
+    },
+    {
+      "site": "brutalist",
+      "name": "brief download selected data",
+      "pass": true
+    },
+    {
+      "site": "brutalist",
+      "name": "mobile no horizontal overflow",
+      "pass": true
+    },
+    {
+      "site": "brutalist",
+      "name": "mobile nav opens",
+      "pass": true
+    },
+    {
+      "site": "brutalist",
+      "name": "mobile nav closes",
+      "pass": true
+    },
+    {
+      "site": "brutalist",
+      "name": "reduced motion honored",
+      "pass": true
+    },
+    {
+      "site": "brutalist",
+      "name": "no runtime errors",
+      "pass": true
+    }
+  ],
+  "results": [
+    {
+      "site": "glass",
+      "errors": []
+    },
+    {
+      "site": "terminal",
+      "errors": []
+    },
+    {
+      "site": "brutalist",
+      "errors": []
+    }
+  ]
+}

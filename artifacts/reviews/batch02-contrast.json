@@ -1,0 +1,51 @@
+[
+  {
+    "site": "glass",
+    "selector": ".sound-card>p",
+    "foreground": "rgb(177, 165, 189)",
+    "background": "#10101e",
+    "ratio": 8.06
+  },
+  {
+    "site": "glass",
+    "selector": ".faq-item>p",
+    "foreground": "rgb(177, 165, 189)",
+    "background": "#10101e",
+    "ratio": 8.06
+  },
+  {
+    "site": "terminal",
+    "selector": ".feature-grid p",
+    "foreground": "rgb(162, 185, 169)",
+    "background": "#111713",
+    "ratio": 8.69
+  },
+  {
+    "site": "terminal",
+    "selector": ".terminal-lines>div",
+    "foreground": "rgb(163, 183, 171)",
+    "background": "#0c110e",
+    "ratio": 9
+  },
+  {
+    "site": "terminal",
+    "selector": ".plan li",
+    "foreground": "rgb(162, 185, 169)",
+    "background": "#111a14",
+    "ratio": 8.5
+  },
+  {
+    "site": "brutalist",
+    "selector": ".process p",
+    "foreground": "rgb(86, 91, 71)",
+    "background": "#f3f2e9",
+    "ratio": 6.26
+  },
+  {
+    "site": "brutalist",
+    "selector": ".about-main p",
+    "foreground": "rgb(189, 190, 173)",
+    "background": "#171713",
+    "ratio": 9.53
+  }
+]
