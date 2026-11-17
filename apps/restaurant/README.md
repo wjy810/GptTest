@@ -66,6 +66,31 @@ npm run build -- --mode restaurant
 }
 ```
 
+## 手机菜单与预约排版
+
+菜单保持桌面三列、手机两列；完整餐盘的方形容器没有缩放裁切。正文按内容角色调整：
+
+- 食材说明桌面 `13px`、手机 `12px / 1.8`；`word-break: keep-all` 尽量让每种食材完整换行，`overflow-wrap: anywhere` 处理未来过长词语。
+- 手机菜名 `14px`、价格 `18px`。360px 以下让 `.dish-title` 纵向排列，给长菜名和三位数价格各自完整空间，避免为保留并排而缩小文字。
+- 菜单说明与预约规则为 `12px`；手机营业时间 `12px`、周一休息补充 `11px`。装饰题眉仍保持细小层级。
+- 人数加减按钮为 `44×44px`；手机菜单分类按钮最小高 `44px`。
+- 手机日期、时段字体 `16px`、控件高 `48px`。420px 以下 `.booking-fields` 改为单列；320px 实测每个控件宽 `241.63px`，无需挤压原生日期与时段文字。
+
+```css
+@media (max-width: 420px) {
+  .booking-fields {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+@media (max-width: 360px) {
+  .dish-title {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+```
+
 ## 预约行为与边界
 
 - 日期以 **Asia/Shanghai / UTC+8 餐厅时间** 判断当天，与新加坡同一 UTC 偏移；不使用 `toISOString()` 截断来计算当地日期。
@@ -89,6 +114,24 @@ PREVIEW_URL=http://127.0.0.1:4173/restaurant/ node apps/restaurant/verify.mjs
 脚本使用已安装的系统 Chromium（`/usr/bin/chromium`）；其他机器可改为自己的浏览器路径或已安装 Playwright 的 Chromium。结果写到 `artifacts/reviews/restaurant-results.json`，截图为 `restaurant-1440.png`、`restaurant-390.png`、`restaurant-320.png`。
 
 本轮检查覆盖菜单分类、空/过去日期、提交独立校验、人数上下限、本地确认内容、对话框焦点、Escape 恢复、跳转链接、减少动态效果、三种宽度横向溢出和浏览器异常。它不是真实餐厅服务测试，不包含真实库存、订单、支付或邮件。
+
+### 本轮优化实测
+
+仅修改站内 CSS 与本说明，原有预约与菜单逻辑保持不变。实际通过独立构建、全仓 TypeScript 检查和既有餐厅 5 项 Playwright 测试。另用 [本轮针对性脚本](../../artifacts/optimization/restaurant-verify.mjs) 核验三个尺寸的文本/控件边界、双列菜单及 6 组预约断言；没有重复扩展完整业务测试。
+
+| 390px 实测项        | 优化前 → 优化后                       |
+| ------------------- | ------------------------------------- |
+| 食材说明            | `9px → 12px`                          |
+| 菜单说明 / 预约规则 | `8px → 12px`                          |
+| 人数加减            | `31×31px → 44×44px`                   |
+| 日期 / 时段字号     | `11px → 16px`                         |
+| 日期 / 时段可用宽度 | 两列各 `144.11px →` 单列各 `303.22px` |
+
+预约专项把浏览器时钟固定为 `2026-11-17 20:30 UTC`，确认上海日期最小值为 `2026-11-18`；移除 HTML `min` 后仍拒绝过去日期；`2026-11-23` 周一拒绝，改为周二后错误清除，摘要正确显示 `2026-11-24 · 19:30 · 3 位` 与未发送声明，Escape 返回提交按钮。
+
+[改前测量](../../artifacts/optimization/restaurant-before-metrics.json) / [改后测量](../../artifacts/optimization/restaurant-after-metrics.json)。已实际审阅 [320px 前](../../artifacts/optimization/restaurant-320-before.png) / [后](../../artifacts/optimization/restaurant-320-after.png)、[390px 前](../../artifacts/optimization/restaurant-390-before.png) / [后](../../artifacts/optimization/restaurant-390-after.png)、[1440px 前](../../artifacts/optimization/restaurant-1440-before.png) / [后](../../artifacts/optimization/restaurant-1440-after.png)。三种宽度均无横向溢出，菜品标题、食材文字和预约控件内部无裁切。
+
+复验：先独立构建并启动根 `npm run preview`，再运行 `node artifacts/optimization/restaurant-verify.mjs`。本轮以可读性和操作空间为目标；手机页面允许因字号和纵排表单增加高度。
 
 ## 参考与进一步练习
 

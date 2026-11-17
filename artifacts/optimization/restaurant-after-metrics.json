@@ -1,0 +1,153 @@
+{
+  "metrics": [
+    {
+      "width": 1440,
+      "documentWidth": 1440,
+      "documentHeight": 3952,
+      "ingredient": {
+        "width": 415.328125,
+        "height": 23.390625,
+        "font": "13px"
+      },
+      "menuNote": {
+        "width": 1296,
+        "height": 21.59375,
+        "font": "12px"
+      },
+      "bookingNote": {
+        "width": 480.34375,
+        "height": 21.59375,
+        "font": "12px"
+      },
+      "stepper": {
+        "width": 44,
+        "height": 44,
+        "font": "16px"
+      },
+      "date": {
+        "width": 229.171875,
+        "height": 43,
+        "font": "12px"
+      },
+      "time": {
+        "width": 229.171875,
+        "height": 43,
+        "font": "12px"
+      },
+      "dishTitle": {
+        "width": 120,
+        "height": 29,
+        "font": "20px"
+      },
+      "art": {
+        "width": 415.328125,
+        "height": 351.96875,
+        "font": "16px"
+      },
+      "columns": "415.328px 415.328px 415.344px",
+      "overflows": []
+    },
+    {
+      "width": 390,
+      "documentWidth": 390,
+      "documentHeight": 4367,
+      "ingredient": {
+        "width": 169,
+        "height": 21.59375,
+        "font": "12px"
+      },
+      "menuNote": {
+        "width": 351,
+        "height": 45.59375,
+        "font": "12px"
+      },
+      "bookingNote": {
+        "width": 303.21875,
+        "height": 43.1875,
+        "font": "12px"
+      },
+      "stepper": {
+        "width": 44,
+        "height": 44,
+        "font": "16px"
+      },
+      "date": {
+        "width": 303.21875,
+        "height": 48,
+        "font": "16px"
+      },
+      "time": {
+        "width": 303.21875,
+        "height": 48,
+        "font": "16px"
+      },
+      "dishTitle": {
+        "width": 84,
+        "height": 21,
+        "font": "14px"
+      },
+      "art": {
+        "width": 169,
+        "height": 169,
+        "font": "16px"
+      },
+      "columns": "169px 169px",
+      "overflows": []
+    },
+    {
+      "width": 320,
+      "documentWidth": 320,
+      "documentHeight": 4464,
+      "ingredient": {
+        "width": 137.5,
+        "height": 43.1875,
+        "font": "12px"
+      },
+      "menuNote": {
+        "width": 288,
+        "height": 68.390625,
+        "font": "12px"
+      },
+      "bookingNote": {
+        "width": 241.625,
+        "height": 43.1875,
+        "font": "12px"
+      },
+      "stepper": {
+        "width": 44,
+        "height": 44,
+        "font": "16px"
+      },
+      "date": {
+        "width": 241.625,
+        "height": 48,
+        "font": "16px"
+      },
+      "time": {
+        "width": 241.625,
+        "height": 48,
+        "font": "16px"
+      },
+      "dishTitle": {
+        "width": 84,
+        "height": 21,
+        "font": "14px"
+      },
+      "art": {
+        "width": 137.5,
+        "height": 137.5,
+        "font": "16px"
+      },
+      "columns": "137.5px 137.5px",
+      "overflows": []
+    }
+  ],
+  "bookingChecks": [
+    "Shanghai date boundary",
+    "past date without native min",
+    "Monday closure",
+    "editing clears error",
+    "selected date/time/guests in local-only dialog",
+    "Escape restores trigger"
+  ]
+}

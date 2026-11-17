@@ -408,13 +408,15 @@ main {
   color: #705644;
 }
 .dish-card > p {
-  font-size: 11px;
+  font-size: 13px;
   color: #705644;
   line-height: 1.8;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
   margin: 12px 0 0;
 }
 .menu-note {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.8;
   color: #796554;
   margin: 30px 0 0;
@@ -559,7 +561,7 @@ main {
 }
 .guest-row small {
   display: block;
-  font-size: 9px;
+  font-size: 11px;
   color: #705644;
   margin-top: 8px;
 }
@@ -569,8 +571,9 @@ main {
   gap: 16px;
 }
 .stepper button {
-  width: 31px;
-  height: 31px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
   border: 1px solid #c7af91;
   display: grid;
   place-items: center;
@@ -597,7 +600,7 @@ main {
   background: #722b38;
 }
 .booking-note {
-  font-size: 9px;
+  font-size: 12px;
   color: #6e503d;
   line-height: 1.8;
   margin-bottom: 0;
@@ -908,7 +911,7 @@ footer > a:last-child {
     letter-spacing: 0;
   }
   .section-heading > p {
-    font-size: 10px;
+    font-size: 12px;
     margin-top: 18px;
     line-height: 1.8;
   }
@@ -921,8 +924,9 @@ footer > a:last-child {
     gap: 0;
   }
   .menu-toolbar button {
-    font-size: 10px;
-    padding: 8px 12px;
+    font-size: 12px;
+    padding: 9px 10px;
+    min-height: 44px;
   }
   .menu-toolbar button span {
     font-size: 6px;
@@ -960,7 +964,7 @@ footer > a:last-child {
     align-items: flex-start;
   }
   .dish-title h3 {
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.5;
   }
   .dish-title strong {
@@ -972,18 +976,18 @@ footer > a:last-child {
     margin-right: 1px;
   }
   .dish-en {
-    font-size: 6px;
+    font-size: 8px;
     line-height: 1.6;
     letter-spacing: 0.5px;
     margin-top: 6px;
   }
   .dish-card > p {
-    font-size: 9px;
+    font-size: 12px;
     margin-top: 8px;
-    line-height: 1.7;
+    line-height: 1.8;
   }
   .menu-note {
-    font-size: 8px;
+    font-size: 12px;
     line-height: 1.9;
     margin-top: 25px;
   }
@@ -1049,17 +1053,21 @@ footer > a:last-child {
     margin-top: 22px;
   }
   .booking-fields label {
-    font-size: 11px;
+    font-size: 12px;
   }
   .booking-fields input,
   .booking-fields select {
-    font-size: 11px;
+    font-size: 16px;
+    height: 48px;
   }
   .guest-row {
     padding: 23px 0;
   }
+  .stepper {
+    gap: 12px;
+  }
   .booking-note {
-    font-size: 8px;
+    font-size: 12px;
   }
   .visit {
     padding: 40px 6%;
@@ -1077,16 +1085,16 @@ footer > a:last-child {
     padding: 0;
   }
   .visit-label {
-    font-size: 7px;
+    font-size: 10px;
     letter-spacing: 0.4px;
   }
   .visit p {
     margin-top: 15px;
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1.9;
   }
   .visit small {
-    font-size: 8px;
+    font-size: 11px;
   }
   footer {
     padding: 30px 6%;
@@ -1109,6 +1117,18 @@ footer > a:last-child {
   footer > a:last-child {
     font-size: 10px;
     gap: 15px;
+  }
+}
+@media (max-width: 420px) {
+  .booking-fields {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+@media (max-width: 360px) {
+  .dish-title {
+    flex-direction: column;
+    gap: 5px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
