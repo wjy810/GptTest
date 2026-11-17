@@ -1,0 +1,197 @@
+[
+  {
+    "width": 1440,
+    "metrics": [
+      {
+        "s": ".ritual-grid button",
+        "w": 96.015625,
+        "h": 17,
+        "font": "12px"
+      },
+      {
+        "s": ".player-card-top .icon-button",
+        "w": 32,
+        "h": 32,
+        "font": "14px"
+      },
+      {
+        "s": ".sound-info .icon-button",
+        "w": 40,
+        "h": 40,
+        "font": "14px"
+      },
+      {
+        "s": ".player-controls .icon-button",
+        "w": 40,
+        "h": 40,
+        "font": "14px"
+      },
+      {
+        "s": ".sound-card > p",
+        "w": 295,
+        "h": 21.59375,
+        "font": "12px"
+      },
+      {
+        "s": ".ritual-grid p",
+        "w": 336,
+        "h": 48,
+        "font": "12px"
+      },
+      {
+        "s": ".faq-item > p",
+        "w": 460,
+        "h": 48,
+        "font": "12px"
+      },
+      {
+        "s": ".player-notice",
+        "w": 294,
+        "h": 16,
+        "font": "11px"
+      },
+      {
+        "s": ".volume-control input",
+        "w": 232.15625,
+        "h": 20,
+        "font": "14px"
+      },
+      {
+        "s": ".filter-tabs button",
+        "w": 56.015625,
+        "h": 40,
+        "font": "12px"
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "metrics": [
+      {
+        "s": ".ritual-grid button",
+        "w": 85,
+        "h": 16,
+        "font": "11px"
+      },
+      {
+        "s": ".player-card-top .icon-button",
+        "w": 32,
+        "h": 32,
+        "font": "14px"
+      },
+      {
+        "s": ".sound-info .icon-button",
+        "w": 32,
+        "h": 40,
+        "font": "14px"
+      },
+      {
+        "s": ".player-controls .icon-button",
+        "w": 40,
+        "h": 40,
+        "font": "14px"
+      },
+      {
+        "s": ".sound-card > p",
+        "w": 169,
+        "h": 43.1875,
+        "font": "12px"
+      },
+      {
+        "s": ".ritual-grid p",
+        "w": 251,
+        "h": 48,
+        "font": "12px"
+      },
+      {
+        "s": ".faq-item > p",
+        "w": 350,
+        "h": 72,
+        "font": "12px"
+      },
+      {
+        "s": ".player-notice",
+        "w": 260,
+        "h": 15,
+        "font": "10px"
+      },
+      {
+        "s": ".volume-control input",
+        "w": 198.546875,
+        "h": 20,
+        "font": "14px"
+      },
+      {
+        "s": ".filter-tabs button",
+        "w": 44,
+        "h": 40,
+        "font": "11px"
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "metrics": [
+      {
+        "s": ".ritual-grid button",
+        "w": 85,
+        "h": 16,
+        "font": "11px"
+      },
+      {
+        "s": ".player-card-top .icon-button",
+        "w": 32,
+        "h": 32,
+        "font": "14px"
+      },
+      {
+        "s": ".sound-info .icon-button",
+        "w": 32,
+        "h": 40,
+        "font": "14px"
+      },
+      {
+        "s": ".player-controls .icon-button",
+        "w": 40,
+        "h": 40,
+        "font": "14px"
+      },
+      {
+        "s": ".sound-card > p",
+        "w": 134,
+        "h": 43.1875,
+        "font": "12px"
+      },
+      {
+        "s": ".ritual-grid p",
+        "w": 181,
+        "h": 48,
+        "font": "12px"
+      },
+      {
+        "s": ".faq-item > p",
+        "w": 280,
+        "h": 72,
+        "font": "12px"
+      },
+      {
+        "s": ".player-notice",
+        "w": 231,
+        "h": 15,
+        "font": "10px"
+      },
+      {
+        "s": ".volume-control input",
+        "w": 169.96875,
+        "h": 20,
+        "font": "14px"
+      },
+      {
+        "s": ".filter-tabs button",
+        "w": 44,
+        "h": 40,
+        "font": "11px"
+      }
+    ]
+  }
+]

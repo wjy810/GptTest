@@ -261,8 +261,9 @@ input:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 32px;
-  min-height: 32px;
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
   padding: 5px;
   border-radius: 50%;
   color: #bdb5d1;
@@ -899,7 +900,8 @@ input:focus-visible {
   gap: 9px;
   font-size: 10px;
   color: #c0add6;
-  padding: 0;
+  min-height: 44px;
+  padding: 10px 0;
   margin-top: 22px;
 }
 .ritual-grid button:hover {
@@ -922,6 +924,8 @@ input:focus-visible {
   border-radius: 50%;
 }
 .timer-status button {
+  min-width: 44px;
+  min-height: 44px;
   text-decoration: underline;
   font-size: 10px;
   color: #bda3d6;
@@ -1558,14 +1562,14 @@ input:focus-visible {
 }
 .sound-info .icon-button,
 .player-controls .icon-button {
-  min-width: 40px;
-  min-height: 40px;
+  min-width: 44px;
+  min-height: 44px;
 }
 .volume-control input {
-  height: 20px;
+  height: 44px;
 }
 .filter-tabs button {
-  min-height: 40px;
+  min-height: 44px;
 }
 .footer > small {
   color: #9c8ba9;
@@ -1596,8 +1600,8 @@ input:focus-visible {
     align-items: flex-start;
   }
   .sound-info .icon-button {
-    min-width: 32px;
-    min-height: 40px;
+    min-width: 44px;
+    min-height: 44px;
     padding: 5px;
   }
   .sound-info h3 {
@@ -1632,5 +1636,256 @@ input:focus-visible {
   }
   .player-scene {
     margin-bottom: 0;
+  }
+}
+
+/* Touch refinement: keep the quiet glass composition, give actions real room. */
+.ritual-grid button {
+  border-bottom: 1px solid #d4b9f52b;
+  justify-content: space-between;
+}
+.icon-button[aria-pressed='true'] {
+  color: #e0d2ff;
+  background: #c8adff18;
+}
+.player-card-top .icon-button {
+  margin-right: -7px;
+}
+.timer-status {
+  flex-wrap: wrap;
+  line-height: 1.7;
+}
+.timer-status > svg {
+  flex-shrink: 0;
+}
+@media (max-width: 760px) {
+  .hero-copy > p {
+    font-size: 14px;
+    line-height: 1.95;
+  }
+  .hero-actions {
+    flex-wrap: wrap;
+    gap: 10px 18px;
+  }
+  .hero-actions > a,
+  .nav-links > a,
+  .footer > a,
+  .empty-favorites button {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .hero-actions > a {
+    font-size: 12px;
+  }
+  .hero-actions .primary-button {
+    min-height: 48px;
+    font-size: 13px;
+  }
+  .player-scene {
+    min-width: 0;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .player-card {
+    min-width: 0;
+    padding: 21px 23px 20px;
+  }
+  .player-card > p {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .player-controls {
+    gap: 26px;
+    margin-bottom: 8px;
+  }
+  .play-button {
+    width: 54px;
+    height: 54px;
+  }
+  .playback-time,
+  .volume-control output {
+    font-size: 11px;
+  }
+  .volume-control input {
+    min-width: 0;
+    margin: 0;
+  }
+  .volume-control output {
+    min-width: 34px;
+    text-align: right;
+  }
+  .player-notice {
+    font-size: 12px;
+    line-height: 1.8;
+    margin-top: 9px;
+  }
+  .filter-tabs {
+    gap: 4px;
+  }
+  .filter-tabs button {
+    min-width: 44px;
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+  .sound-grid {
+    row-gap: 28px;
+  }
+  .sound-info {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    gap: 0;
+    align-items: center;
+    margin-top: 15px;
+  }
+  .sound-info > div {
+    display: contents;
+  }
+  .sound-info h3 {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    font-size: 15px;
+    line-height: 1.45;
+    margin: 0 0 4px;
+  }
+  .sound-info span {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .sound-info .icon-button {
+    grid-column: 2;
+    grid-row: 2;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #c7b6dd20;
+    background: #d1bcf008;
+  }
+  .sound-card > p {
+    font-size: 14px;
+    line-height: 1.85;
+    margin-top: 10px;
+  }
+  .philosophy-copy > p,
+  .ritual-grid p,
+  .faq-item > p,
+  .empty-favorites p {
+    font-size: 14px;
+    line-height: 1.95;
+  }
+  .philosophy-values {
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    font-size: 12px;
+  }
+  .ritual-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .ritual-grid article {
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    column-gap: 17px;
+  }
+  .ritual-grid article > svg {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    float: none;
+    margin: 2px 0 0;
+  }
+  .ritual-index {
+    top: 26px;
+    right: 22px;
+    color: #9d8dae;
+  }
+  .ritual-grid h3 {
+    grid-column: 2;
+    margin: 0 20px 9px 0;
+    font-size: 18px;
+  }
+  .ritual-grid p {
+    grid-column: 2;
+    margin: 0;
+  }
+  .ritual-grid button {
+    grid-column: 2;
+    margin: 14px 0 0;
+    padding: 10px 0;
+    font-size: 13px;
+    gap: 12px;
+    text-align: left;
+  }
+  .ritual-grid button > svg {
+    flex-shrink: 0;
+  }
+  .timer-status {
+    font-size: 12px;
+    row-gap: 3px;
+  }
+  .timer-status button {
+    font-size: 12px;
+    padding: 10px 8px;
+  }
+  .faq-item > button {
+    font-size: 14px;
+  }
+  .faq-item > button svg {
+    flex-shrink: 0;
+  }
+  .empty-favorites {
+    padding: 28px 20px;
+  }
+}
+@media (max-width: 440px) {
+  .hero h1 {
+    font-size: clamp(54px, 18.5vw, 74px);
+    letter-spacing: -0.065em;
+  }
+}
+@media (max-width: 350px) {
+  .hero-copy > p {
+    font-size: 13px;
+  }
+  .hero-actions {
+    gap: 8px 11px;
+  }
+  .hero-actions .primary-button {
+    font-size: 12px;
+    padding: 14px 17px;
+  }
+  .hero-actions > a {
+    font-size: 11px;
+  }
+  .player-scene {
+    padding: 0 4px;
+  }
+  .player-card {
+    padding-left: 19px;
+    padding-right: 19px;
+  }
+  .record {
+    width: 154px;
+    height: 154px;
+  }
+  .player-card h2 {
+    font-size: 20px;
+  }
+  .sound-info h3 {
+    min-height: 2.9em;
+  }
+  .ritual-grid article {
+    padding: 23px 20px;
+    column-gap: 13px;
+  }
+  .ritual-grid p br {
+    display: none;
+  }
+  .ritual-grid h3 {
+    font-size: 17px;
+  }
+  .ritual-grid button {
+    grid-column: 1 / -1;
   }
 }
