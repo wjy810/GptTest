@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   ArrowDown,
@@ -78,6 +78,8 @@ function loadScores(): Score[] {
       ? data
           .filter(
             (s) =>
+              s !== null &&
+              typeof s === 'object' &&
               Number.isFinite(s.ms) &&
               s.ms > 0 &&
               typeof s.date === 'string' &&
@@ -130,6 +132,22 @@ function PixelStar() {
     </svg>
   )
 }
+function keepDialogFocus(event: KeyboardEvent<HTMLDialogElement>) {
+  if (event.key !== 'Tab') return
+  const controls = event.currentTarget.querySelectorAll<HTMLElement>(
+    'button:not(:disabled), a[href], input:not(:disabled), [tabindex="0"]',
+  )
+  const first = controls[0],
+    last = controls[controls.length - 1]
+  if (!first) return
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault()
+    first.focus()
+  }
+}
 function App() {
   const [menu, setMenu] = useState(false)
   const [filter, setFilter] = useState('全部游戏')
@@ -153,7 +171,16 @@ function App() {
     : null
 
   useEffect(() => {
-    selected ? dialog.current?.showModal() : dialog.current?.close()
+    if (!selected) {
+      dialog.current?.close()
+      return
+    }
+    const overflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    dialog.current?.showModal()
+    return () => {
+      document.body.style.overflow = overflow
+    }
   }, [selected])
   useEffect(
     () => () => {
@@ -209,16 +236,15 @@ function App() {
     setScores([])
     try {
       localStorage.removeItem('p1xel-scores')
+      setStorageNote('')
     } catch {
       setStorageNote('无法清除浏览器存储；当前页面成绩已清空。')
     }
   }
   function goPlay() {
-    document
-      .getElementById('play')
-      ?.scrollIntoView({
-        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-      })
+    document.getElementById('play')?.scrollIntoView({
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    })
     gameButton.current?.focus({ preventScroll: true })
   }
   function download() {
@@ -826,9 +852,19 @@ function App() {
         ref={dialog}
         className="game-dialog"
         aria-labelledby="game-dialog-title"
+        onKeyDown={keepDialogFocus}
+        onClose={() => setSelected(null)}
         onCancel={() => setSelected(null)}
         onClick={(e) => {
-          if (e.target === e.currentTarget) setSelected(null)
+          if (e.target !== e.currentTarget) return
+          const bounds = e.currentTarget.getBoundingClientRect()
+          if (
+            e.clientX < bounds.left ||
+            e.clientX > bounds.right ||
+            e.clientY < bounds.top ||
+            e.clientY > bounds.bottom
+          )
+            setSelected(null)
         }}
       >
         <button

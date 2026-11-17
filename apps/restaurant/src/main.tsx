@@ -295,6 +295,11 @@ function App() {
       setBooking(null)
       return
     }
+    if (new Date(`${date}T00:00:00Z`).getUTCDay() === 1) {
+      setError('周一休息，请选择周二至周日的晚餐时段。')
+      setBooking(null)
+      return
+    }
     setError('')
     setBooking({ date, time, guests })
   }
@@ -502,6 +507,7 @@ function App() {
                     onChange={(e) => {
                       setDate(e.target.value)
                       setBooking(null)
+                      setError('')
                     }}
                   />
                 </label>
@@ -554,7 +560,9 @@ function App() {
               <button className="book-button" type="submit">
                 生成预约意向 <ArrowUpRight size={19} />
               </button>
-              <p className="booking-note">本地交互演示 · UTC+8 餐厅时间 · 不会产生真实订位</p>
+              <p className="booking-note">
+                本地交互演示 · 周一休息 · UTC+8 餐厅时间 · 不会产生真实订位
+              </p>
               {error && <p role="alert">{error}</p>}
             </form>
           </div>

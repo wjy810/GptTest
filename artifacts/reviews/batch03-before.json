@@ -1,0 +1,52 @@
+[
+  {
+    "site": "restaurant",
+    "width": 1440,
+    "viewport": 1440,
+    "documentWidth": 1440,
+    "h1": 1,
+    "duplicates": [],
+    "errors": []
+  },
+  {
+    "site": "restaurant",
+    "width": 390,
+    "viewport": 390,
+    "documentWidth": 390,
+    "h1": 1,
+    "duplicates": [],
+    "errors": []
+  },
+  {
+    "site": "restaurant",
+    "mondayAccepted": true,
+    "advertisedHours": "DROP BY, STAY A WHILE.\n在拐角处，\n循着香气来。\nFIND US / 虚构地址\n\n梧桐路 18 号，街角的红色门\n这是一处用于设计展示的虚构地点\n\nHOURS / 示例营业时间\n\n周二 — 周日\n17:30 — 22:00\n周一，把时间留给自己。"
+  },
+  {
+    "site": "arcade",
+    "width": 1440,
+    "viewport": 1440,
+    "documentWidth": 1440,
+    "h1": 1,
+    "duplicates": [],
+    "errors": []
+  },
+  {
+    "site": "arcade",
+    "width": 390,
+    "viewport": 390,
+    "documentWidth": 390,
+    "h1": 1,
+    "duplicates": [],
+    "errors": []
+  },
+  {
+    "site": "arcade",
+    "mixedStorageRows": 0,
+    "errors": []
+  },
+  {
+    "site": "arcade",
+    "dialogClosedByInnerPadding": true
+  }
+]

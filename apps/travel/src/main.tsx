@@ -370,13 +370,15 @@ function App() {
     })
   }
   function planFor(id: string) {
+    detailDialog.current?.close()
     setDestination(id)
     setDetail(null)
-    document
-      .getElementById('plan')
-      ?.scrollIntoView({
-        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-      })
+    document.getElementById('plan')?.scrollIntoView({
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+    })
+    requestAnimationFrame(() =>
+      document.getElementById('destination')?.focus({ preventScroll: true }),
+    )
   }
   function dayPlan(day: number) {
     return day === 1
@@ -516,7 +518,7 @@ function App() {
             </p>
           </div>
           <div className="destination-toolbar">
-            <div className="filters" aria-label="目的地分类">
+            <div className="filters" role="group" aria-label="目的地分类">
               {['全部', '山野', '海岛', '城市', '已收藏'].map((f) => (
                 <button key={f} aria-pressed={filter === f} onClick={() => setFilter(f)}>
                   {f}

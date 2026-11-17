@@ -1,0 +1,118 @@
+{
+  "date": "2026-11-17",
+  "checks": [
+    {
+      "name": "restaurant 1440px layout and SVG identities",
+      "result": "passed"
+    },
+    {
+      "name": "restaurant 390px layout and SVG identities",
+      "result": "passed"
+    },
+    {
+      "name": "restaurant menu categories return two of six dishes",
+      "result": "passed"
+    },
+    {
+      "name": "restaurant UTC+8 day boundary ignores browser UTC calendar",
+      "result": "passed"
+    },
+    {
+      "name": "restaurant rejects empty, past and Monday; error clears on edit",
+      "result": "passed"
+    },
+    {
+      "name": "restaurant party bounds 1..8 and named modal preserves choices",
+      "result": "passed"
+    },
+    {
+      "name": "restaurant reduced motion and no JS exceptions",
+      "result": "passed"
+    },
+    {
+      "name": "arcade 1440px layout and SVG identities",
+      "result": "passed"
+    },
+    {
+      "name": "arcade 390px layout and SVG identities",
+      "result": "passed"
+    },
+    {
+      "name": "arcade valid stored score survives null/malformed neighbors",
+      "result": "passed"
+    },
+    {
+      "name": "arcade concept dialog internal padding, focus wrap, Esc restore",
+      "result": "passed"
+    },
+    {
+      "name": "arcade favorites are session-only with real empty state",
+      "result": "passed"
+    },
+    {
+      "name": "arcade early click and reset never create scores",
+      "result": "passed"
+    },
+    {
+      "name": "arcade keyboard completes measured round and persists score",
+      "result": "passed"
+    },
+    {
+      "name": "arcade hidden-state event cancels current round without a score",
+      "result": "passed"
+    },
+    {
+      "name": "arcade storage denial preserves session score and reports failure",
+      "result": "passed"
+    },
+    {
+      "name": "arcade downloaded JSON matches displayed scores and best",
+      "result": "passed"
+    },
+    {
+      "name": "arcade mode limits, clearing, reduced motion, no JS exceptions",
+      "result": "passed"
+    },
+    {
+      "name": "travel 1440px layout and SVG identities",
+      "result": "passed"
+    },
+    {
+      "name": "travel 390px layout and SVG identities",
+      "result": "passed"
+    },
+    {
+      "name": "travel category filters and empty saved list are truthful",
+      "result": "passed"
+    },
+    {
+      "name": "travel saved IDs persist and malformed neighbors are removed",
+      "result": "passed"
+    },
+    {
+      "name": "travel storage denial preserves page action and shows failure",
+      "result": "passed"
+    },
+    {
+      "name": "travel named detail modal ignores inner padding and traps focus",
+      "result": "passed"
+    },
+    {
+      "name": "travel detail-to-planner transition carries destination and keyboard focus",
+      "result": "passed"
+    },
+    {
+      "name": "travel budget bounds and arithmetic are consistent",
+      "result": "passed"
+    },
+    {
+      "name": "travel generated itinerary and downloaded Markdown match the form",
+      "result": "passed"
+    },
+    {
+      "name": "travel mobile menu, reduced motion and no JS exceptions",
+      "result": "passed"
+    }
+  ],
+  "scope": "independent built sites; controlled browser clocks for calendar and game state assertions"
+}

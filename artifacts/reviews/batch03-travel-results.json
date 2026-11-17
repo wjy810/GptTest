@@ -1,0 +1,131 @@
+{
+  "site": "travel",
+  "checkedAt": "2026-11-17T05:22:20.259Z",
+  "results": [
+    {
+      "name": "initial six destinations",
+      "passed": true
+    },
+    {
+      "name": "mountain filter has two",
+      "passed": true
+    },
+    {
+      "name": "island filter has two",
+      "passed": true
+    },
+    {
+      "name": "city filter has two",
+      "passed": true
+    },
+    {
+      "name": "saved id persisted",
+      "passed": true
+    },
+    {
+      "name": "favorite restored after reload",
+      "passed": true
+    },
+    {
+      "name": "saved filter one",
+      "passed": true
+    },
+    {
+      "name": "saved empty recovery visible",
+      "passed": true
+    },
+    {
+      "name": "destination dialog labelled",
+      "passed": true
+    },
+    {
+      "name": "Escape closes destination",
+      "passed": true
+    },
+    {
+      "name": "detail CTA changes planner",
+      "passed": true
+    },
+    {
+      "name": "default destination budget formula",
+      "passed": true
+    },
+    {
+      "name": "minimum budget formula",
+      "passed": true
+    },
+    {
+      "name": "minimum people boundary",
+      "passed": true
+    },
+    {
+      "name": "maximum people boundary",
+      "passed": true
+    },
+    {
+      "name": "maximum formula",
+      "passed": true
+    },
+    {
+      "name": "summary 14 day entries",
+      "passed": true
+    },
+    {
+      "name": "summary budget matches",
+      "passed": true
+    },
+    {
+      "name": "download actual itinerary and formula",
+      "passed": true
+    },
+    {
+      "name": "mobile no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "mobile navigation opens",
+      "passed": true
+    },
+    {
+      "name": "navigation closes on link",
+      "passed": true
+    },
+    {
+      "name": "journal details expands",
+      "passed": true
+    },
+    {
+      "name": "mobile summary fits viewport",
+      "passed": true
+    },
+    {
+      "name": "reduced motion uses instant scrolling",
+      "passed": true
+    },
+    {
+      "name": "malformed storage recovers",
+      "passed": true
+    },
+    {
+      "name": "saved schema drops unknown types and duplicates",
+      "passed": true
+    },
+    {
+      "name": "storage denial still renders",
+      "passed": true
+    },
+    {
+      "name": "storage denial has feedback",
+      "passed": true
+    },
+    {
+      "name": "denied persistence still favorites in memory",
+      "passed": true
+    },
+    {
+      "name": "no JS errors",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

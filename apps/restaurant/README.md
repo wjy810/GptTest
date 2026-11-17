@@ -70,6 +70,7 @@ npm run build -- --mode restaurant
 
 - 日期以 **Asia/Shanghai / UTC+8 餐厅时间** 判断当天，与新加坡同一 UTC 偏移；不使用 `toISOString()` 截断来计算当地日期。
 - `<input type="date">` 使用 `required` 和 `min`，提交函数再次校验日期，即使原生 `min` 被移除也拒绝过去日期。
+- 周一休息，提交函数拒绝周一日期，与页脚营业时间一致；修改日期后清除旧错误。
 - 人数范围为 1–8，边界按钮禁用；时间从预设晚餐时段选择。
 - 确认使用原生 `<dialog>.showModal()`，锁定背景滚动；Tab 保持在面板内，Escape 和“返回修改”关闭后恢复焦点。
 - 输入保留在当前会话内，不发送网络请求，不生成真实订单、不保存个人资料。
@@ -81,6 +82,8 @@ npm run build -- --mode restaurant
 
 ```bash
 node apps/restaurant/verify.mjs
+# 或针对根目录构建预览服务：
+PREVIEW_URL=http://127.0.0.1:4173/restaurant/ node apps/restaurant/verify.mjs
 ```
 
 脚本使用已安装的系统 Chromium（`/usr/bin/chromium`）；其他机器可改为自己的浏览器路径或已安装 Playwright 的 Chromium。结果写到 `artifacts/reviews/restaurant-results.json`，截图为 `restaurant-1440.png`、`restaurant-390.png`、`restaurant-320.png`。
