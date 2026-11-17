@@ -1,0 +1,143 @@
+[
+  {
+    "width": 1440,
+    "targets": [
+      {
+        "s": ".game-link",
+        "w": 67,
+        "h": 26,
+        "font": "11px"
+      },
+      {
+        "s": ".heart-button",
+        "w": 40,
+        "h": 40,
+        "font": "14px"
+      },
+      {
+        "s": ".game-card > p",
+        "w": 292.5,
+        "h": 22.1875,
+        "font": "12px"
+      },
+      {
+        "s": ".screen-content > p",
+        "w": 144.015625,
+        "h": 17,
+        "font": "12px"
+      },
+      {
+        "s": ".measurement-note p",
+        "w": 380,
+        "h": 18,
+        "font": "10px"
+      },
+      {
+        "s": ".score-table",
+        "w": 600,
+        "h": 245,
+        "font": "14px"
+      },
+      {
+        "s": ".screen-bottom",
+        "w": 148.890625,
+        "h": 8,
+        "font": "7px"
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "targets": [
+      {
+        "s": ".game-link",
+        "w": 67,
+        "h": 26,
+        "font": "11px"
+      },
+      {
+        "s": ".heart-button",
+        "w": 30,
+        "h": 40,
+        "font": "14px"
+      },
+      {
+        "s": ".game-card > p",
+        "w": 168,
+        "h": 44.375,
+        "font": "12px"
+      },
+      {
+        "s": ".screen-content > p",
+        "w": 132,
+        "h": 16,
+        "font": "11px"
+      },
+      {
+        "s": ".measurement-note p",
+        "w": 327,
+        "h": 39.59375,
+        "font": "11px"
+      },
+      {
+        "s": ".score-table",
+        "w": 350,
+        "h": 243,
+        "font": "14px"
+      },
+      {
+        "s": ".screen-bottom",
+        "w": 148.890625,
+        "h": 8,
+        "font": "7px"
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "targets": [
+      {
+        "s": ".game-link",
+        "w": 67,
+        "h": 26,
+        "font": "11px"
+      },
+      {
+        "s": ".heart-button",
+        "w": 30,
+        "h": 40,
+        "font": "14px"
+      },
+      {
+        "s": ".game-card > p",
+        "w": 133,
+        "h": 44.375,
+        "font": "12px"
+      },
+      {
+        "s": ".screen-content > p",
+        "w": 132,
+        "h": 16,
+        "font": "11px"
+      },
+      {
+        "s": ".measurement-note p",
+        "w": 257,
+        "h": 39.59375,
+        "font": "11px"
+      },
+      {
+        "s": ".score-table",
+        "w": 280,
+        "h": 243,
+        "font": "14px"
+      },
+      {
+        "s": ".screen-bottom",
+        "w": 148.890625,
+        "h": 8,
+        "font": "7px"
+      }
+    ]
+  }
+]

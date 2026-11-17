@@ -473,6 +473,16 @@ function App() {
                       </span>
                       <h3>{g.name}</h3>
                     </div>
+                  </div>
+                  <p>{g.desc}</p>
+                  <div className="game-actions">
+                    <button
+                      className="game-link"
+                      onClick={() => (g.id === 'reflex' ? goPlay() : setSelected(g))}
+                    >
+                      {g.label}
+                      <ArrowRight size={14} />
+                    </button>
                     <button
                       className="heart-button"
                       aria-label={`${savedGames.includes(g.id) ? '取消收藏' : '收藏'} ${g.name}`}
@@ -486,14 +496,6 @@ function App() {
                       <Heart size={18} fill={savedGames.includes(g.id) ? 'currentColor' : 'none'} />
                     </button>
                   </div>
-                  <p>{g.desc}</p>
-                  <button
-                    className="game-link"
-                    onClick={() => (g.id === 'reflex' ? goPlay() : setSelected(g))}
-                  >
-                    {g.label}
-                    <ArrowRight size={14} />
-                  </button>
                 </article>
               ))}
           </div>

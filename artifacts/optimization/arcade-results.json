@@ -1,0 +1,367 @@
+{
+  "results": [
+    {
+      "name": "抢跑/隐藏取消不记分/键盘正常记录240ms",
+      "pass": true
+    },
+    {
+      "name": "刷新恢复/导出JSON回读/清空仍为空",
+      "pass": true
+    },
+    {
+      "name": "重排卡片收藏/筛选/规则键盘与焦点返回",
+      "pass": true
+    },
+    {
+      "name": "存储写拒绝：成绩留当前页且反馈可见",
+      "pass": true
+    },
+    {
+      "name": "320px布局/主要操作44px/文字未裁切/截图",
+      "pass": true
+    },
+    {
+      "name": "390px布局/主要操作44px/文字未裁切/截图",
+      "pass": true
+    },
+    {
+      "name": "1440px布局/主要操作44px/文字未裁切/截图",
+      "pass": true
+    },
+    {
+      "name": "无运行异常/减少动态滚动",
+      "pass": true
+    },
+    {
+      "name": "320px四位毫秒成绩与单位不超出指标卡",
+      "pass": true
+    }
+  ],
+  "metrics": [
+    {
+      "width": 320,
+      "controls": [
+        {
+          "s": ".game-link",
+          "w": 84,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".game-link",
+          "w": 84,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".game-link",
+          "w": 84,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".game-link",
+          "w": 84,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".heart-button",
+          "w": 44,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "s": ".heart-button",
+          "w": 44,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "s": ".heart-button",
+          "w": 44,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "s": ".heart-button",
+          "w": 44,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "s": ".machine-top > button",
+          "w": 44,
+          "h": 44,
+          "font": "8px"
+        },
+        {
+          "s": ".mode-picker button",
+          "w": 62,
+          "h": 44,
+          "font": "13px"
+        },
+        {
+          "s": ".mode-picker button",
+          "w": 62,
+          "h": 44,
+          "font": "13px"
+        },
+        {
+          "s": ".filters button",
+          "w": 74.015625,
+          "h": 44,
+          "font": "12px"
+        },
+        {
+          "s": ".filters button",
+          "w": 74.015625,
+          "h": 44,
+          "font": "12px"
+        },
+        {
+          "s": ".filters button",
+          "w": 74.015625,
+          "h": 44,
+          "font": "12px"
+        },
+        {
+          "s": ".filters button",
+          "w": 62.015625,
+          "h": 44,
+          "font": "12px"
+        },
+        {
+          "s": ".export-button",
+          "w": 123.015625,
+          "h": 45,
+          "font": "13px"
+        },
+        {
+          "s": ".empty-scores > button",
+          "w": 106.015625,
+          "h": 44,
+          "font": "13px"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "controls": [
+        {
+          "s": ".game-link",
+          "w": 116,
+          "h": 44,
+          "font": "12px"
+        },
+        {
+          "s": ".game-link",
+          "w": 116,
+          "h": 44,
+          "font": "12px"
+        },
+        {
+          "s": ".game-link",
+          "w": 116,
+          "h": 44,
+          "font": "12px"
+        },
+        {
+          "s": ".game-link",
+          "w": 116,
+          "h": 44,
+          "font": "12px"
+        },
+        {
+          "s": ".heart-button",
+          "w": 44,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "s": ".heart-button",
+          "w": 44,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "s": ".heart-button",
+          "w": 44,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "s": ".heart-button",
+          "w": 44,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "s": ".machine-top > button",
+          "w": 44,
+          "h": 44,
+          "font": "8px"
+        },
+        {
+          "s": ".mode-picker button",
+          "w": 62,
+          "h": 44,
+          "font": "13px"
+        },
+        {
+          "s": ".mode-picker button",
+          "w": 62,
+          "h": 44,
+          "font": "13px"
+        },
+        {
+          "s": ".filters button",
+          "w": 74.015625,
+          "h": 44,
+          "font": "12px"
+        },
+        {
+          "s": ".filters button",
+          "w": 74.015625,
+          "h": 44,
+          "font": "12px"
+        },
+        {
+          "s": ".filters button",
+          "w": 74.015625,
+          "h": 44,
+          "font": "12px"
+        },
+        {
+          "s": ".filters button",
+          "w": 62.015625,
+          "h": 44,
+          "font": "12px"
+        },
+        {
+          "s": ".export-button",
+          "w": 123.015625,
+          "h": 45,
+          "font": "13px"
+        },
+        {
+          "s": ".empty-scores > button",
+          "w": 106.015625,
+          "h": 44,
+          "font": "13px"
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "controls": [
+        {
+          "s": ".game-link",
+          "w": 238.5,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".game-link",
+          "w": 238.5,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".game-link",
+          "w": 238.5,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".game-link",
+          "w": 238.5,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".heart-button",
+          "w": 44,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "s": ".heart-button",
+          "w": 44,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "s": ".heart-button",
+          "w": 44,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "s": ".heart-button",
+          "w": 44,
+          "h": 44,
+          "font": "14px"
+        },
+        {
+          "s": ".machine-top > button",
+          "w": 44,
+          "h": 44,
+          "font": "8px"
+        },
+        {
+          "s": ".mode-picker button",
+          "w": 50,
+          "h": 44,
+          "font": "10px"
+        },
+        {
+          "s": ".mode-picker button",
+          "w": 50,
+          "h": 44,
+          "font": "10px"
+        },
+        {
+          "s": ".filters button",
+          "w": 76,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".filters button",
+          "w": 76,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".filters button",
+          "w": 76,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".filters button",
+          "w": 65,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".export-button",
+          "w": 113,
+          "h": 44,
+          "font": "11px"
+        },
+        {
+          "s": ".empty-scores > button",
+          "w": 96,
+          "h": 44,
+          "font": "11px"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "note": "240ms and 300ms are controlled clock checks, not human measurements; visibility used a controlled document.hidden event.",
+  "recheck": "Corrected assertion to actual concept disclaimer; reran only favorite/filter/dialog/focus flow.",
+  "scoreLayoutNote": "1234ms is a layout fixture; 240ms came from the controlled round."
+}

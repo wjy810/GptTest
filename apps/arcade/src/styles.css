@@ -671,8 +671,9 @@ button:focus-visible {
   display: grid;
   place-items: center;
   color: #af9cc0;
-  min-width: 40px;
-  min-height: 40px;
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
 }
 .heart-button[aria-pressed='true'] {
   color: var(--lime);
@@ -689,7 +690,8 @@ button:focus-visible {
   gap: 9px;
   font-size: 11px;
   color: #c7b4db;
-  padding: 5px 0;
+  min-height: 44px;
+  padding: 10px 0;
 }
 .empty-state {
   border: 1px dashed #c1a2e533;
@@ -759,8 +761,8 @@ button:focus-visible {
 }
 .machine-top > button {
   color: #ad94c3;
-  min-width: 35px;
-  min-height: 35px;
+  min-width: 44px;
+  min-height: 44px;
   display: grid;
   place-items: center;
 }
@@ -936,7 +938,7 @@ button:focus-visible {
   gap: 6px;
 }
 .mode-picker button {
-  min-height: 36px;
+  min-height: 44px;
   padding: 7px 14px;
   border: 1px solid #ac8cc63d;
   font-size: 10px;
@@ -1317,8 +1319,8 @@ button:focus-visible {
   position: absolute;
   right: 12px;
   top: 12px;
-  min-width: 40px;
-  min-height: 40px;
+  min-width: 44px;
+  min-height: 44px;
   display: grid;
   place-items: center;
   color: #c8addc;
@@ -1963,8 +1965,8 @@ button:focus-visible {
     font-size: 7px;
   }
   .heart-button {
-    min-width: 30px;
-    min-height: 40px;
+    min-width: 44px;
+    min-height: 44px;
     padding: 5px;
   }
   .heart-button > svg {
@@ -1994,7 +1996,7 @@ button:focus-visible {
     letter-spacing: 0;
   }
   .machine-top > button {
-    min-width: 28px;
+    min-width: 44px;
   }
   .game-screen {
     min-height: 330px;
@@ -2157,5 +2159,312 @@ button:focus-visible {
   .ticker > span > svg {
     width: 20px;
     height: 20px;
+  }
+}
+
+/* Keep each arcade card's title, rules, and actions in their own readable row. */
+.game-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.game-title {
+  margin-top: 20px;
+}
+.game-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #b99bcc26;
+}
+.game-actions .game-link {
+  flex: 1;
+  justify-content: space-between;
+  min-width: 0;
+  text-align: left;
+}
+.game-link > svg {
+  flex-shrink: 0;
+}
+.game-actions .heart-button {
+  border: 1px solid #b99bcc30;
+  width: 44px;
+  height: 44px;
+}
+.heart-button[aria-pressed='true'] {
+  background: #c5ff480c;
+  border-color: #c5ff4866;
+}
+.filters button,
+.export-button,
+.clear-scores,
+.empty-scores > button,
+.empty-state button {
+  min-height: 44px;
+}
+.machine-top > button {
+  flex-shrink: 0;
+}
+.score-row > b,
+.score-stats strong {
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 760px) {
+  .hero-actions > a,
+  .nav-links > a,
+  .footer > a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .filters {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .filters button {
+    font-size: 12px;
+    padding: 11px 12px;
+  }
+  .game-grid {
+    row-gap: 32px;
+  }
+  .game-title {
+    margin-top: 17px;
+  }
+  .game-title > div > span {
+    font-size: 9px;
+    color: #b4a1c4;
+    line-height: 1.8;
+  }
+  .game-title h3 {
+    font-size: 15px;
+    letter-spacing: -0.4px;
+    line-height: 1.3;
+    margin-top: 5px;
+  }
+  .game-card > p {
+    font-size: 14px;
+    line-height: 1.85;
+    color: #b5a4c4;
+    margin: 12px 0 18px;
+  }
+  .game-actions {
+    gap: 8px;
+    padding-top: 10px;
+  }
+  .game-link {
+    font-size: 12px;
+    gap: 5px;
+  }
+  .heart-button > svg {
+    width: 18px;
+    height: 18px;
+  }
+  .play-layout {
+    gap: 32px;
+  }
+  .game-screen {
+    min-height: 350px;
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+  .screen-content {
+    width: 100%;
+    gap: 16px;
+  }
+  .screen-content > p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .screen-label {
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: #a98abc;
+  }
+  .screen-bottom {
+    font-size: 10px;
+    letter-spacing: 0.7px;
+    color: #ad92c0;
+  }
+  .screen-cta {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  .screen-small {
+    font-size: 11px;
+    color: #e5abc5;
+  }
+  .challenge-info > p,
+  .challenge-info li p,
+  .challenge-info b {
+    font-size: 14px;
+    line-height: 1.85;
+  }
+  .challenge-info li p {
+    color: #b49ac5;
+  }
+  .challenge-info ol {
+    display: block;
+  }
+  .challenge-info li {
+    gap: 17px;
+    margin: 22px 0;
+  }
+  .challenge-info li > span {
+    font-size: 11px;
+    min-width: 20px;
+    margin-top: 6px;
+  }
+  .mode-picker {
+    max-width: none;
+    font-size: 13px;
+    color: #c0a6d3;
+  }
+  .mode-picker button {
+    min-width: 62px;
+    font-size: 13px;
+  }
+  .measurement-note > p {
+    font-size: 13px;
+    color: #af97c2;
+    line-height: 1.9;
+  }
+  .score-stats article {
+    min-width: 0;
+    padding: 22px 18px;
+  }
+  .score-stats article > svg {
+    margin-bottom: 22px;
+  }
+  .score-stats article > span {
+    font-size: 9px;
+    letter-spacing: 0;
+    color: #baa2cb;
+  }
+  .score-stats p {
+    font-size: 13px;
+    color: #b49ac5;
+  }
+  .score-stats strong > small {
+    display: inline-block;
+    color: #b49ac5;
+  }
+  .score-stats strong {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .score-table {
+    padding: 20px;
+  }
+  .score-table-head {
+    flex-wrap: wrap;
+    font-size: 10px;
+  }
+  .score-table-head > span:last-child {
+    font-size: 12px;
+    color: #b398c5;
+  }
+  .score-columns,
+  .score-row {
+    grid-template-columns: 1fr 0.8fr 1.3fr;
+    gap: 8px;
+    min-height: 48px;
+    padding: 12px 0;
+    font-size: 13px;
+    color: #c1a7d3;
+  }
+  .score-columns {
+    font-size: 12px;
+    color: #ad93bf;
+  }
+  .score-row > b {
+    font-size: 18px;
+    gap: 4px;
+  }
+  .score-row > b > small {
+    font-size: 11px;
+    color: #abc28b;
+  }
+  .score-row > span > small {
+    display: block;
+    font-size: 8px;
+    margin: 4px 0 0;
+    color: #abc28b;
+  }
+  .export-button,
+  .clear-scores,
+  .empty-scores > button,
+  .empty-state button {
+    font-size: 13px;
+  }
+  .clear-scores {
+    color: #b9a0cc;
+    margin-top: 8px;
+  }
+  .storage-note {
+    font-size: 13px;
+    color: #b59ac8;
+    line-height: 1.85;
+  }
+  .empty-scores > p,
+  .empty-state > p,
+  .faq-item > p,
+  .game-dialog > p {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+  .faq-item > button {
+    font-size: 14px;
+  }
+  .dialog-note {
+    font-size: 12px;
+    line-height: 1.9;
+    color: #bda2cf;
+  }
+  .game-dialog {
+    padding: 27px;
+  }
+}
+@media (max-width: 350px) {
+  .game-grid {
+    column-gap: 12px;
+  }
+  .game-title h3 {
+    font-size: 14px;
+    min-height: 2.6em;
+  }
+  .game-actions {
+    gap: 6px;
+  }
+  .game-link {
+    font-size: 11px;
+  }
+  .machine-top > span:nth-child(2) {
+    display: none;
+  }
+  .machine-top > button {
+    margin-left: auto;
+  }
+  .screen-content > p {
+    font-size: 14px;
+  }
+  .screen-bottom {
+    font-size: 9px;
+    letter-spacing: 0.4px;
+  }
+  .score-stats article {
+    padding: 22px 13px;
+  }
+  .score-stats strong {
+    font-size: 47px;
+    letter-spacing: -2px;
+  }
+  .score-table {
+    padding: 18px 14px;
+  }
+  .score-row > b {
+    font-size: 16px;
   }
 }
