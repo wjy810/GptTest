@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-17",
+  "base": "http://127.0.0.1:4173",
+  "checks": [
+    {
+      "name": "editorial 1440px: single h1, no overflow, no duplicate IDs",
+      "result": "passed"
+    },
+    {
+      "name": "editorial 390px: single h1, no overflow, no duplicate IDs",
+      "result": "passed"
+    },
+    {
+      "name": "editorial: corrupted/invalid/duplicate stored bookmarks recover",
+      "result": "passed"
+    },
+    {
+      "name": "editorial: keyboard opens named article; focus restores after Escape",
+      "result": "passed"
+    },
+    {
+      "name": "editorial: category filtering, bookmark persistence, empty state",
+      "result": "passed"
+    },
+    {
+      "name": "editorial: valid local subscription gives explicit feedback",
+      "result": "passed"
+    },
+    {
+      "name": "editorial: reduced motion preference disables smooth scroll",
+      "result": "passed"
+    },
+    {
+      "name": "editorial: no page JavaScript exceptions in this pass",
+      "result": "passed"
+    },
+    {
+      "name": "swiss 1440px: single h1, no overflow, no duplicate IDs",
+      "result": "passed"
+    },
+    {
+      "name": "swiss 390px: single h1, no overflow, no duplicate IDs",
+      "result": "passed"
+    },
+    {
+      "name": "swiss: Arrow keys/Home/End roving date tabs",
+      "result": "passed"
+    },
+    {
+      "name": "swiss: named exhibition modal closes and restores focus",
+      "result": "passed"
+    },
+    {
+      "name": "swiss: three-day two-person ticket equals 316 and opens summary",
+      "result": "passed"
+    },
+    {
+      "name": "swiss: reduced motion preference disables smooth scroll",
+      "result": "passed"
+    },
+    {
+      "name": "swiss: no page JavaScript exceptions in this pass",
+      "result": "passed"
+    },
+    {
+      "name": "organic 1440px: single h1, no overflow, no duplicate IDs",
+      "result": "passed"
+    },
+    {
+      "name": "organic 390px: single h1, no overflow, no duplicate IDs",
+      "result": "passed"
+    },
+    {
+      "name": "organic: plants filter and named product dialog",
+      "result": "passed"
+    },
+    {
+      "name": "organic: bag persists, shipping threshold recalculates, local summary works",
+      "result": "passed"
+    },
+    {
+      "name": "organic: mobile menu and native FAQ toggles",
+      "result": "passed"
+    },
+    {
+      "name": "organic: reduced motion preference disables smooth scroll",
+      "result": "passed"
+    },
+    {
+      "name": "organic: no page JavaScript exceptions in this pass",
+      "result": "passed"
+    }
+  ]
+}

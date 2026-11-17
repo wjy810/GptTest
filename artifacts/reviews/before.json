@@ -1,0 +1,87 @@
+{
+  "date": "2026-11-17",
+  "checks": [
+    {
+      "site": "editorial",
+      "width": 1440,
+      "documentWidth": 1440,
+      "viewport": 1440,
+      "h1Count": 1,
+      "duplicateIds": [
+        "wall-sand",
+        "shadow-sand",
+        "noise-sand"
+      ],
+      "errors": [
+        "H.includes is not a function"
+      ]
+    },
+    {
+      "site": "editorial",
+      "width": 390,
+      "documentWidth": 390,
+      "viewport": 390,
+      "h1Count": 1,
+      "duplicateIds": [
+        "wall-sand",
+        "shadow-sand",
+        "noise-sand"
+      ],
+      "errors": [
+        "H.includes is not a function"
+      ]
+    },
+    {
+      "site": "editorial",
+      "dialog": null,
+      "dialogLabel": null
+    },
+    {
+      "site": "editorial",
+      "invalidStorageBody": "",
+      "errors": [
+        "H.includes is not a function"
+      ]
+    },
+    {
+      "site": "swiss",
+      "width": 1440,
+      "documentWidth": 1440,
+      "viewport": 1440,
+      "h1Count": 1,
+      "duplicateIds": [],
+      "errors": []
+    },
+    {
+      "site": "swiss",
+      "width": 390,
+      "documentWidth": 390,
+      "viewport": 390,
+      "h1Count": 1,
+      "duplicateIds": [],
+      "errors": []
+    },
+    {
+      "site": "swiss",
+      "arrowRightSelected": "12.18\nFRIDAY\n星期五"
+    },
+    {
+      "site": "organic",
+      "width": 1440,
+      "documentWidth": 1440,
+      "viewport": 1440,
+      "h1Count": 1,
+      "duplicateIds": [],
+      "errors": []
+    },
+    {
+      "site": "organic",
+      "width": 390,
+      "documentWidth": 390,
+      "viewport": 390,
+      "h1Count": 1,
+      "duplicateIds": [],
+      "errors": []
+    }
+  ]
+}
