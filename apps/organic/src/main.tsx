@@ -97,6 +97,16 @@ const products: Product[] = [
   },
 ]
 
+const productNotes: Record<number, { tag: string; use: string }> = {
+  1: { tag: '新手友好', use: '明亮散射光' },
+  2: { tag: '自然砂感', use: '插枝 / 日常收纳' },
+  3: { tag: '舒展大叶', use: '半阴通风处' },
+  4: { tag: '一室暖光', use: '床头 / 阅读角' },
+  5: { tag: '向光生长', use: '靠近明亮窗边' },
+  6: { tag: '慢慢浇灌', use: '细嘴 / 1.2L' },
+}
+const specimens = [products[0], products[2], products[4]]
+
 function Botanical({
   variant = 1,
   id = 'plant',
@@ -107,6 +117,31 @@ function Botanical({
   hero?: boolean
 }) {
   const leafColor = variant === 3 ? '#526347' : variant === 5 ? '#6c7752' : '#40533e'
+  const leaves =
+    variant === 3
+      ? [
+          { x: 250, y: 345, r: -76, s: 0.82 },
+          { x: 258, y: 300, r: 72, s: 0.9 },
+          { x: 252, y: 254, r: -52, s: 1 },
+          { x: 258, y: 202, r: 48, s: 0.85 },
+          { x: 250, y: 155, r: -17, s: 0.78 },
+        ]
+      : variant === 5
+        ? [
+            { x: 252, y: 324, r: -64, s: 0.67 },
+            { x: 255, y: 268, r: 62, s: 0.79 },
+            { x: 256, y: 219, r: -49, s: 0.83 },
+            { x: 252, y: 165, r: 39, s: 0.75 },
+            { x: 250, y: 112, r: -15, s: 0.65 },
+          ]
+        : [
+            { x: 252, y: 324, r: -62, s: 0.88 },
+            { x: 255, y: 272, r: 63, s: 1 },
+            { x: 259, y: 221, r: -64, s: 0.92 },
+            { x: 255, y: 175, r: 57, s: 0.84 },
+            { x: 250, y: 129, r: -48, s: 0.77 },
+            { x: 250, y: 85, r: 32, s: 0.61 },
+          ]
   return (
     <svg
       className={`botanical ${hero ? 'botanical-hero' : ''}`}
@@ -223,14 +258,7 @@ function Botanical({
             stroke="#73764b"
             strokeWidth="8"
           />
-          {[
-            { x: 252, y: 324, r: -62, s: 0.98 },
-            { x: 255, y: 272, r: 63, s: 1.14 },
-            { x: 259, y: 221, r: -64, s: 1.02 },
-            { x: 255, y: 175, r: 57, s: 0.92 },
-            { x: 250, y: 129, r: -48, s: 0.86 },
-            { x: 250, y: 85, r: 32, s: 0.7 },
-          ].map((leaf, i) => (
+          {leaves.map((leaf, i) => (
             <g
               key={i}
               transform={`translate(${leaf.x} ${leaf.y}) rotate(${leaf.r}) scale(${leaf.s})`}
@@ -279,8 +307,11 @@ function Dialog({
   drawer?: boolean
 }) {
   const dialog = useRef<HTMLDivElement>(null)
+  const returnFocus = useRef<HTMLElement | null>(null)
   useEffect(() => {
-    const previous = document.activeElement as HTMLElement
+    const active = document.activeElement as HTMLElement
+    if (!dialog.current?.contains(active)) returnFocus.current = active
+    const previous = returnFocus.current
     const oldOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     dialog.current?.focus()
@@ -288,7 +319,7 @@ function Dialog({
       if (e.key === 'Escape') close()
       if (e.key !== 'Tab') return
       const nodes = dialog.current?.querySelectorAll<HTMLElement>(
-        'button, a[href], input, select, [tabindex="0"]',
+        'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), [tabindex="0"]',
       )
       if (!nodes?.length) {
         e.preventDefault()
@@ -311,7 +342,19 @@ function Dialog({
     return () => {
       document.body.style.overflow = oldOverflow
       document.removeEventListener('keydown', key)
-      previous?.focus()
+      requestAnimationFrame(() => {
+        if (document.querySelector('[role="dialog"]')) return
+        const fallback =
+          document.querySelector<HTMLButtonElement>('.mobile-bag-dock button') ||
+          document.querySelector<HTMLButtonElement>('.bag-button')
+        const target =
+          previous?.isConnected &&
+          previous !== document.body &&
+          previous !== document.documentElement
+            ? previous
+            : fallback
+        target?.focus({ preventScroll: true })
+      })
     }
   }, [close])
   return (
@@ -335,6 +378,8 @@ function Dialog({
 
 function App() {
   const [category, setCategory] = useState('all')
+  const [specimen, setSpecimen] = useState(0)
+  const [sort, setSort] = useState('recommended')
   const [selected, setSelected] = useState<Product | null>(null)
   const [cartOpen, setCartOpen] = useState(false)
   const [menu, setMenu] = useState(false)
@@ -360,11 +405,13 @@ function App() {
   const [message, setMessage] = useState('')
   const [order, setOrder] = useState(false)
   const [subscribed, setSubscribed] = useState(false)
+  const [storageUnavailable, setStorageUnavailable] = useState(false)
   useEffect(() => {
     try {
       localStorage.setItem('mori-bag', JSON.stringify(bag))
+      setStorageUnavailable(false)
     } catch {
-      /* Storage is optional. */
+      setStorageUnavailable(true)
     }
   }, [bag])
   useEffect(() => {
@@ -374,7 +421,22 @@ function App() {
   }, [message])
   const count = Object.values(bag).reduce((a, b) => a + b, 0)
   const total = products.reduce((n, p) => n + p.price * (bag[p.id] || 0), 0)
+  const remainingForShipping = Math.max(0, 299 - total)
+  const currentSpecimen = specimens[specimen]
+  const visibleProducts = products
+    .filter((p) => category === 'all' || p.category === category)
+    .sort((a, b) =>
+      sort === 'price-up'
+        ? a.price - b.price
+        : sort === 'price-down'
+          ? b.price - a.price
+          : a.id - b.id,
+    )
   const add = (p: Product) => {
+    if ((bag[p.id] || 0) >= 99) {
+      setMessage('每件好物最多放入 99 件。')
+      return
+    }
     setBag((old) => ({ ...old, [p.id]: Math.min((old[p.id] || 0) + 1, 99) }))
     setOrder(false)
     setMessage(`${p.name}已放入购物袋`)
@@ -391,6 +453,12 @@ function App() {
   }
   const closeProduct = React.useCallback(() => setSelected(null), [])
   const closeCart = React.useCallback(() => setCartOpen(false), [])
+  const openCart = () => {
+    setSelected(null)
+    setCartOpen(true)
+    setMenu(false)
+    setMessage('')
+  }
   return (
     <>
       <a href="#main" className="skip-link">
@@ -419,7 +487,7 @@ function App() {
           <span className="nav-note">A slower kind of living.</span>
           <button
             className="bag-button"
-            onClick={() => setCartOpen(true)}
+            onClick={openCart}
             aria-label={`打开购物袋，${count}件商品`}
           >
             <ShoppingBag size={19} />
@@ -489,20 +557,35 @@ function App() {
               <br />
               IT IS HOME.
             </span>
-            <Botanical hero id="hero" />
+            <div className="hero-window-light" aria-hidden="true" />
+            <Botanical hero id="hero" variant={currentSpecimen.variant} />
             <div className="round-stamp">
               <span>GROW SLOW</span>
               <Leaf size={28} strokeWidth={1} />
               <span>LIVE WELL</span>
             </div>
             <div className="specimen-label">
-              <span>01 / FICUS ELASTICA</span>
-              <span>橡皮树 · 安静的陪伴者</span>
+              <span>BOTANICAL STUDY / 0{specimen + 1}</span>
+              <button onClick={() => setSelected(currentSpecimen)}>
+                {currentSpecimen.name}
+                <ArrowUpRight size={15} />
+              </button>
+              <span>
+                {currentSpecimen.en} · ¥{currentSpecimen.price}
+              </span>
             </div>
-            <div className="hero-pagination">
-              <span className="active-dot" />
-              <span />
-              <span />
+            <div className="hero-pagination" role="group" aria-label="选择首屏植物">
+              {specimens.map((p, i) => (
+                <button
+                  key={p.id}
+                  onClick={() => setSpecimen(i)}
+                  aria-pressed={specimen === i}
+                  aria-label={`展示${p.name}`}
+                >
+                  <span>0{i + 1}</span>
+                  <i />
+                </button>
+              ))}
             </div>
           </div>
         </section>
@@ -549,45 +632,60 @@ function App() {
                 </button>
               ))}
             </div>
-            <span className="results-count">
-              {products
-                .filter((p) => category === 'all' || p.category === category)
-                .length.toString()
-                .padStart(2, '0')}{' '}
-              件慢生活提案
-            </span>
+            <div className="collection-options">
+              <span className="results-count" aria-live="polite">
+                {visibleProducts.length.toString().padStart(2, '0')} 件好物
+              </span>
+              <label>
+                <span className="sr-only">商品排序</span>
+                <select
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value)}
+                  aria-label="商品排序"
+                >
+                  <option value="recommended">森间推荐</option>
+                  <option value="price-up">价格从低到高</option>
+                  <option value="price-down">价格从高到低</option>
+                </select>
+              </label>
+            </div>
           </div>
           <div className="product-grid">
-            {products
-              .filter((p) => category === 'all' || p.category === category)
-              .map((p) => (
-                <article className="product-card" key={p.id}>
-                  <div className="product-image" style={{ background: p.color }}>
-                    <button
-                      className="product-art-button"
-                      onClick={() => setSelected(p)}
-                      aria-label={`查看${p.name}详情`}
-                    >
-                      <Botanical id={`product-${p.id}`} variant={p.variant} />
-                    </button>
-                    <span className="product-badge">
-                      {p.category === 'plants' ? '一份生长' : '手作日常'}
-                    </span>
-                    <button
-                      className="quick-add"
-                      onClick={() => add(p)}
-                      aria-label={`添加${p.name}到购物袋`}
-                    >
-                      <Plus size={20} />
-                    </button>
-                  </div>
-                  <div className="product-title-row">
-                    <button onClick={() => setSelected(p)}>{p.name}</button>
-                    <span>¥{p.price}</span>
-                  </div>
-                  <span className="latin-name">{p.en}</span>
-                </article>
-              ))}
+            {visibleProducts.map((p) => (
+              <article className="product-card" key={p.id}>
+                <div className="product-image" style={{ background: p.color }}>
+                  <button
+                    className="product-art-button"
+                    onClick={() => setSelected(p)}
+                    aria-label={`查看${p.name}详情`}
+                  >
+                    <Botanical id={`product-${p.id}`} variant={p.variant} />
+                  </button>
+                  <span className="product-badge">{productNotes[p.id].tag}</span>
+                  <span className="product-specimen-number" aria-hidden="true">
+                    M / 0{p.id}
+                  </span>
+                </div>
+                <div className="product-title-row">
+                  <button onClick={() => setSelected(p)}>{p.name}</button>
+                  <span>¥{p.price}</span>
+                </div>
+                <span className="latin-name">{p.en}</span>
+                <div className="product-care-line">
+                  {p.category === 'plants' ? <Sun size={12} /> : <Leaf size={12} />}
+                  <span>{productNotes[p.id].use}</span>
+                </div>
+                <button
+                  className="quick-add"
+                  onClick={() => add(p)}
+                  aria-label={`添加${p.name}到购物袋`}
+                  disabled={(bag[p.id] || 0) >= 99}
+                >
+                  <span>{(bag[p.id] || 0) >= 99 ? '已达数量上限' : '加入购物袋'}</span>
+                  <Plus size={16} />
+                </button>
+              </article>
+            ))}
           </div>
           <p className="collection-note">
             每一株植物都有自己的样子。图片为原创艺术插画，本网站为交互设计演示。
@@ -796,7 +894,26 @@ function App() {
       {message && (
         <div className="toast" role="status">
           <Check size={17} />
-          {message}
+          <span>{message}</span>
+          <button onClick={openCart}>
+            查看购物袋 <ArrowRight size={14} />
+          </button>
+        </div>
+      )}
+      {count > 0 && !cartOpen && !selected && (
+        <div className="mobile-bag-dock">
+          <div>
+            <span>
+              <ShoppingBag size={15} /> {count} 件好物
+            </span>
+            <strong>
+              ¥{total}
+              <small>商品合计</small>
+            </strong>
+          </div>
+          <button onClick={openCart}>
+            查看购物袋 <ArrowRight size={16} />
+          </button>
         </div>
       )}
       {selected && (
@@ -813,12 +930,25 @@ function App() {
               <Sun size={18} />
               {selected.light}
             </div>
+            <div className="detail-delivery">
+              <Truck size={17} />
+              <span>满 ¥299 包邮 · 未满运费 ¥18</span>
+            </div>
             <div className="detail-bottom">
               <strong>¥{selected.price}</strong>
-              <button className="pill-button" onClick={() => add(selected)}>
+              <button
+                className="pill-button"
+                onClick={() => add(selected)}
+                disabled={(bag[selected.id] || 0) >= 99}
+              >
                 加入购物袋 <Plus size={18} />
               </button>
             </div>
+            {(bag[selected.id] || 0) > 0 && (
+              <button className="detail-view-bag" onClick={openCart}>
+                已放入 {bag[selected.id]} 件 · 查看购物袋 <ArrowRight size={15} />
+              </button>
+            )}
             <small>设计样例 · 商品与价格均用于演示</small>
           </div>
         </Dialog>
@@ -831,6 +961,37 @@ function App() {
               你的购物袋 <span>({count})</span>
             </h2>
           </div>
+          {storageUnavailable && (
+            <p className="storage-note" role="status">
+              浏览器未允许保存，购物袋仅在当前页面保留。
+            </p>
+          )}
+          {count > 0 && (
+            <div className="shipping-progress">
+              <div>
+                <Truck size={15} />
+                <span>
+                  {remainingForShipping ? (
+                    <>
+                      再添 <strong>¥{remainingForShipping}</strong>，就能把运费省下来。
+                    </>
+                  ) : (
+                    <>这份绿意，已享包邮。</>
+                  )}
+                </span>
+              </div>
+              <div
+                className="shipping-track"
+                role="progressbar"
+                aria-label="包邮进度"
+                aria-valuemin={0}
+                aria-valuemax={299}
+                aria-valuenow={Math.min(total, 299)}
+              >
+                <i style={{ width: `${Math.min(total / 299, 1) * 100}%` }} />
+              </div>
+            </div>
+          )}
           {count === 0 ? (
             <div className="empty-cart">
               <Leaf size={50} strokeWidth={1} />
@@ -840,7 +1001,11 @@ function App() {
                 className="pill-button"
                 onClick={() => {
                   closeCart()
-                  document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' })
+                  document.getElementById('collection')?.scrollIntoView({
+                    behavior: matchMedia('(prefers-reduced-motion: reduce)').matches
+                      ? 'auto'
+                      : 'smooth',
+                  })
                 }}
               >
                 逛逛日常好物 <ArrowRight size={17} />
@@ -864,7 +1029,11 @@ function App() {
                             <Minus size={13} />
                           </button>
                           <span>{bag[p.id]}</span>
-                          <button aria-label={`增加${p.name}数量`} onClick={() => change(p.id, 1)}>
+                          <button
+                            aria-label={`增加${p.name}数量`}
+                            onClick={() => change(p.id, 1)}
+                            disabled={bag[p.id] >= 99}
+                          >
                             <Plus size={13} />
                           </button>
                         </div>
