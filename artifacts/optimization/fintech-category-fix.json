@@ -1,0 +1,100 @@
+[
+  {
+    "width": 320,
+    "document": 320,
+    "categoryViewport": 246,
+    "categoryContent": 314,
+    "overflow": "auto",
+    "buttons": [
+      {
+        "label": "全部资产",
+        "width": 48.015625,
+        "height": 44,
+        "client": 48,
+        "scroll": 48
+      },
+      {
+        "label": "股票",
+        "width": 44,
+        "height": 44,
+        "client": 44,
+        "scroll": 44
+      },
+      {
+        "label": "基金",
+        "width": 44,
+        "height": 44,
+        "client": 44,
+        "scroll": 44
+      },
+      {
+        "label": "数字资产",
+        "width": 48.015625,
+        "height": 44,
+        "client": 48,
+        "scroll": 48
+      },
+      {
+        "label": "我的关注2",
+        "width": 66.015625,
+        "height": 44,
+        "client": 66,
+        "scroll": 66
+      }
+    ],
+    "lastCategory": {
+      "scrollLeft": 68,
+      "focused": "我的关注2",
+      "visible": true
+    }
+  },
+  {
+    "width": 390,
+    "document": 390,
+    "categoryViewport": 316,
+    "categoryContent": 316,
+    "overflow": "auto",
+    "buttons": [
+      {
+        "label": "全部资产",
+        "width": 48.015625,
+        "height": 44,
+        "client": 48,
+        "scroll": 48
+      },
+      {
+        "label": "股票",
+        "width": 44,
+        "height": 44,
+        "client": 44,
+        "scroll": 44
+      },
+      {
+        "label": "基金",
+        "width": 44,
+        "height": 44,
+        "client": 44,
+        "scroll": 44
+      },
+      {
+        "label": "数字资产",
+        "width": 48.015625,
+        "height": 44,
+        "client": 48,
+        "scroll": 48
+      },
+      {
+        "label": "我的关注2",
+        "width": 66.015625,
+        "height": 44,
+        "client": 66,
+        "scroll": 66
+      }
+    ],
+    "lastCategory": {
+      "scrollLeft": 0,
+      "focused": "我的关注2",
+      "visible": true
+    }
+  }
+]

@@ -2585,8 +2585,13 @@ footer i {
   .note-links button {
     min-height: 44px;
   }
+  .asset-tabs {
+    gap: 16px;
+  }
   .asset-tabs button {
     font-size: 12px;
+    min-width: 44px;
+    flex-shrink: 0;
   }
   .overview-actions .mint-button {
     font-size: 11px;
