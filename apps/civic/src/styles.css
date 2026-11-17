@@ -1441,6 +1441,12 @@ footer > div > p {
 .quick-links button,
 .quick-links a {
   font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 6px;
   text-decoration: underline;
   text-underline-offset: 4px;
   color: #294e93;
@@ -1541,6 +1547,7 @@ footer > div > p {
 }
 .search-summary button {
   font-size: 14px;
+  min-height: 44px;
 }
 .empty-state p {
   font-size: 15px;
@@ -1785,8 +1792,8 @@ footer > div > p {
     height: 19px;
   }
   .hero-search input {
-    font-size: 13px;
-    height: 40px;
+    font-size: 16px;
+    height: 44px;
   }
   .hero-search button {
     font-size: 12px;
@@ -1799,9 +1806,9 @@ footer > div > p {
     display: none;
   }
   .quick-links {
-    gap: 12px;
+    gap: 6px;
     font-size: 11px;
-    margin-top: 15px;
+    margin-top: 10px;
   }
   .quick-links button,
   .quick-links a {
@@ -1810,10 +1817,10 @@ footer > div > p {
   .quick-links > span {
     width: 100%;
     font-size: 11px;
-    margin-bottom: -5px;
+    margin-bottom: 0;
   }
   .portal-foot {
-    margin-top: 25px;
+    margin-top: 16px;
     gap: 17px;
     padding: 16px 0;
     font-size: 10px;
@@ -1852,16 +1859,18 @@ footer > div > p {
     margin-bottom: 18px;
   }
   .category-tabs {
-    gap: 22px;
+    gap: 0 16px;
+    flex-wrap: wrap;
+    overflow: visible;
     padding-right: 3px;
   }
   .category-tabs button {
-    font-size: 13px;
+    font-size: 14px;
     padding: 13px 0 14px;
   }
   .result-count {
     display: block;
-    font-size: 11px;
+    font-size: 12px;
     padding: 10px 0 0;
     margin-bottom: 9px;
   }
@@ -1894,12 +1903,12 @@ footer > div > p {
     margin-bottom: 7px;
   }
   .service-card p {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.8;
     margin-bottom: 14px;
   }
   .card-bottom {
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1.7;
     gap: 4px;
   }
@@ -1964,7 +1973,7 @@ footer > div > p {
     font-size: 11px;
   }
   .form-guidance {
-    font-size: 12px;
+    font-size: 13px;
     padding: 11px 12px;
     line-height: 1.8;
     margin-bottom: 21px;
@@ -1979,7 +1988,7 @@ footer > div > p {
   }
   .booking-panel input:not([type='checkbox']),
   .booking-panel select {
-    font-size: 14px;
+    font-size: 16px;
     padding-left: 11px;
     height: 46px;
   }
@@ -1987,11 +1996,11 @@ footer > div > p {
     top: 15px;
   }
   .booking-panel .check-label {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.8;
   }
   .form-footnote {
-    font-size: 11px;
+    font-size: 12px;
   }
   .booking-success h3 {
     font-size: 22px;
@@ -2050,7 +2059,7 @@ footer > div > p {
     font-size: 13px;
   }
   .hero-search input {
-    font-size: 12px;
+    font-size: 16px;
   }
   .hero-search button {
     min-width: 73px;
@@ -2112,6 +2121,10 @@ footer > div > p {
 @media (max-width: 760px) {
   .hero h1 > span {
     display: block;
+  }
+  .menu-toggle {
+    width: 44px;
+    height: 44px;
   }
   .paper-sheet {
     height: 160px;

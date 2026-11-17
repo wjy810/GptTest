@@ -268,7 +268,7 @@ function App() {
               <input
                 id="city-search"
                 ref={searchRef}
-                placeholder="输入服务名称，例如：居住、健康、学习"
+                placeholder="居住、健康、学习…"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />

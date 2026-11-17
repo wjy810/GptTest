@@ -45,7 +45,7 @@ npm run build -- --mode civic
 | 搜索容器 | 最大 760px；桌面 66px 高，手机 60px                        |
 | 服务网格 | 桌面三列；760px 以下两列；360px 以下一列                   |
 | 主要正文 | 桌面 14–15px；窄屏服务说明 12–13px                         |
-| 表单文字 | 14px，输入控件 46px 高                                     |
+| 表单文字 | 桌面 14px，手机 16px；输入控件 46px 高                     |
 | 字体     | 本机 Arial / PingFang SC / Microsoft YaHei；无外部字体请求 |
 
 ```css
@@ -71,6 +71,14 @@ npm run build -- --mode civic
 ```
 
 重点是信息架构：搜索优先于宣传图，服务入口优先于社区故事，表单完整说明优先于装饰性指标。不要把蓝白卡片本身误认为公共服务 UX。
+
+本轮触控与窄屏规则：
+
+- 常用服务保持文字链接外观，通过 `inline-flex`、`min-height: 44px`、左右 `6px` 内边距扩大真实操作盒子；当前四项在 320px 仍能完整并排。
+- 手机搜索字号为 `16px`，输入高 `44px`；占位提示缩为“居住、健康、学习…”，完整搜索名称继续由 label 提供。
+- 手机服务类别字体 `14px`，`gap: 0 16px` 配合 `flex-wrap: wrap`。390px 为一行，320px 为两行，所有类别都直接可见；不靠缩字或截断最后一项维持单行。
+- 手机预约五个输入/选择控件均为 `16px`，保留原有单列表单与 `46px` 高度。必填提示和演示确认 `13px`，手机服务说明 `13px`。
+- 手机菜单按钮为 `44×44px`，搜索结果的清除按钮最小高 `44px`。焦点路径保持原实现。
 
 ## 日期与提交逻辑
 
@@ -106,6 +114,22 @@ PREVIEW_URL=http://127.0.0.1:4173/civic/ node apps/civic/verify.mjs
 本轮独立构建成功；**35 项浏览器断言通过**，包括搜索/分类交集、无结果恢复、服务预填、空表单、移除原生 min 后的提交校验、UTC+8 跨日测试、错误和成功焦点、重新安排、公告、FAQ、刷新不保留信息、手机导航、减少动态效果、1440/390/320px 横向溢出及无 POST 请求/浏览器异常。
 
 原始记录见 `artifacts/reviews/civic-results.json`；截图为 `civic-1440.png`、`civic-390.png`、`civic-320.png`。这些检查证明演示流程可运行，不等于完整 WCAG 审计、真实用户研究或政务认证。
+
+### 本轮针对性优化实测
+
+本轮调整 CSS 和搜索占位提示，未新增业务功能。实际通过独立构建、仓库 TypeScript 检查，以及既有 CIVIC **6 项 Playwright 测试**；另以 [针对性脚本](../../artifacts/optimization/civic-verify.mjs) 核验三种尺寸和四组流程：搜索与分类交集及清除焦点、常用服务的搜索重置/服务预填、移除原生 min 后拒绝过去日期并聚焦错误、本地摘要与成功焦点。
+
+| 390px 实测项     | 优化前 → 优化后                      |
+| ---------------- | ------------------------------------ |
+| 常用服务操作高度 | `19.19px → 44px`                     |
+| 搜索字号         | `13px → 16px`（320px 原为 12px）     |
+| 五个预约控件字号 | `14px → 16px`                        |
+| 服务类别字号     | `13px → 14px`                        |
+| 服务目录起点     | `570.70px → 580.52px`，下移约 9.82px |
+
+已实看 [1440px 前](../../artifacts/optimization/civic-1440-before.png) / [后](../../artifacts/optimization/civic-1440-after.png)、[390px 前](../../artifacts/optimization/civic-390-before.png) / [后](../../artifacts/optimization/civic-390-after.png)、[320px 前](../../artifacts/optimization/civic-320-before.png) / [后](../../artifacts/optimization/civic-320-after.png)。三种宽度没有页面横向溢出，所有类别可见，表单内部没有裁切；蓝白居中门户、服务目录、公告和预约的顺序保持原结构。
+
+[改前测量](../../artifacts/optimization/civic-before-metrics.json) / [改后测量](../../artifacts/optimization/civic-after-metrics.json)。复验时先构建并运行根 `npm run preview`，再执行 `node artifacts/optimization/civic-verify.mjs`。既有时区测试在洛杉矶浏览器验证 UTC+8 跨日；本轮仍为本地演示，不代表真实机构预约或 iOS 真机认证。
 
 ## 研究依据与扩展
 
