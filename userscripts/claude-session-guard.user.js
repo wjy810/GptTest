@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Claude 会话守护（精简版）
 // @namespace    https://claude.ai/
-// @version      4.1.1
+// @version      4.1.2
 // @description  只保留本浏览器当前会话 + 你勾选的，其余自动踢掉（含 Claude Code 等非网页端会话）；走网页原生活动会话接口，默认每轮只踢 1 条并自检防误踢
 // @match        https://claude.ai/*
 // @grant        GM_getValue
@@ -13,6 +13,12 @@
 // ==/UserScript==
 
 /*
+ * v4.1.2（自查修正）
+ * - 学习只看“终止 / 撤销”类请求（DELETE 会话 / 授权路径，或 logout / revoke / terminate 提交），
+ *   不再观察 count_tokens、刷新登录之类的普通请求，避免把无关请求学成踢人格式；观察日志限频。
+ * - created_at: null 的安全规则更保守：同应用里只要有保留的会话就不发。
+ * - 一次删掉同组多条时，“本次已踢”按实际条数计。
+ *
  * v4.1.1（设置页表格“看起来残留”）
  * - 脚本在后台踢掉会话后，设置页自己的「活跃会话」表格不一定会刷新，踢掉的行会一直挂着。
  *   现在踢掉之后模拟一次“切回本页”，让网页按自己的规则重新拉取（不保证一定生效）；
@@ -67,7 +73,7 @@
   const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
   try { if (W.top !== W.self) return; } catch (e) { return; }
 
-  const VERSION = '4.1.1';
+  const VERSION = '4.1.2';
   try { console.info('[会话守护] 已注入 v' + VERSION + '：', location.href); } catch (e) {}
 
   /* ================= 常量 ================= */
@@ -379,13 +385,14 @@
   // 踢人请求：application_slug 必须和这条会话自己的一致（iOS / 桌面端 / 网页端 / Claude Code 不同）。
   // 不带应用的 {session_uuid} 会被服务端按网页端处理：踢别的应用的会话时常常“返回成功、其实没踢掉”，所以排到最后。
   // 每个应用各自记住“确认踢掉过”的格式并优先使用。
-  // created_at: null 这种请求可能一次命中同应用里所有“没有创建时间”的会话，所以只在不可能波及本机和保留会话时才用
+  // created_at: null 这种请求可能一次命中同应用里所有“没有创建时间”的会话（服务端要是不按 null 过滤，甚至是同应用的全部会话），
+  // 所以只在同应用里既没有本机、也没有保留的会话时才用
   function nullBodySafe(s, list) {
     if (!s.appSlug) return false;
     const keep = keepSet();
     for (const x of list || []) {
       if (x.isCurrent && (x.appSlug || API.app) === s.appSlug) return false;      // 和本机是同一种应用：不冒险
-      if (!x.isCurrent && x.appSlug === s.appSlug && x.createdNull && keep.has(x.id)) return false;
+      if (!x.isCurrent && x.appSlug === s.appSlug && keep.has(x.id)) return false;   // 同应用里有保留的：不冒险
     }
     return true;
   }
@@ -430,7 +437,8 @@
         sawList = true; last = r.list;
         if (r.list.some((x) => x.isCurrent)) {
           sawSelf = true;
-          if (r.list.filter((x) => x.id === target.id).length < before) return { self: true, gone: true, list: r.list };
+          const left = r.list.filter((x) => x.id === target.id).length;
+          if (left < before) return { self: true, gone: true, removed: before - left, list: r.list };
         }
       }
       if (!CFG.enabled) return { self: null, gone: false, list: last };   // 比如连续 401 已经停了
@@ -446,7 +454,7 @@
     const before = Math.max(1, (list || []).filter((x) => x.id === s.id).length);
     const bodies = revokeBodies(s, list);
     if (!bodies.length && s.createdNull && s.appSlug) {
-      tried.push('这条只能按「应用 + 创建时间为空」整组踢，会连带本机或保留的同类会话，为了安全没有动手');
+      tried.push('这条只能按「应用 + 创建时间为空」整组踢，可能连带本机或保留的同应用会话，为了安全没有动手');
     }
     for (const { name, body, url, method, headers } of bodies) {
       if (!alive() || !CFG.enabled || !stillLead()) return { done: 'abort', tried };
@@ -478,7 +486,7 @@
         if (CFG.enabled) log(`⚠️ 已发出踢出「${desc(s)}」的请求，但暂时读不到会话列表确认结果，这一轮先停手`);
         return { done: 'abort', tried };
       }
-      if (chk.gone) { learnShape(s, name); return { done: 'gone', tried, list: chk.list }; }
+      if (chk.gone) { learnShape(s, name); return { done: 'gone', tried, removed: chk.removed, list: chk.list }; }
       tried.push(`${name} → 返回成功但还在列表里`);
       logEvery(`noeff:${s.appSlug}:${name}`, 10 * 60000,
         `🔍 诊断：格式「${name}」返回成功，但「${desc(s)}」还在列表里（应用 ${s.appSlug || '未标'}），换下一种格式`);
@@ -491,7 +499,9 @@
   // 之后同一应用的会话照这个样子踢（同样重读列表确认真的消失了）。请求和返回原样交给网页，脚本自己的请求不经过这里。
   let recipes = (() => { const m = get(K.recipes, null); return m && typeof m === 'object' && !Array.isArray(m) ? m : {}; })();
   let nativeRows = [];                    // 最近一次（脚本或网页自己）读到的原始会话列表
-  const NATIVE_PATH_RE = /logout|revoke|terminate|session|token|oauth|grant/i;
+  // 只看“终止 / 撤销”类请求：DELETE 会话 / 授权类路径，或路径里带 logout / revoke / terminate 的提交
+  const NATIVE_DELETE_RE = /session|token|oauth|grant/i;
+  const NATIVE_POST_RE = /logout|revoke|terminate|sign_?out/i;
   const isIdField = (f) => !/slug|application|^app/i.test(f);
 
   function headersOf(h) {
@@ -545,7 +555,7 @@
   function learnNative(info) {
     const rows = (info.rows || []).filter((r) => r && typeof r === 'object');
     const what = `${info.method} ${info.path}`;
-    if (!rows.length) { log(`👀 看到网页发出「${what}」并成功了，但手上还没有会话列表可以对照，这次没学到（先打开面板刷新一次列表再试）`); return; }
+    if (!rows.length) { logEvery('nl0:' + what, 10 * 60000, `👀 看到网页发出「${what}」并成功了，但手上还没有会话列表可以对照，这次没学到（先打开面板刷新一次列表再试）`); return; }
     let best = null, bestScore = 0, tie = false;
     for (const r of rows) {
       const b = buildRecipe(info, r);
@@ -555,8 +565,8 @@
       else if (score === bestScore && best && slugOf(best.r) !== slugOf(r)) tie = true;
     }
     const keys = info.body && typeof info.body === 'object' ? Object.keys(info.body).join(',') : '无';
-    if (!best) { log(`👀 网页发出「${what}」并成功了，但请求里没有能对上某条会话的值，没学（body 字段：${keys}）`); return; }
-    if (tie) { log(`👀 网页发出「${what}」并成功了，但同时对得上不同应用的会话，分不清是哪一条，没学（body 字段：${keys}）`); return; }
+    if (!best) { logEvery('nl1:' + what, 10 * 60000, `👀 网页发出「${what}」并成功了，但请求里没有能对上某条会话的值，没学（body 字段：${keys}）`); return; }
+    if (tie) { logEvery('nl2:' + what, 10 * 60000, `👀 网页发出「${what}」并成功了，但同时对得上不同应用的会话，分不清是哪一条，没学（body 字段：${keys}）`); return; }
     const n = normSession(best.r, 0);
     if (n.isCurrent) return;                                   // 这是退出本机，不学
     const slug = n.appSlug || API.app;
@@ -601,7 +611,10 @@
     if (u.origin !== location.origin) return null;
     const method = String((init && init.method) || (isReq && input.method) || 'GET').toUpperCase();
     const isList = method === 'GET' && u.pathname === API.list;
-    if (!isList && (method === 'GET' || method === 'HEAD' || !/^\/api\//.test(u.pathname) || !NATIVE_PATH_RE.test(u.pathname))) return null;
+    if (!isList) {
+      if (!/^\/api\//.test(u.pathname)) return null;
+      if (method === 'DELETE' ? !NATIVE_DELETE_RE.test(u.pathname) : (method === 'GET' || method === 'HEAD' || !NATIVE_POST_RE.test(u.pathname))) return null;
+    }
     const info = { method, path: u.pathname, search: u.search, isList, rows: nativeRows.slice(),
       headers: headersOf((init && init.headers) || (isReq && input.headers)) };
     const b = init && init.body;
@@ -791,8 +804,9 @@
       if (res.done === 'abort') return;
       if (res.done === 'gone') {
         fails.delete(s.id);
-        kicked();
-        log(`🦶 已踢：${desc(s)} · ${sec}s`);
+        const n = Math.max(1, res.removed || 1);
+        for (let i = 0; i < n; i++) kicked();
+        log(`🦶 已踢：${desc(s)}${n > 1 ? `（同组 ${n} 条）` : ''} · ${sec}s`);
         continue;
       }
       const wait = markFail(s);

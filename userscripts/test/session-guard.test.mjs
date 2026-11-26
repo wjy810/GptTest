@@ -206,6 +206,47 @@ await scenario('踢完后设置页表格会被提醒重新拉取，面板提示�
   expect(state.ui && state.ui.stale && state.ui.reload && /已踢掉 1 个/.test(state.ui.text), '面板应提示并显示刷新按钮：' + JSON.stringify(state.ui)),
 ));
 
+await scenario('网页的普通请求（count_tokens、刷新登录）不会被观察', {
+  sessions: [self(), web('web-a', 200)], seconds: 4, gm: { dryRun: true },
+  extraApi: () => ({ status: 200, json: {} }),
+  onTick: async (st, page) => {
+    if (Date.now() - st.t0 > 1500 && !st.done) {
+      st.done = true;
+      await page.evaluate(async () => {
+        for (let i = 0; i < 3; i++) {
+          await fetch('/api/organizations/org-1/count_tokens', { method: 'POST', body: JSON.stringify({ session_uuid: 'web-a' }) });
+          await fetch('/api/auth/session', { method: 'POST', body: '{}' });
+        }
+      });
+    }
+  },
+}, ({ gm, logs }) => first(
+  expect(!logs.some((l) => l.includes('👀')), '不该有观察日志：\n' + logs.filter((l) => l.includes('👀')).join('\n')),
+  expect(!gm.nativeRecipes || !Object.keys(gm.nativeRecipes).length, '不该学到：' + JSON.stringify(gm.nativeRecipes)),
+));
+
+await scenario('一次请求删掉同组多条：计数按实际条数', {
+  sessions: [selfN(), codeN(), codeN()], seconds: 6,
+  revoke: (body, st) => {
+    if (!body || body.created_at !== null) return { status: 400, json: {} };
+    st.sessions = st.sessions.filter((x) => !(x.application_slug === body.application_slug && x.created_at === null));
+    return { status: 200, json: {} };
+  },
+}, ({ state, gm, logs }) => first(
+  expect(left(state) === 'claude-ai@t', '残留：' + left(state)),
+  expect(gm.kickedRun === 2, '计数应为 2：' + gm.kickedRun),
+  expect(logs.some((l) => l.includes('同组 2 条')), '日志应写明同组 2 条'),
+));
+
+const keptCode = noid(row({ application_slug: 'claude-code', created_at: iso(50), last_active_at: iso(2), user_agent: 'claude-cli/2.0.9 (external, cli)' }));
+await scenario('同应用里有保留的会话（哪怕有创建时间）也不发 created_at:null', {
+  sessions: [selfN(), keptCode, codeN()],
+  gm: { keepMigrated: true, keepIds: ['c:' + keptCode.created_at] }, seconds: 5,
+}, ({ state }) => first(
+  expect(!state.revokes.some((r) => r.body && r.body.created_at === null), '不该发 null 请求：' + JSON.stringify(state.revokes)),
+  expect(state.sessions.length === 3, '一条都不该少：' + left(state)),
+));
+
 const bad = results.filter((r) => !r.ok).length;
 console.log(`\n${results.length - bad}/${results.length} 通过`);
 process.exit(bad ? 1 : 0);
