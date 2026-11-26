@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Claude 会话守护（精简版）
 // @namespace    https://claude.ai/
-// @version      4.1.0
+// @version      4.1.1
 // @description  只保留本浏览器当前会话 + 你勾选的，其余自动踢掉（含 Claude Code 等非网页端会话）；走网页原生活动会话接口，默认每轮只踢 1 条并自检防误踢
 // @match        https://claude.ai/*
 // @grant        GM_getValue
@@ -13,6 +13,12 @@
 // ==/UserScript==
 
 /*
+ * v4.1.1（设置页表格“看起来残留”）
+ * - 脚本在后台踢掉会话后，设置页自己的「活跃会话」表格不一定会刷新，踢掉的行会一直挂着。
+ *   现在踢掉之后模拟一次“切回本页”，让网页按自己的规则重新拉取（不保证一定生效）；
+ *   面板里提示“以面板列表为准”，并给出「刷新本页」按钮。
+ * - 修正面板在手机宽度下左边被裁掉（面板自身没算上内边距）。
+ *
  * v4.1.0（踢不掉时照网页自己的「终止」学）
  * - 不同应用的会话，服务端要的踢人请求可能完全不同（甚至是另一个接口）。脚本猜不到时，
  *   在 设置 → 账户 的会话列表里手动点一次那条会话的「终止」：脚本只观察网页自己发出的请求
@@ -61,7 +67,7 @@
   const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
   try { if (W.top !== W.self) return; } catch (e) { return; }
 
-  const VERSION = '4.1.0';
+  const VERSION = '4.1.1';
   try { console.info('[会话守护] 已注入 v' + VERSION + '：', location.href); } catch (e) {}
 
   /* ================= 常量 ================= */
@@ -128,6 +134,7 @@
   let runGen = 0, runStartedAt = 0, starting = false, refreshing = false, lastRefreshAt = 0;
   let sessions = [], listSig = '', issue = null, dirty = true, connectedLogged = false;
   let authFails = 0, authFailAt = 0, kickSoonAt = 0;
+  let kickedHere = 0, synthVis = false, nudgeTimer = null;   // 本页打开后踢掉几个；设置页表格刷新提示
   let listRenderSig = '', diagText = '', logText = '';
   // 每个应用（application_slug）各自“确认踢掉过”的请求格式。
   // v4.0.0 只记一种、而且收到 200 就记，没确认会话是否真的消失：网页端学到的格式拿去踢 Claude Code，会一直“成功但没踢掉”
@@ -726,7 +733,24 @@
   }
   function kicked() {
     set(K.kicked, (Number(get(K.kicked, 0)) || 0) + 1);
+    kickedHere++;
+    nudgeNativeTable();
     renderBadge();
+  }
+
+  // 设置页自己的「活跃会话」表格是网页加载时读的，脚本在后台踢掉会话后它不一定会刷新，
+  // 被踢掉的行会一直挂着，看起来像“残留”。这里模拟一次“切回本页”，让网页按自己的规则重新拉取（不保证一定生效），
+  // 同时在面板里提示以面板列表为准、可以一键刷新本页。
+  const onSettingsPage = () => /^\/settings/.test(location.pathname);
+  function nudgeNativeTable() {
+    if (!onSettingsPage()) return;
+    logEvery('stale-table', 10 * 60000, 'ℹ️ 设置页自己的会话表格不一定会自动刷新，踢掉的行可能还挂着：以面板里的列表为准，或在面板点「刷新本页」');
+    clearTimeout(nudgeTimer);
+    nudgeTimer = setTimeout(() => {
+      if (document.hidden) return;
+      synthVis = true;
+      try { document.dispatchEvent(new Event('visibilitychange', { bubbles: true })); } catch (e) {} finally { synthVis = false; }
+    }, 800);
   }
   function logDryRun(s) {
     if (dryLogged.has(s.id)) return;
@@ -1012,7 +1036,7 @@
         --off:#8a8984; --warn:#e0a33a; --warn-bg:#3a2f18; --hover:#383835;
       }
     }
-    #csg-fab *, #csg-panel * { box-sizing: border-box; }
+    #csg-fab, #csg-panel, #csg-fab *, #csg-panel * { box-sizing: border-box; }   /* 面板自己也要算上内边距，否则手机上左边会被裁掉 */
     #csg-fab {
       position: fixed; right: 14px; bottom: 96px; z-index: 2147483646; width: 44px; height: 44px; padding: 0;
       border-radius: 50%; border: 1px solid var(--line); background: var(--bg); color: var(--off); cursor: pointer;
@@ -1145,7 +1169,8 @@
         <div class="lbl">会话</div>
         <div class="hint">本浏览器当前会话永远保留；勾选的也会保留（勾选立即生效），其余自动踢掉。</div>
         <div id="csg-list"></div>
-        <div class="row"><button type="button" id="csg-now">立即检测</button></div>
+        <div class="hint warn" id="csg-stale" hidden></div>
+        <div class="row"><button type="button" id="csg-now">立即检测</button><button type="button" id="csg-reload" hidden>刷新本页</button></div>
       </div>
       <div class="card">
         <div class="lbl">检测间隔</div>
@@ -1173,6 +1198,7 @@
     $('#csg-close').addEventListener('click', closePanel);
     $('#csg-toggle').addEventListener('click', () => (CFG.enabled ? stopGuard() : startGuard()));
     $('#csg-now').addEventListener('click', () => { runNow(); });
+    $('#csg-reload').addEventListener('click', () => { try { location.reload(); } catch (e) {} });
     $('#csg-chips').addEventListener('click', (e) => {
       const b = e.target.closest('.chip');
       if (b) setIntervalSec(b.dataset.s);
@@ -1268,6 +1294,11 @@
     const info = statusInfo();
     renderBadge(info);
     if (!isOpen()) return;
+    const stale = kickedHere > 0 && onSettingsPage();
+    const st = $('#csg-stale');
+    if (st.hidden === stale) st.hidden = !stale;
+    $('#csg-reload').hidden = !stale;
+    if (stale) setText(st, `本页打开后已踢掉 ${kickedHere} 个会话。设置页自己的会话表格不一定会自动刷新，看到的可能是旧的：以上面的列表为准，或点「刷新本页」。`);
     $('#csg-runbox').dataset.state = info.st;
     setText($('#csg-state-text'), info.text);
     setText($('#csg-reason'), info.reason);
@@ -1399,6 +1430,7 @@
   document.addEventListener('freeze', releaseLead);           // 浏览器冻结后台标签前让出领导权
   W.addEventListener('pageshow', (e) => { if (e && e.persisted) kickSoon(); });
   document.addEventListener('visibilitychange', () => {
+    if (synthVis) return;                                       // 脚本自己为了刷新设置页表格发的，不算切回本页
     if (!document.hidden) { kickSoon(); return; }
     const l = get(K.leader, null);                              // 转到后台：告诉其它标签页可以接手
     if (l && l.tab === TAB_ID) set(K.leader, { tab: TAB_ID, ts: Date.now(), hidden: true });

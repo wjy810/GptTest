@@ -185,6 +185,27 @@ await scenario('学到的 created_at:null 配方同样遵守保留规则', {
   expect(state.sessions.length === 3, '一条都不该少'),
 ));
 
+// ---- 设置页自己的表格：踢完后让它按“切回本页”的规则重新拉取，并在面板里提示 ----
+await scenario('踢完后设置页表格会被提醒重新拉取，面板提示可刷新', {
+  sessions: [self(), web('web-a', 200)], seconds: 5,
+  nativeScript: `window.__nativeRefetch = 0;
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { window.__nativeRefetch++; fetch('/api/auth/sessions/list-active'); } });`,
+  onTick: async (st, page) => {
+    if (Date.now() - st.t0 > 4200 && !st.ui) {
+      st.ui = await page.evaluate(() => {
+        const k = Object.keys(window.__menu).find((n) => n.includes('打开'));
+        window.__menu[k]();
+        const p = document.getElementById('csg-panel');
+        return { refetch: window.__nativeRefetch, stale: !p.querySelector('#csg-stale').hidden, text: p.querySelector('#csg-stale').textContent, reload: !p.querySelector('#csg-reload').hidden };
+      });
+    }
+  },
+}, ({ state }) => first(
+  expect(ids(state) === 'web-self', '残留：' + ids(state)),
+  expect(state.ui && state.ui.refetch === 1, '网页表格应被提醒重新拉取 1 次：' + JSON.stringify(state.ui)),
+  expect(state.ui && state.ui.stale && state.ui.reload && /已踢掉 1 个/.test(state.ui.text), '面板应提示并显示刷新按钮：' + JSON.stringify(state.ui)),
+));
+
 const bad = results.filter((r) => !r.ok).length;
 console.log(`\n${results.length - bad}/${results.length} 通过`);
 process.exit(bad ? 1 : 0);
