@@ -247,6 +247,24 @@ await scenario('同应用里有保留的会话（哪怕有创建时间）也不�
   expect(state.sessions.length === 3, '一条都不该少：' + left(state)),
 ));
 
+// ---- 守护运行中途有新的人登录：网页端和 Claude Code 都应在几个检测间隔内被踢掉，保留的不动 ----
+await scenario('运行中途新登录的会话会被发现并踢掉', {
+  sessions: [self(), web('web-keep', 400)], seconds: 10, gm: { keepMigrated: true, keepIds: ['web-keep'], interval: 1 },
+  onTick: async (st) => {
+    const t = Date.now() - st.t0;
+    if (t > 3000 && !st.a) { st.a = Date.now(); st.sessions.push(web('intruder-web', 0)); }
+    if (t > 3500 && !st.b) { st.b = Date.now(); st.sessions.push(code('intruder-cc')); }
+    if (st.a && !st.goneA && !st.sessions.some((x) => x.session_uuid === 'intruder-web')) st.goneA = Date.now() - st.a;
+    if (st.b && !st.goneB && !st.sessions.some((x) => x.session_uuid === 'intruder-cc')) st.goneB = Date.now() - st.b;
+  },
+}, ({ state }) => {
+  console.log(`      新网页会话 ${state.goneA} ms 后被踢；新 Claude Code 会话 ${state.goneB} ms 后被踢（检测间隔 1 秒、每轮最多踢 1 条）`);
+  return first(
+    expect(ids(state) === 'web-keep,web-self', '结果：' + ids(state)),
+    expect(state.goneA && state.goneB, '应都被踢掉'),
+  );
+});
+
 const bad = results.filter((r) => !r.ok).length;
 console.log(`\n${results.length - bad}/${results.length} 通过`);
 process.exit(bad ? 1 : 0);
