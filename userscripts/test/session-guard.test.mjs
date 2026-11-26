@@ -79,6 +79,51 @@ await scenario('踢到自己时立即停止', {
   expect(logs.some((l) => l.includes('401') || l.includes('自检')), '应写明原因'),
 ));
 
+// ---- 列表不给 session_uuid、Claude Code 那条创建时间为空（网页上显示“未知”）----
+const noid = (o) => { delete o.session_uuid; return o; };
+const selfN = () => noid(self());
+const webN = (min) => noid(web('x', min));
+const codeN = (uaStr) => noid(row({ application_slug: 'claude-code', created_at: null, last_active_at: iso(1), location_info: null, user_agent: uaStr || 'claude-cli/2.1.0 (external, cli)' }));
+const left = (st) => st.sessions.map((x) => `${x.application_slug}@${x.created_at === null ? 'null' : 't'}`).sort().join(',');
+
+await scenario('没有 id、创建时间为空的 Claude Code 会话也能踢掉', {
+  sessions: [selfN(), webN(200), codeN()], gm: { maxPerRound: 3 }, seconds: 8,
+}, ({ state, logs }) => first(
+  expect(left(state) === 'claude-ai@t', '残留：' + left(state)),
+  expect(!logs.some((l) => l.includes('停止守护')), '不该停止守护'),
+));
+
+await scenario('同类会话里有被保留的，就不发 created_at:null', {
+  sessions: [selfN(), codeN('claude-cli/2.1.0 (external, cli)'), codeN('claude-desktop-code/1.0')],
+  gm: { maxPerRound: 3, keepMigrated: true, keepIds: ['z:claude-code|claude-desktop-code/#'] }, seconds: 6,
+}, ({ state, logs }) => first(
+  expect(!state.revokes.some((r) => r.body && r.body.created_at === null), '不该发 null 请求：' + JSON.stringify(state.revokes)),
+  expect(state.sessions.some((x) => /desktop/.test(x.user_agent)), '保留的会话被踢了'),
+  expect(logs.some((l) => l.includes('认不出来') || l.includes('踢不掉')), '应在日志里说明没踢的那条：\n' + logs.join('\n')),
+  expect(!logs.some((l) => l.includes('✅ 干净了')), '不该说干净了'),
+));
+
+await scenario('服务端拒绝时写出字段诊断、不谎报干净', {
+  sessions: [selfN(), codeN()], seconds: 6,
+  revoke: (body) => ({ status: body && body.created_at === null ? 422 : 400, json: { error: { message: 'invalid session' } } }),
+}, ({ state, logs }) => first(
+  expect(left(state) === 'claude-ai@t,claude-code@null', '结果：' + left(state)),
+  expect(logs.some((l) => l.includes('被拒（422') && l.includes('invalid session')), '应记下服务端回复'),
+  expect(logs.some((l) => l.includes('字段：') && l.includes('application_slug="claude-code"') && l.includes('created_at=null')), '应记下字段结构'),
+  expect(!logs.some((l) => l.includes('✅ 干净了')), '不该说干净了'),
+  expect(!logs.some((l) => l.includes('停止守护')), '不该停止守护'),
+));
+
+await scenario('同组两条 Claude Code 会话，每次只删一条也能删光', {
+  sessions: [selfN(), codeN(), codeN()], seconds: 8,
+  revoke: (body, st) => {
+    if (!body || body.created_at !== null) return { status: 400, json: {} };
+    const i = st.sessions.findIndex((x) => x.application_slug === body.application_slug && x.created_at === null);
+    if (i >= 0) st.sessions.splice(i, 1);
+    return { status: 200, json: {} };
+  },
+}, ({ state }) => expect(left(state) === 'claude-ai@t', '残留：' + left(state)));
+
 const bad = results.filter((r) => !r.ok).length;
 console.log(`\n${results.length - bad}/${results.length} 通过`);
 process.exit(bad ? 1 : 0);
