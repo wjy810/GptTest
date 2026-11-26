@@ -31,8 +31,9 @@ export function defaultRevoke(body, state) {
   return { status: 200, json: {} };
 }
 
-export async function run({ sessions, revoke = defaultRevoke, gm = {}, seconds = 8, nativeScript = null, preScript = '', onTick = null, extraApi = null }) {
-  const state = { sessions: JSON.parse(JSON.stringify(sessions)), revokes: [], extra: [], selfLoggedOut: false, listReads: 0, extraApi, t0: Date.now(), seq: '' };
+// listFail(state) 可以让读列表失败：返回 'abort'（网络错误）或 { status, headers }；返回假值照常回应
+export async function run({ sessions, revoke = defaultRevoke, gm = {}, seconds = 8, nativeScript = null, preScript = '', onTick = null, extraApi = null, listFail = null }) {
+  const state = { sessions: JSON.parse(JSON.stringify(sessions)), revokes: [], extra: [], selfLoggedOut: false, listReads: 0, listTimes: [], listFails: 0, extraApi, t0: Date.now(), seq: '' };
   const browser = await chromium.launch();
   const page = await browser.newPage();
   const logs = [];
@@ -42,7 +43,13 @@ export async function run({ sessions, revoke = defaultRevoke, gm = {}, seconds =
     const req = route.request();
     const u = new URL(req.url());
     if (u.pathname === '/api/auth/sessions/list-active') {
-      state.listReads++; state.seq += 'L';
+      state.listReads++; state.seq += 'L'; state.listTimes.push(Date.now());
+      const f = listFail ? listFail(state) : null;
+      if (f) {
+        state.listFails++; state.seq += '!';
+        if (f === 'abort') return route.abort('failed');
+        return route.fulfill({ status: f.status, headers: f.headers || {}, contentType: 'application/json', body: '{}' });
+      }
       if (state.selfLoggedOut) return route.fulfill({ status: 401, contentType: 'application/json', body: '{}' });
       return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(state.sessions) });
     }

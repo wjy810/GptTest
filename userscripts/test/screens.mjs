@@ -10,7 +10,7 @@ const sessions = [
   row({ session_uuid: 'web-a', application_slug: 'claude-ai', created_at: iso(200), last_active_at: iso(5), user_agent: ua('Firefox', 'Linux') }),
   row({ token_uuid: 'tok-1', application_slug: 'claude-code', created_at: null, last_active_at: iso(1), location_info: null, user_agent: 'claude-cli/2.1.0 (external, cli)' }),
 ];
-const shim = `(function(){const store={interval:1,maxPerRound:2,lastVer:'4.1.0'};window.__gm=store;window.__menu={};
+const shim = `(function(){const store={intervalMin:3,intervalMax:8,maxPerRound:2,lastVer:'4.1.0'};window.__gm=store;window.__menu={};
 window.GM_getValue=(k,d)=>(k in store&&store[k]!==undefined?JSON.parse(JSON.stringify(store[k])):d);
 window.GM_setValue=(k,v)=>{if(v===undefined)delete store[k];else store[k]=JSON.parse(JSON.stringify(v));};
 window.GM_registerMenuCommand=(n,f)=>{window.__menu[n]=f;};window.unsafeWindow=window;window.confirm=()=>true;})();`;
@@ -46,6 +46,29 @@ for (const [name, opts] of [['desktop', { viewport: { width: 1280, height: 900 }
     console.log(name, scheme, 'panel box:', JSON.stringify(box), box.left >= 0 && box.right <= box.vw ? 'fits' : 'CLIPPED');
     await page.close();
   }
+}
+// 读列表连续失败：黄灯 + 倒计时（退避时长带随机）
+{
+  let reads = 0;
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, colorScheme: 'light' });
+  await page.route('https://claude.ai/**', async (route) => {
+    const u = new URL(route.request().url());
+    if (u.pathname === '/api/auth/sessions/list-active') {
+      if (++reads > 2) return route.abort('failed');
+      return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(sessions.slice(0, 1)) });
+    }
+    return route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;font-family:system-ui;background:#faf9f5}</style></head><body><main style="padding:24px">设置 → 账户（模拟页）</main></body></html>' });
+  });
+  await page.addInitScript({ content: shim.replace('intervalMin:3,intervalMax:8', 'intervalMin:1,intervalMax:1') + '\n' + readFileSync(SCRIPT_PATH, 'utf8') });
+  await page.goto('https://claude.ai/settings/account');
+  await page.waitForTimeout(400);
+  await page.evaluate(() => window.__menu[Object.keys(window.__menu).find((n) => n.includes('启动'))]());
+  await page.waitForTimeout(2600);
+  await page.evaluate(() => { window.__menu[Object.keys(window.__menu).find((n) => n.includes('打开'))](); document.querySelector('#csg-panel details').open = true; });
+  await page.waitForTimeout(600);
+  await page.screenshot({ path: `${out}panel-backoff-mobile.png` });
+  console.log('backoff reason:', await page.evaluate(() => document.getElementById('csg-reason').textContent));
+  await page.close();
 }
 await browser.close();
 console.log('ok');

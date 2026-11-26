@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Claude 会话守护（精简版）
 // @namespace    https://claude.ai/
-// @version      4.2.0
-// @description  只保留本浏览器当前会话 + 你勾选的，其余自动踢掉（含 Claude Code 等非网页端会话）；走网页原生活动会话接口，默认每轮只踢 1 条并自检防误踢
+// @version      4.3.0
+// @description  只保留本浏览器当前会话 + 你勾选的，其余自动踢掉（含 Claude Code 等非网页端会话）；走网页原生活动会话接口，按随机间隔检测，默认每轮只踢 1 条并自检防误踢
 // @match        https://claude.ai/*
 // @grant        GM_getValue
 // @grant        GM_setValue
@@ -13,6 +13,17 @@
 // ==/UserScript==
 
 /*
+ * v4.3.0（检测改成随机间隔；偶发的网络错误不再一直亮黄灯）
+ * - 检测间隔改成随机区间：每轮在「最短～最长」之间随机等一段再查（默认 3～8 秒），不再按固定节拍发请求。
+ *   旧版的固定间隔自动换成平均值差不多的区间（5 秒 → 3～8 秒）；最短和最长填一样就是固定间隔。
+ * - 出错后的退避改成“指数 + 随机抖动”：偶发一次网络错误 / 超时 / 5xx 先不报警，下一轮照常重试；
+ *   连续失败才亮黄灯并逐次拉长等待（最长 5 分钟）。被限流（429）起步更久，服务端给了 Retry-After 就至少等那么久。
+ * - 退避状态多个标签页共用，负责检测的标签页在等待期间也续租。以前退避时租约一过期，
+ *   别的标签页就接手并马上再发请求，失败次数也从头算，退避形同虚设。
+ * - 区分「超时 / 网络错误 / 浏览器离线」：离线时等网络恢复后立刻补测；电脑休眠、标签被冻结时作废的请求不算失败。
+ * - 「立即检测」在退避中也会真的读一次列表；状态里的倒计时按实际下一次检测时间算，重试进行中显示「正在重试…」。
+ * - 踢后确认、一轮踢完接着下一轮、单条踢不掉后的重试，等待时间也都带随机抖动。
+ *
  * v4.2.0（一次进来好几个人时清得更快）
  * - 新登录的先踢：本页后看到的排前面，同时出现的按创建时间（没有就按最近活跃）从新到旧。
  * - 待踢的比“每轮最多踢”多时自动加快，这一轮最多踢 5 条（设定更大时按设定）。这次启动后要先确认踢掉过一条才加快；
@@ -84,13 +95,18 @@
   const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
   try { if (W.top !== W.self) return; } catch (e) { return; }
 
-  const VERSION = '4.2.0';
+  const VERSION = '4.3.0';
   try { console.info('[会话守护] 已注入 v' + VERSION + '：', location.href); } catch (e) {}
 
   /* ================= 常量 ================= */
   const MIN_INTERVAL = 1;                 // 最低检测间隔（秒）
   const MAX_INTERVAL = 3600;
-  const INTERVAL_PRESETS = [1, 3, 5, 15, 30, 60];
+  // 检测间隔是一个随机区间（秒）：每轮在 [最短, 最长] 之间随机等一段
+  const RANGE_PRESETS = [[1, 3], [3, 8], [5, 15], [10, 30], [30, 90], [60, 180]];
+  const DEFAULT_RANGE = [3, 8];
+  const BACKOFF_BASE_MS = 5000;           // 连续失败的退避起步（之后每次翻倍，并在 [一半, 全部] 之间随机）
+  const RATE_LIMIT_BASE_MS = 20000;       // 被限流（429）时起步更久
+  const BACKOFF_MAX_MS = 5 * 60000;
   const MAX_PER_ROUND = 15;
   const AUTO_BURST = 5;                   // 待踢多时自动加快：每轮最多踢到 5 条（设定值更大时以设定值为准）
   const FETCH_TIMEOUT_MS = 12000;         // 每个请求（含读 body）最长 12 秒，卡住也不会拖死循环
@@ -103,9 +119,9 @@
   };
   // 存储键。会话缓存 / 领导权 / 状态用了新名字，避免和还没刷新的旧版标签页互相干扰
   const K = {
-    enabled: 'enabled', interval: 'interval', dryRun: 'dryRun', maxPerRound: 'maxPerRound',
+    enabled: 'enabled', interval: 'interval', ivMin: 'intervalMin', ivMax: 'intervalMax', dryRun: 'dryRun', maxPerRound: 'maxPerRound',
     keepIds: 'keepIds', keepMigrated: 'keepMigrated', legacyKeep: 'keepKeys',
-    sessions: 'sessions4', leader: 'leader4', issue: 'issue4',
+    sessions: 'sessions4', leader: 'leader4', issue: 'issue4', net: 'net4',
     logs: 'logs', kicked: 'kickedRun', shape: 'nativeShape', shapes: 'nativeShapes', fields: 'nativeFields2', ver: 'lastVer',
     recipes: 'nativeRecipes', learnNative: 'learnNative',
   };
@@ -129,8 +145,24 @@
   const CFG = {
     get enabled() { return !!get(K.enabled, false); },
     set enabled(v) { set(K.enabled, !!v); },
-    get interval() { return clampInt(get(K.interval, 5), MIN_INTERVAL, MAX_INTERVAL, 5); },
-    set interval(v) { set(K.interval, clampInt(v, MIN_INTERVAL, MAX_INTERVAL, 5)); },
+    // 检测间隔 [最短, 最长]（秒），每轮在这之间随机等。
+    // 旧版只存了一个固定值 interval：换成平均值差不多的区间（5 秒 → 3～8 秒，1 秒 → 1～2 秒）
+    get range() {
+      let a = get(K.ivMin, null), b = get(K.ivMax, null);
+      if (a == null || b == null) {
+        const n = clampInt(get(K.interval, 0), 0, MAX_INTERVAL, 0);
+        if (n >= MIN_INTERVAL) { a = Math.max(MIN_INTERVAL, Math.round(n * 0.6)); b = Math.max(a + 1, Math.round(n * 1.6)); }
+        else { a = DEFAULT_RANGE[0]; b = DEFAULT_RANGE[1]; }
+      }
+      a = clampInt(a, MIN_INTERVAL, MAX_INTERVAL, DEFAULT_RANGE[0]);
+      b = clampInt(b, MIN_INTERVAL, MAX_INTERVAL, DEFAULT_RANGE[1]);
+      return a <= b ? [a, b] : [b, a];
+    },
+    set range(v) {
+      const a = clampInt(v && v[0], MIN_INTERVAL, MAX_INTERVAL, DEFAULT_RANGE[0]);
+      const b = clampInt(v && v[1], MIN_INTERVAL, MAX_INTERVAL, DEFAULT_RANGE[1]);
+      set(K.ivMin, Math.min(a, b)); set(K.ivMax, Math.max(a, b));
+    },
     // 预演：只写日志不真踢
     // 观察网页自己的「终止」请求并照着学（只看不改）；改了要刷新页面才生效
     get learnNative() { return get(K.learnNative, true) !== false; },
@@ -178,6 +210,10 @@
 
   /* ================= 工具 ================= */
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const rand = (lo, hi) => Math.round(lo + Math.random() * Math.max(0, hi - lo));
+  // 下一轮等多久：在设定区间里随机挑（毫秒）
+  const nextWaitMs = () => { const [a, b] = CFG.range; return rand(a * 1000, b * 1000); };
+  const rangeText = ([a, b]) => (a === b ? `固定 ${a} 秒` : `${a}～${b} 秒随机`);
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const fmtTime = (ms) => (Number.isFinite(ms) && ms > 0 ? new Date(ms).toLocaleString() : '');
   const desc = (s) => `${s.device}${s.location ? ' · ' + s.location : ''}`;
@@ -237,19 +273,50 @@
     if (get(K.issue, null)) set(K.issue, null);   // 连上一次页面留下的旧状态一起清掉
     if (had) renderStatus();
   }
-  // 临时错误（限流、5xx、网络、验证页）：指数退避，最长 5 分钟，不会自动停止守护
-  function backoff(text) {
-    net.failN++;
-    const wait = Math.min(5000 * Math.pow(2, net.failN - 1), 5 * 60000);
-    net.coolUntil = Date.now() + wait;
+  // 退避状态（连续失败次数、等到什么时候）放进存储，多个标签页共用。
+  // v4.2.0 及以前每个标签页各算各的：负责检测的标签页退避时租约一过期，别的标签页接手就马上再发请求，失败次数也从头算
+  function sharedCool() {
+    const v = get(K.net, null);
+    return v && typeof v === 'object' ? { n: Number(v.n) || 0, until: Number(v.until) || 0 } : { n: 0, until: 0 };
+  }
+  const coolUntil = () => Math.max(net.coolUntil, sharedCool().until);
+  function setCool(until) {
+    net.coolUntil = until;
+    set(K.net, { n: net.failN, until });
+  }
+  function resetCool() {
+    net.failN = 0; net.coolUntil = 0;
+    const sc = sharedCool();
+    if (sc.n || sc.until) set(K.net, null);
+  }
+
+  // 临时错误：不会自动停止守护。
+  // - transient（网络错误、超时、离线、5xx）：偶发一次先不报警，按正常的随机间隔再试；连续失败才亮黄灯并退避。
+  // - 其它（403、验证页、429 等）：马上退避。
+  // 退避 = 起步 × 2^(次数-1)，最长 5 分钟，实际在 [一半, 全部] 之间随机（“等量抖动”），不会每次都卡在同一个节拍上。
+  // 服务端给了 Retry-After 就至少等那么久
+  function backoff(text, opt) {
+    opt = opt || {};
+    net.failN = Math.max(net.failN, sharedCool().n) + 1;
     net.lastErr = text;
+    const n = net.failN;
+    if (opt.transient && n === 1) {
+      setCool(0);
+      if (CFG.enabled) logEvery('blip', 10 * 60000, `ℹ️ ${text}：偶发一次先不报警，下一轮照常重试`);
+      return;
+    }
+    const k = opt.transient ? n - 1 : n;
+    const cap = Math.min((opt.rate ? RATE_LIMIT_BASE_MS : BACKOFF_BASE_MS) * Math.pow(2, k - 1), BACKOFF_MAX_MS);
+    let wait = rand(cap / 2, cap);
+    if (opt.retryAfter > 0) wait = Math.max(wait, Math.min(opt.retryAfter, 30 * 60000));
+    setCool(Date.now() + wait);
     setIssue('net', text, net.coolUntil);
-    if (CFG.enabled) logEvery('net:' + text, 60000, `⛔ ${text}，${Math.round(wait / 1000)} 秒后自动重试`);
+    if (CFG.enabled) logEvery('net:' + text, 60000, `⛔ ${text}，${Math.round(wait / 1000)} 秒后自动重试（连续失败 ${n} 次）`);
   }
   // 接口看起来改版了（404 / 格式不对）：隔一段时间再试
   function pauseFor(ms, code, text) {
-    net.coolUntil = Date.now() + ms;
     net.lastErr = text;
+    setCool(Date.now() + ms);
     setIssue(code, text, net.coolUntil);
     if (CFG.enabled) logEvery(code, 10 * 60000, `⛔ ${text}`);
   }
@@ -273,18 +340,42 @@
   }
 
   /* ================= 网络 ================= */
-  // 所有请求都带超时，并且在超时内把 body 读完：休眠唤醒、切网络、代理断流都不会让这一轮永远不返回
+  // Retry-After：秒数或 HTTP 日期 → 毫秒
+  function retryAfterMs(v) {
+    if (v == null || v === '') return 0;
+    const s = String(v).trim();
+    if (/^\d+(\.\d+)?$/.test(s)) return Math.round(Number(s) * 1000);
+    const t = Date.parse(s);
+    return Number.isFinite(t) ? Math.max(0, t - Date.now()) : 0;
+  }
+
+  // 所有请求都带超时，并且在超时内把 body 读完：休眠唤醒、切网络、代理断流都不会让这一轮永远不返回。
+  // 失败时给出原因 err：timeout 超时 / offline 浏览器离线 / network 连接出错 /
+  // frozen 实际过去的时间远超超时（电脑休眠或标签被冻结），这种不算接口的问题
   async function request(url, opts) {
     const f = pageFetch || W.fetch;
     const ac = new AbortController();
-    const timer = setTimeout(() => { try { ac.abort(); } catch (e) {} }, FETCH_TIMEOUT_MS);
+    const t0 = Date.now();
+    let timedOut = false;
+    const timer = setTimeout(() => { timedOut = true; try { ac.abort(); } catch (e) {} }, FETCH_TIMEOUT_MS);
+    const errKind = () => {
+      if (Date.now() - t0 > FETCH_TIMEOUT_MS * 2) return 'frozen';
+      if (timedOut) return 'timeout';
+      try { if (W.navigator && W.navigator.onLine === false) return 'offline'; } catch (e) {}
+      return 'network';
+    };
     try {
       const res = await f.call(W, url, Object.assign({ credentials: 'include' }, opts || {}, { signal: ac.signal }));
       let text = null;
-      try { text = await res.text(); } catch (e) { text = null; }
-      return { ok: !!res.ok, status: res.status, text };
+      try { text = await res.text(); } catch (e) {
+        if (timedOut) return { ok: false, status: 0, text: null, err: errKind() };   // 读 body 时超时
+        text = null;
+      }
+      let retryAfter = 0;
+      try { retryAfter = retryAfterMs(res.headers && res.headers.get('retry-after')); } catch (e) {}
+      return { ok: !!res.ok, status: res.status, text, retryAfter };
     } catch (e) {
-      return { ok: false, status: 0, text: null };
+      return { ok: false, status: 0, text: null, err: errKind() };
     } finally {
       clearTimeout(timer);
     }
@@ -380,12 +471,17 @@
 
   // 返回 { status: 'ok', list } / 'cool'（退避中，没发请求）/ 'auth'（401）/ 'err'
   async function readList(force) {
-    if (!force && Date.now() < net.coolUntil) return { status: 'cool' };
+    if (!force && Date.now() < coolUntil()) return { status: 'cool' };
     const r = await request(API.list, { headers: API.headers });
     if (r.status === 401) { on401('会话接口'); return { status: 'auth' }; }
     if (!r.ok) {
       if (r.status === 404) pauseFor(10 * 60000, 'gone', '原生会话接口返回 404（可能改版了），10 分钟后再试');
-      else backoff(r.status ? `会话接口返回 ${r.status}` : '读取会话接口超时或网络错误');
+      else if (r.status === 429) backoff('会话接口被限流（429）', { rate: true, retryAfter: r.retryAfter });
+      else if (r.status) backoff(`会话接口返回 ${r.status}`, { transient: r.status >= 500, retryAfter: r.retryAfter });
+      else if (r.err === 'frozen') net.lastErr = '请求期间页面被挂起（电脑休眠或标签被冻结），这次作废，不算失败';
+      else if (r.err === 'offline') backoff('浏览器显示离线，网络恢复后自动继续', { transient: true });
+      else if (r.err === 'timeout') backoff(`读取会话接口超时（${FETCH_TIMEOUT_MS / 1000} 秒没有响应）`, { transient: true });
+      else backoff('读取会话接口网络错误（连接被中断或请求没发出去）', { transient: true });
       return { status: 'err' };
     }
     let data = null;
@@ -393,7 +489,7 @@
     if (data == null) { backoff('会话接口返回的不是 JSON（可能是人机验证页）'); return { status: 'err' }; }
     const arr = Array.isArray(data) ? data : (data.sessions || data.data || data.items);
     if (!Array.isArray(arr)) { pauseFor(5 * 60000, 'shape', '会话接口返回格式变了，5 分钟后再试'); return { status: 'err' }; }
-    net.failN = 0; net.coolUntil = 0; net.lastOkAt = Date.now(); net.lastErr = '';
+    resetCool(); net.lastOkAt = Date.now(); net.lastErr = '';
     authFails = 0;
     if (issue && CFG.enabled) log('✅ 会话接口恢复正常');
     clearIssue();
@@ -448,7 +544,7 @@
   // self: true = 本机还在；false = 读到了列表但都没有本机；null = 一直没读到 / 被中止，无法判断
   async function verifyGone(target, alive, before) {
     let sawList = false, sawSelf = false, last = null;
-    const waits = [0, 600, 1200, 2000];
+    const waits = [0, rand(450, 800), rand(900, 1500), rand(1600, 2500)];   // 确认读取的间隔也带一点随机
     for (let i = 0; i < waits.length; i++) {
       if (waits[i]) await sleep(waits[i]);
       if (!alive() || !CFG.enabled) return { self: null, gone: false, list: last };
@@ -486,7 +582,7 @@
       });
       if (!alive()) return { done: 'abort', tried };
       if (r.status === 401) { on401('踢人接口'); return { done: 'abort', tried }; }
-      if (r.status === 429) { backoff('踢人接口被限流（429）'); return { done: 'abort', tried }; }
+      if (r.status === 429) { backoff('踢人接口被限流（429）', { rate: true, retryAfter: r.retryAfter }); return { done: 'abort', tried }; }
       if (!r.ok) {
         tried.push(`${name} → ${r.status || '网络错误或超时'}`);
         if (!r.status || r.status === 403 || r.status >= 500) return { done: 'fail', tried };   // 不是格式问题，换格式也没用
@@ -762,7 +858,8 @@
   const cooling = (s) => { const f = fails.get(s.id); return !!f && Date.now() < f.until; };
   function markFail(s) {
     const n = ((fails.get(s.id) || {}).n || 0) + 1;
-    const wait = Math.min(30000 * Math.pow(2, n - 1), 600000);
+    const cap = Math.min(30000 * Math.pow(2, n - 1), 600000);
+    const wait = rand(cap * 0.75, cap * 1.25);                 // ±25% 随机，几条踢不掉的会话不会挤在同一时刻重试
     fails.set(s.id, { n, until: Date.now() + wait });
     return wait;
   }
@@ -861,8 +958,9 @@
     if (alive() && CFG.enabled) moreSoon = planOf(latest).kick.some((x) => !cooling(x));
   }
 
-  async function tick(alive) {
-    const r = await readList(false);
+  // manual：手动「立即检测」，退避中也真的读一次
+  async function tick(alive, manual) {
+    const r = await readList(!!manual);
     if (r.status !== 'ok' || !alive()) return;
     migrateLegacyKeep(r.list);
     updateList(r.list);
@@ -899,8 +997,8 @@
   }
 
   /* ================= 调度 / 多标签页 ================= */
-  // 同一时间只让一个标签页检测。租约 max(3×间隔, 15 秒)；前台标签可以接手后台标签
-  const leaseMs = () => Math.max(CFG.interval * 3000, 15000);
+  // 同一时间只让一个标签页检测。租约 max(3×最长间隔, 15 秒)，负责的标签页在等待期间由看门狗续租；前台标签可以接手后台标签
+  const leaseMs = () => Math.max(CFG.range[1] * 3000, 15000);
   function takeLead() {
     const now = Date.now();
     const hidden = !!document.hidden;
@@ -921,12 +1019,12 @@
   // 每条最坏 = 7 种格式 ×（12 秒请求 + 4 次确认读取 × 12 秒 + 3.8 秒等待），按“每轮上限”放宽
   const stuckLimit = () => Math.max(120000, Math.max(CFG.maxPerRound, CFG.autoBurst ? AUTO_BURST : 0) * 7 * 65000 + 20000);
 
-  async function runTick() {
+  async function runTick(manual) {
     const gen = ++runGen;
     const alive = () => gen === runGen;
     running = true; runStartedAt = Date.now();
     renderStatus();
-    try { await tick(alive); } catch (e) { log('检测出错：' + (e && e.message)); }
+    try { await tick(alive, manual); } catch (e) { log('检测出错：' + (e && e.message)); }
     if (!alive()) return false;           // 这一轮卡太久已被看门狗作废，别覆盖新一轮的状态
     running = false; runStartedAt = 0;
     renderAll(false);
@@ -955,10 +1053,11 @@
   }
   const armTicker = (ms) => { if (ticker) { try { ticker.postMessage(ms); } catch (e) {} } };
 
-  function schedule() {
+  // 下一轮：平时在设定区间里随机等；一轮踢完还有待踢的就 0.3～0.9 秒后接着来；退避中（包括别的标签页记下的）等到退避结束
+  function schedule(ms) {
     clearTimeout(loopTimer); loopTimer = null;
     if (!CFG.enabled) { nextAt = 0; armTicker(0); renderStatus(); return; }
-    const ms = Math.max(moreSoon ? 500 : CFG.interval * 1000, net.coolUntil - Date.now(), 500);
+    if (!(ms >= 0)) ms = Math.max(moreSoon ? rand(300, 900) : nextWaitMs(), coolUntil() - Date.now(), 300);
     moreSoon = false;
     nextAt = Date.now() + ms;
     loopTimer = setTimeout(loop, ms);
@@ -984,7 +1083,7 @@
     if (!takeLead()) { mode = 'other'; await refreshList(true); return; }
     log('手动检测…');
     mode = 'lead';
-    if (!(await runTick())) return;
+    if (!(await runTick(true))) return;
     if (CFG.enabled) { takeLead(); schedule(); } else { mode = ''; releaseLead(); }
     renderAll(false);
   }
@@ -1006,8 +1105,19 @@
         return;
       }
       // 定时器丢了，或者早就该触发却没触发（浏览器冻结后恢复）；也负责在别的标签页启动守护后跟上
-      if (!running && (!loopTimer || (nextAt && Date.now() - nextAt > 15000))) loop();
+      if (!running && (!loopTimer || (nextAt && Date.now() - nextAt > 15000))) { loop(); return; }
+      // 两轮之间（尤其是退避要等很久时）续租：租约过期别的标签页就会接手；被前台标签接手了就转为待命
+      if (mode === 'lead' && !running && !takeLead()) { mode = 'other'; renderStatus(); }
     } catch (e) {}
+  }
+
+  // 浏览器恢复联网：不用等退避结束，1～3 秒后补测一次
+  function onOnline() {
+    if (!CFG.enabled) return;
+    net.coolUntil = 0;
+    const sc = sharedCool();
+    if (sc.until) set(K.net, { n: sc.n, until: 0 });
+    if (!running) schedule(rand(1000, 3000));
   }
 
   // 切回标签页 / 窗口获得焦点时立刻补测一次（前台标签也借此接手后台标签）
@@ -1020,11 +1130,17 @@
     loop();
   }
 
-  function setIntervalSec(v) {
-    const n = Math.round(Number(v));
-    if (!Number.isFinite(n) || n < MIN_INTERVAL) { log(`检测间隔要填不小于 ${MIN_INTERVAL} 的整数（秒）`); renderStatus(); return; }
-    CFG.interval = Math.min(n, MAX_INTERVAL);
-    log(`检测间隔设为 ${CFG.interval} 秒`);
+  // 设检测区间。which：改的是哪一头（'min' / 'max'），另一头被越过时跟着挪，而不是两头对调
+  function setIntervalRange(a, b, which) {
+    let x = Math.round(Number(a)), y = Math.round(Number(b));
+    if (!Number.isFinite(x) || !Number.isFinite(y) || x < MIN_INTERVAL || y < MIN_INTERVAL) {
+      log(`检测间隔要填不小于 ${MIN_INTERVAL} 的整数（秒）`); renderStatus(); return;
+    }
+    x = Math.min(x, MAX_INTERVAL); y = Math.min(y, MAX_INTERVAL);
+    if (x > y) { if (which === 'max') x = y; else y = x; }
+    const before = CFG.range.join('-');
+    CFG.range = [x, y];
+    if (CFG.range.join('-') !== before) log(`检测间隔设为 ${rangeText(CFG.range)}`);
     if (CFG.enabled && !running) schedule();
     renderAll(false);
   }
@@ -1063,12 +1179,12 @@
         (CFG.dryRun ? '\n\n当前是【预演】：只写日志，不会真的踢。' : ''));
       if (!ok || CFG.enabled) return;
       CFG.enabled = true;
-      authFails = 0; net.failN = 0; net.coolUntil = 0;
+      authFails = 0; resetCool();
       set(K.kicked, 0);
       fails.clear(); dryLogged.clear();
       dirty = true; connectedLogged = false;
       clearIssue();
-      log(`▶️ 守护启动 · 间隔 ${CFG.interval} 秒 · 每轮最多踢 ${CFG.maxPerRound} 条${CFG.dryRun ? ' · 预演中（不会真踢）' : ''}`);
+      log(`▶️ 守护启动 · 间隔 ${rangeText(CFG.range)} · 每轮最多踢 ${CFG.maxPerRound} 条${CFG.dryRun ? ' · 预演中（不会真踢）' : ''}`);
       renderAll(false);
       loop();
     } finally {
@@ -1093,12 +1209,12 @@
     if (!confirm('清除已保存的数据？\n\n会停止守护，并清空：保留名单、会话列表缓存、本次踢出计数。\n' +
       '检测间隔、预演、每轮上限和日志会保留。适合退出账号或换账号后使用。\n\n确定吗？')) return;
     if (CFG.enabled) stopGuard('清除已保存数据');
-    [K.keepIds, K.legacyKeep, K.sessions, K.leader, K.issue, K.kicked].forEach((k) => set(k, undefined));
+    [K.keepIds, K.legacyKeep, K.sessions, K.leader, K.issue, K.kicked, K.net].forEach((k) => set(k, undefined));
     set(K.keepMigrated, true);
     sessions = []; listSig = ''; issue = null;
     fails.clear(); dryLogged.clear();
     dirty = true; connectedLogged = false;
-    net.lastOkAt = 0; net.lastErr = '';
+    net.lastOkAt = 0; net.lastErr = ''; net.failN = 0; net.coolUntil = 0;
     log('🧹 已清除保存的数据：保留名单和会话列表缓存已清空，下次读到列表会重新识别');
     renderAll(true);
   }
@@ -1178,12 +1294,16 @@
 
     #csg-panel .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-top: 8px; }
     #csg-panel .lbl { font-weight: 600; margin-bottom: 6px; }
+    #csg-panel .lbl .sub { font-weight: 400; font-size: 12px; color: var(--muted); margin-left: 6px; }
+    #csg-panel #csg-chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }   /* 6 个区间排成整齐的 3×2 */
+    #csg-panel .range { margin-top: 8px; gap: 6px; }
+    #csg-panel .range input[type=number] { margin-right: 0; }
+    #csg-panel #csg-iv-hint { margin-top: 6px; }
     #csg-panel .hint, #csg-panel .meta { color: var(--muted); font-size: 12px; }
     #csg-panel .hint.warn { color: var(--warn); }
     #csg-panel .chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
     #csg-panel .chip { padding: 3px 10px; border-radius: 999px; }
     #csg-panel .chip.active { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-    #csg-panel .cus { color: var(--muted); font-size: 12px; margin-left: 2px; }
     #csg-panel input[type=number] { font: inherit; padding: 4px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); width: 64px; margin-right: 4px; }
 
     #csg-panel .switch { display: flex; align-items: center; gap: 8px; margin: 4px 0; cursor: pointer; position: relative; }
@@ -1253,10 +1373,17 @@
         <div class="row"><button type="button" id="csg-now">立即检测</button><button type="button" id="csg-reload" hidden>刷新本页</button></div>
       </div>
       <div class="card">
-        <div class="lbl">检测间隔</div>
-        <div class="chips" id="csg-chips">
-          ${INTERVAL_PRESETS.map((n) => `<button type="button" class="chip" data-s="${n}">${n}s</button>`).join('')}
-          <span class="cus"><input type="number" id="csg-interval" min="${MIN_INTERVAL}" max="${MAX_INTERVAL}" step="1" aria-label="自定义间隔（秒）">秒</span>
+        <div class="lbl">检测间隔<span class="sub">随机区间</span></div>
+        <div class="chips" id="csg-chips" role="group" aria-label="常用区间">
+          ${RANGE_PRESETS.map(([a, b]) => `<button type="button" class="chip" data-a="${a}" data-b="${b}" aria-pressed="false">${a}–${b}s</button>`).join('')}
+        </div>
+        <div class="row range">
+          <label class="hint" for="csg-iv-min">最短</label>
+          <input type="number" id="csg-iv-min" min="${MIN_INTERVAL}" max="${MAX_INTERVAL}" step="1">
+          <span class="hint" aria-hidden="true">～</span>
+          <label class="hint" for="csg-iv-max">最长</label>
+          <input type="number" id="csg-iv-max" min="${MIN_INTERVAL}" max="${MAX_INTERVAL}" step="1">
+          <span class="hint">秒</span>
         </div>
         <div class="hint" id="csg-iv-hint"></div>
       </div>
@@ -1282,9 +1409,10 @@
     $('#csg-reload').addEventListener('click', () => { try { location.reload(); } catch (e) {} });
     $('#csg-chips').addEventListener('click', (e) => {
       const b = e.target.closest('.chip');
-      if (b) setIntervalSec(b.dataset.s);
+      if (b) setIntervalRange(b.dataset.a, b.dataset.b);
     });
-    $('#csg-interval').addEventListener('change', (e) => setIntervalSec(e.target.value));
+    $('#csg-iv-min').addEventListener('change', (e) => setIntervalRange(e.target.value, $('#csg-iv-max').value, 'min'));
+    $('#csg-iv-max').addEventListener('change', (e) => setIntervalRange($('#csg-iv-min').value, e.target.value, 'max'));
     $('#csg-list').addEventListener('change', (e) => {
       const cb = e.target.closest('input[type=checkbox][data-id]');
       if (cb && !cb.disabled) toggleKeep(cb.getAttribute('data-id'), cb.checked);
@@ -1346,8 +1474,10 @@
     const iss = mode === 'other' ? get(K.issue, null) : issue;
     let reason = '';
     if (iss && iss.text) {
-      const left = iss.until ? Math.ceil((iss.until - Date.now()) / 1000) : 0;
-      reason = iss.text + (CFG.enabled && left > 0 ? `（${left} 秒后重试）` : '');
+      // 倒计时按本页实际排好的下一次检测算（随机间隔可能比退避更晚）；重试已经在进行就直接说
+      const until = mode === 'lead' && nextAt ? nextAt : iss.until;
+      const left = until ? Math.ceil((until - Date.now()) / 1000) : 0;
+      reason = iss.text + (!CFG.enabled ? '' : running && mode === 'lead' ? '（正在重试…）' : left > 0 ? `（${left} 秒后重试）` : '');
     }
     if (!CFG.enabled) return { st: 'off', text: '已停止', reason };
     if (reason) return { st: 'warn', text: '运行中 · 需要留意', reason };
@@ -1404,10 +1534,15 @@
     const p = planOf(list);
     setText($('#csg-stat-total'), list.length ? String(list.length) : '—');
     setText($('#csg-stat-pending'), list.length && p.cur.length === 1 ? String(p.kick.length) : '—');
-    const iv = $('#csg-interval');
-    const ivs = String(CFG.interval);
-    if (document.activeElement !== iv && iv.value !== ivs) iv.value = ivs;
-    panel.querySelectorAll('.chip').forEach((c) => c.classList.toggle('active', Number(c.dataset.s) === CFG.interval));
+    const [ra, rb] = CFG.range;
+    for (const [sel, v] of [['#csg-iv-min', ra], ['#csg-iv-max', rb]]) {
+      const el = $(sel);
+      if (document.activeElement !== el && el.value !== String(v)) el.value = String(v);
+    }
+    panel.querySelectorAll('.chip').forEach((c) => {
+      const on = Number(c.dataset.a) === ra && Number(c.dataset.b) === rb;
+      if (c.classList.contains('active') !== on) { c.classList.toggle('active', on); c.setAttribute('aria-pressed', String(on)); }
+    });
     const dry = $('#csg-dry');
     if (dry.checked !== CFG.dryRun) dry.checked = CFG.dryRun;
     const learn = $('#csg-learn');
@@ -1418,12 +1553,12 @@
     const mxs = String(CFG.maxPerRound);
     if (document.activeElement !== mx && mx.value !== mxs) mx.value = mxs;
     const hint = $('#csg-iv-hint');
-    const fast = CFG.interval < 3;
+    const fast = ra < 3;
     const hc = 'hint' + (fast ? ' warn' : '');
     if (hint.className !== hc) hint.className = hc;
-    setText(hint, fast
-      ? '⚠️ 低于 3 秒请求量较大：被限流时会自动退避（最长 5 分钟），不会自动停止守护。'
-      : `最低 ${MIN_INTERVAL} 秒。切回本页会立刻补测一次。`);
+    setText(hint, (fast ? '⚠️ 最短低于 3 秒请求量较大。' : '') +
+      (ra === rb ? `固定每 ${ra} 秒检测一次（最短和最长一样就不随机）。` : `每轮在 ${ra}～${rb} 秒之间随机等一段再检测，平均约 ${(ra + rb) / 2} 秒。`) +
+      '偶发网络错误先安静重试，连续失败自动退避（最长 5 分钟），不会停止守护。切回本页会立刻补测一次。');
   }
 
   function renderList(force) {
@@ -1478,8 +1613,12 @@
       `网页原生「终止」：${Object.keys(recipes).length ? Object.entries(recipes).map(([k, v]) => `${k} → ${recipeText(v)}`).join('；') : CFG.learnNative ? '还没学到（手动点一次「终止」就会学）' : '学习已关闭'}`,
       `踢人请求格式：${Object.keys(shapeBySlug).length ? Object.entries(shapeBySlug).map(([k, v]) => `${k} → ${v}`).join('，') + '（已确认）' : '未确认（第一次踢掉会话时自动确认）'}`,
       `上次读取：${mode === 'other' ? '由另一个标签页读取' : net.lastErr ? '失败 · ' + net.lastErr : net.lastOkAt ? `成功 · ${sessions.length} 条` : '本页还没读过'}`,
+      (() => {
+        const n = Math.max(net.failN, sharedCool().n), cu = coolUntil();
+        return `网络：${n ? `连续失败 ${n} 次` : '正常'}${cu > Date.now() ? ` · 退避到 ${new Date(cu).toLocaleTimeString()}（时长带随机抖动）` : ''}`;
+      })(),
       `保留名单：${ids.length} 条${stale ? `（其中 ${stale} 条已不在当前列表，可能已过期）` : ''}${legacyN ? ` · 旧版名单 ${legacyN} 条待迁移（读到列表后自动完成）` : ''}`,
-      `检测间隔 ${CFG.interval} 秒 · 每轮最多踢 ${CFG.maxPerRound} 条${CFG.autoBurst ? `（待踢多时自动加快到 ${Math.max(CFG.maxPerRound, AUTO_BURST)} 条）` : ''} · 预演${CFG.dryRun ? '开' : '关'}`,
+      `检测间隔 ${rangeText(CFG.range)} · 每轮最多踢 ${CFG.maxPerRound} 条${CFG.autoBurst ? `（待踢多时自动加快到 ${Math.max(CFG.maxPerRound, AUTO_BURST)} 条）` : ''} · 预演${CFG.dryRun ? '开' : '关'}`,
       `本标签页：${!CFG.enabled ? '守护未运行' : mode === 'other' ? '待命（另一个标签页在检测）' : '负责检测'}`,
     ];
     const text = lines.join('\n');
@@ -1504,7 +1643,7 @@
   /* ================= 启动 ================= */
   if (get(K.ver, '') !== VERSION) {
     OBSOLETE_KEYS.forEach((k) => set(k, undefined));
-    log(`已更新到 v${VERSION}：只走网页原生活动会话接口；去掉页面点击、接口自学/探测和「受信任的设备」清理；保留名单改为按会话 ID。请把其它已打开的 claude.ai 标签页刷新一遍`);
+    log(`已更新到 v${VERSION}：检测间隔改成随机区间（现在是 ${rangeText(CFG.range)}）；偶发网络错误先安静重试，连续失败才亮黄灯并随机退避，多个标签页共用退避。请把其它已打开的 claude.ai 标签页刷新一遍`);
     set(K.ver, VERSION);
   }
 
@@ -1524,6 +1663,7 @@
     if (l && l.tab === TAB_ID) set(K.leader, { tab: TAB_ID, ts: Date.now(), hidden: true });
   });
   W.addEventListener('focus', kickSoon);
+  W.addEventListener('online', onOnline);
 
   const ready = (fn) => (document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', fn, { once: true }) : fn());
   ready(() => {
@@ -1535,6 +1675,6 @@
       } catch (e) {}
     }, 1000);
     setInterval(watchdog, 5000);
-    if (CFG.enabled) setTimeout(loop, 1500);
+    if (CFG.enabled) setTimeout(loop, rand(1000, 2500));
   });
 })();

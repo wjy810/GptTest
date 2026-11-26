@@ -1,4 +1,4 @@
-// 运行：node userscripts/test/session-guard.test.mjs   （可用 CSG_SCRIPT=路径 指定要测的脚本）
+// 运行：node userscripts/test/session-guard.test.mjs   （可用 CSG_SCRIPT=路径 指定要测的脚本，CSG_ONLY=正则 只跑部分场景）
 import { run, row, ua, iso, defaultRevoke } from './harness.mjs';
 
 const self = () => row({ session_uuid: 'web-self', application_slug: 'claude-ai', created_at: iso(300), last_active_at: iso(0), is_current: true, user_agent: ua('Chrome', 'Windows') });
@@ -7,7 +7,10 @@ const code = (id) => row({ session_uuid: id, application_slug: 'claude-code', cr
 
 const ids = (st) => st.sessions.map((s) => s.session_uuid || s.token_uuid || String(s.created_at)).sort().join(',');
 const results = [];
+// CSG_ONLY=正则：只跑名字匹配的场景
+const only = process.env.CSG_ONLY ? new RegExp(process.env.CSG_ONLY) : null;
 async function scenario(name, opts, check) {
+  if (only && !only.test(name)) return;
   const t0 = Date.now();
   let r, err = null;
   try { r = await run(opts); err = check(r); } catch (e) { err = e.stack || String(e); }
@@ -316,7 +319,7 @@ await scenario('一次进来 6 个人：确认踢掉一条后自动加快，几�
   console.log(`      自动加快：6 个人 ${state.clear} ms 清完；请求顺序 ${state.seq.replace(/^L+/, '')}`);
   return first(
     expect(ids(state) === 'web-self', '残留：' + ids(state)),
-    expect(state.clear && state.clear < 3500, '应几秒内清完：' + state.clear),
+    expect(state.clear && state.clear < 4000, '应几秒内清完：' + state.clear),
     expect(order(state) === 'in-5,in-4,in-3,in-2,in-1,in-0', '应从新到旧：' + order(state)),
     expect(!/^L*LRLR/.test(state.seq), '第一轮还没确认踢掉过，不该连踢：' + state.seq),
     expect(/RLR/.test(state.seq), '之后应在同一轮连踢：' + state.seq),
@@ -352,6 +355,122 @@ await scenario('自动加快时踢到自己也只发 1 条就停', {
 }, ({ state, gm }) => first(
   expect(gm.enabled === false, '应已停止'),
   expect(state.revokes.length === 2, '出事后应只多发 1 条：' + state.revokes.length),
+));
+
+// ---- v4.3.0：随机检测区间、带抖动的退避、偶发失败不报警、多标签页共用退避 ----
+const gapsOf = (ts) => ts.slice(1).map((t, i) => t - ts[i]);
+const fabState = (page) => page.evaluate(() => { const f = document.getElementById('csg-fab'); return f ? f.dataset.state : ''; });
+
+await scenario('检测间隔随机：相邻两次读取的间隔不固定，且都在区间内', {
+  sessions: [self()], seconds: 14, gm: { intervalMin: 1, intervalMax: 3 },
+}, ({ state }) => {
+  // 第 1 次是启动前的预览读取，第 2 次紧跟着是第一轮；从第 2 次开始算间隔
+  const g = gapsOf(state.listTimes.slice(1));
+  console.log(`      读取间隔（毫秒）：${g.join(', ')}`);
+  return first(
+    expect(g.length >= 4, '读取次数太少：' + g.length),
+    expect(g.every((x) => x >= 950 && x <= 3400), '有间隔超出 1～3 秒：' + g.join(',')),
+    expect(Math.max(...g) - Math.min(...g) >= 250, '间隔几乎一样，没有随机：' + g.join(',')),
+  );
+});
+
+await scenario('旧版固定 5 秒自动换成 3～8 秒；区间输入框与预设可用', {
+  sessions: [self()], seconds: 4, gm: { interval: 5 },
+  onTick: async (st, page) => {
+    if (Date.now() - st.t0 > 1000 && !st.ui) {
+      st.ui = await page.evaluate(() => {
+        const k = Object.keys(window.__menu).find((n) => n.includes('打开'));
+        window.__menu[k]();
+        const p = document.getElementById('csg-panel');
+        const read = () => ({ min: p.querySelector('#csg-iv-min').value, max: p.querySelector('#csg-iv-max').value,
+          active: [...p.querySelectorAll('.chip.active')].map((c) => c.textContent).join('|'), hint: p.querySelector('#csg-iv-hint').textContent });
+        const before = read();
+        const mn = p.querySelector('#csg-iv-min');
+        mn.value = '12'; mn.dispatchEvent(new Event('change', { bubbles: true }));   // 最短越过最长：最长跟着挪
+        const afterMin = { a: window.__gm.intervalMin, b: window.__gm.intervalMax };
+        p.querySelector('.chip[data-a="5"][data-b="15"]').click();
+        return { before, afterMin, afterChip: { a: window.__gm.intervalMin, b: window.__gm.intervalMax, active: read().active } };
+      });
+    }
+  },
+}, ({ state }) => {
+  const u = state.ui || {};
+  return first(
+    expect(u.before && u.before.min === '3' && u.before.max === '8' && u.before.active === '3–8s', '迁移后应显示 3～8 秒：' + JSON.stringify(u.before)),
+    expect(u.before && /3～8 秒之间随机/.test(u.before.hint), '提示应写明随机区间：' + JSON.stringify(u.before)),
+    expect(u.afterMin && u.afterMin.a === 12 && u.afterMin.b === 12, '最短改成 12 时最长应跟到 12：' + JSON.stringify(u.afterMin)),
+    expect(u.afterChip && u.afterChip.a === 5 && u.afterChip.b === 15 && u.afterChip.active === '5–15s', '点预设应变成 5～15：' + JSON.stringify(u.afterChip)),
+  );
+});
+
+await scenario('偶发网络错误不亮黄灯、不刷 ⛔，照常踢人', {
+  sessions: [self()], seconds: 10, gm: { intervalMin: 1, intervalMax: 2 },
+  listFail: (st) => (st.listReads % 3 === 0 ? 'abort' : null),
+  onTick: async (st, page) => {
+    const t = Date.now() - st.t0;
+    if (t > 3000 && !st.a) { st.a = 1; st.sessions.push(web('intruder', 0)); }
+    if ((await fabState(page)) === 'warn') st.warn = true;
+  },
+}, ({ state, gm, logs }) => first(
+  expect(state.listFails >= 2, '应至少出过 2 次网络错误：' + state.listFails),
+  expect(!state.warn, '偶发一次不该亮黄灯'),
+  expect(!logs.some((l) => l.includes('⛔')), '不该有 ⛔ 日志：\n' + logs.filter((l) => l.includes('⛔')).join('\n')),
+  expect(logs.some((l) => l.includes('网络错误') && l.includes('偶发一次')), '应在日志里说明偶发一次'),
+  expect(ids(state) === 'web-self', '入侵者应被踢掉：' + ids(state)),
+  expect(gm.enabled === true, '不该停止守护'),
+));
+
+await scenario('持续失败：亮黄灯，退避逐次变长且带随机', {
+  sessions: [self()], seconds: 16, gm: { intervalMin: 1, intervalMax: 1 },
+  listFail: (st) => (st.listReads > 2 ? 'abort' : null),
+  onTick: async (st, page) => { if ((await fabState(page)) === 'warn') st.warn = true; },
+}, ({ state, gm, logs }) => {
+  // 失败的读取：第 3 次起。第 1 次失败算偶发（按正常 1 秒再试），第 2 次起退避 2.5～5 秒、5～10 秒……
+  const g = gapsOf(state.listTimes.slice(2));
+  console.log(`      连续失败时的读取间隔（毫秒）：${g.join(', ')}`);
+  return first(
+    expect(g.length >= 3, '读取次数太少：' + g.join(',')),
+    expect(g[0] >= 900 && g[0] <= 1400, '第 1 次失败后应按正常间隔再试：' + g[0]),
+    expect(g[1] >= 2400 && g[1] <= 5400, '第 2 次失败后应退避 2.5～5 秒：' + g[1]),
+    expect(g.length < 4 || (g[2] >= 4900 && g[2] <= 10400), '第 3 次失败后应退避 5～10 秒：' + g[2]),
+    expect(state.warn, '连续失败应亮黄灯'),
+    expect(logs.some((l) => l.includes('⛔') && l.includes('连续失败 2 次')), '应记下退避'),
+    expect(gm.net4 && gm.net4.n >= 3, '失败次数应写进共用存储：' + JSON.stringify(gm.net4)),
+    expect(gm.enabled === true, '不该停止守护'),
+  );
+});
+
+const sharedUntil = Date.now() + 7000;
+await scenario('别的标签页记下的退避在本页同样有效（接手后不会马上再发请求）', {
+  sessions: [self()], seconds: 9, gm: { enabled: true, intervalMin: 1, intervalMax: 1, net4: { n: 3, until: sharedUntil } },
+}, ({ state }) => {
+  console.log(`      退避结束后 ${state.listTimes.length ? state.listTimes[0] - sharedUntil : '—'} ms 才第一次读取`);
+  return first(
+    expect(state.listTimes.length >= 1, '退避结束后应恢复读取'),
+    expect(state.listTimes[0] >= sharedUntil - 50, `退避期间不该读取：早了 ${sharedUntil - state.listTimes[0]} ms`),
+  );
+});
+
+await scenario('被限流（429 + Retry-After）时等够、期间续租；手动检测仍会真的读一次', {
+  sessions: [self()], seconds: 14, gm: { intervalMin: 1, intervalMax: 1 },
+  listFail: (st) => (st.listReads === 3 ? { status: 429, headers: { 'retry-after': '20' } } : null),
+  onTick: async (st, page) => {
+    const t = Date.now() - st.t0;
+    if (t > 11000 && !st.lease) {
+      st.lease = await page.evaluate(() => { const l = window.__gm.leader4; return l ? Date.now() - l.ts : -1; });
+      st.readsBeforeClick = st.listReads;
+      st.clickAt = Date.now();
+      await page.evaluate(() => document.getElementById('csg-now').click());
+    }
+    if ((await fabState(page)) === 'warn') st.warn = true;
+  },
+}, ({ state, gm, logs }) => first(
+  expect(state.readsBeforeClick === 3, '429 之后、手动检测之前不该再自动读取：读了 ' + state.readsBeforeClick + ' 次'),
+  expect(state.lease >= 0 && state.lease < 7000, '退避期间应续租（租约应在几秒内刷新过）：' + state.lease + ' ms'),
+  expect(state.warn, '被限流应亮黄灯'),
+  expect(logs.some((l) => l.includes('限流（429）')), '日志应写明限流'),
+  expect(state.listTimes.length > 3 && state.listTimes[3] >= state.clickAt, '手动检测应真的读一次'),
+  expect(!gm.issue4 && !gm.net4, '读到列表后应清掉退避和提示：' + JSON.stringify({ issue: gm.issue4, net: gm.net4 })),
 ));
 
 const bad = results.filter((r) => !r.ok).length;
