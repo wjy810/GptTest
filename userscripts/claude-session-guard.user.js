@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Claude 会话守护（精简版）
 // @namespace    https://claude.ai/
-// @version      4.1.3
+// @version      4.2.0
 // @description  只保留本浏览器当前会话 + 你勾选的，其余自动踢掉（含 Claude Code 等非网页端会话）；走网页原生活动会话接口，默认每轮只踢 1 条并自检防误踢
 // @match        https://claude.ai/*
 // @grant        GM_getValue
@@ -13,6 +13,12 @@
 // ==/UserScript==
 
 /*
+ * v4.2.0（一次进来好几个人时清得更快）
+ * - 新登录的先踢：本页后看到的排前面，同时出现的按创建时间（没有就按最近活跃）从新到旧。
+ * - 待踢的比“每轮最多踢”多时自动加快，这一轮最多踢 5 条（设定更大时按设定）。这次启动后要先确认踢掉过一条才加快；
+ *   每踢一条照样自检，发现本机不见了立刻停止。可在面板「安全」里关掉。
+ * - 一轮踢完还有待踢的，下一轮不等完整间隔（0.5 秒后就来）。
+ *
  * v4.1.3（后台标签检测不变慢）
  * - 标签放在后台久了，Chrome 会把页面定时器压到约 1 分钟一次，检测跟着变慢。
  *   现在用一个极小的 Worker 负责“到点叫醒”（Worker 的定时器不受这个限制），检测仍在页面里做；
@@ -78,7 +84,7 @@
   const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
   try { if (W.top !== W.self) return; } catch (e) { return; }
 
-  const VERSION = '4.1.3';
+  const VERSION = '4.2.0';
   try { console.info('[会话守护] 已注入 v' + VERSION + '：', location.href); } catch (e) {}
 
   /* ================= 常量 ================= */
@@ -86,6 +92,7 @@
   const MAX_INTERVAL = 3600;
   const INTERVAL_PRESETS = [1, 3, 5, 15, 30, 60];
   const MAX_PER_ROUND = 15;
+  const AUTO_BURST = 5;                   // 待踢多时自动加快：每轮最多踢到 5 条（设定值更大时以设定值为准）
   const FETCH_TIMEOUT_MS = 12000;         // 每个请求（含读 body）最长 12 秒，卡住也不会拖死循环
   const LOG_MAX = 300;
   const API = {
@@ -132,6 +139,9 @@
     set dryRun(v) { set(K.dryRun, !!v); },
     // 每轮最多踢几条：默认 1，出问题时损失最小
     get maxPerRound() { return clampInt(get(K.maxPerRound, 1), 1, MAX_PER_ROUND, 1); },
+    // 待踢多时自动加快（新登录的先踢）
+    get autoBurst() { return get('autoBurst', true) !== false; },
+    set autoBurst(v) { set('autoBurst', !!v); },
     set maxPerRound(v) { set(K.maxPerRound, clampInt(v, 1, MAX_PER_ROUND, 1)); },
   };
   const keepIds = () => { const a = get(K.keepIds, []); return Array.isArray(a) ? a.map(String) : []; };
@@ -147,6 +157,8 @@
   let authFails = 0, authFailAt = 0, kickSoonAt = 0;
   let kickedHere = 0, synthVis = false, nudgeTimer = null;   // 本页打开后踢掉几个；设置页表格刷新提示
   let ticker = null;                      // 后台计时用的 Worker（null 还没建 / false 建不了，退回普通定时器）
+  let moreSoon = false;                   // 这一轮踢完还有待踢的：下一轮不等完整间隔
+  const firstSeen = new Map();            // 会话 id → 本页第一次在列表里看到它的时间（判断谁是“新冒出来的”）
   let listRenderSig = '', diagText = '', logText = '';
   // 每个应用（application_slug）各自“确认踢掉过”的请求格式。
   // v4.0.0 只记一种、而且收到 200 就记，没确认会话是否真的消失：网页端学到的格式拿去踢 Claude Code，会一直“成功但没踢掉”
@@ -345,6 +357,8 @@
       created: Number.isFinite(cMs) ? fmtTime(cMs) : String(createdRaw || ''),
       updated: Number.isFinite(uMs) ? fmtTime(uMs) : '',
       isCurrent: !!(o.is_current || o.isCurrent || o.current),
+      createdMs: Number.isFinite(cMs) ? cMs : 0,
+      activeMs: Number.isFinite(uMs) ? uMs : 0,
     };
   }
 
@@ -693,6 +707,8 @@
 
   function updateList(list) {
     sessions = list;
+    const now = Date.now();
+    for (const x of list) if (!firstSeen.has(x.id)) firstSeen.set(x.id, now);
     const data = list.map(serialize);
     const sig = JSON.stringify(data);
     if (sig !== listSig) { listSig = sig; set(K.sessions, data); }
@@ -778,12 +794,28 @@
   }
   const stillLead = () => { const l = get(K.leader, null); return !l || l.tab === TAB_ID; };
 
+  // 新冒出来的先踢：本页先看到的排后面；同时出现的按创建时间（没有就按最近活跃）从新到旧
+  const newerFirst = (a, b) => ((firstSeen.get(b.id) || 0) - (firstSeen.get(a.id) || 0)) ||
+    ((b.createdMs || b.activeMs) - (a.createdMs || a.activeMs));
+
+  // 这一轮最多踢几条：平时按设定；待踢的比设定多时自动加快到 AUTO_BURST 条。
+  // 这次启动后要先确认踢掉过一条（说明踢人格式和“认本机”都没问题）才加快；每踢一条照样自检
+  function roundLimit(pending) {
+    const base = CFG.maxPerRound;
+    if (!CFG.autoBurst || pending <= base) return base;
+    if (!((Number(get(K.kicked, 0)) || 0) > 0)) return base;
+    return Math.max(base, Math.min(pending, AUTO_BURST));
+  }
+
   async function kickRound(list, alive) {
     const first = planOf(list);
     const cur = first.cur[0];
     // 预演：一次把所有“本来会踢”的都记下来（只写日志，不受每轮上限限制）
     if (CFG.dryRun) { first.kick.forEach(logDryRun); return; }
-    const targets = first.kick.filter((s) => !cooling(s)).slice(0, CFG.maxPerRound);
+    const ready = first.kick.filter((s) => !cooling(s)).sort(newerFirst);
+    const limit = roundLimit(ready.length);
+    if (limit > CFG.maxPerRound) logEvery('burst', 60000, `⚡ 待踢 ${ready.length} 条，自动加快：这一轮最多踢 ${limit} 条，新登录的先踢`);
+    const targets = ready.slice(0, limit);
     if (!targets.length) {
       if (dirty && !first.kick.length) {
         dirty = false;
@@ -825,6 +857,8 @@
       }
       renderList();
     }
+    // 还有待踢的（不在退避中）：下一轮不等完整间隔
+    if (alive() && CFG.enabled) moreSoon = planOf(latest).kick.some((x) => !cooling(x));
   }
 
   async function tick(alive) {
@@ -885,7 +919,7 @@
   }
 
   // 每条最坏 = 7 种格式 ×（12 秒请求 + 4 次确认读取 × 12 秒 + 3.8 秒等待），按“每轮上限”放宽
-  const stuckLimit = () => Math.max(120000, CFG.maxPerRound * 7 * 65000 + 20000);
+  const stuckLimit = () => Math.max(120000, Math.max(CFG.maxPerRound, CFG.autoBurst ? AUTO_BURST : 0) * 7 * 65000 + 20000);
 
   async function runTick() {
     const gen = ++runGen;
@@ -924,7 +958,8 @@
   function schedule() {
     clearTimeout(loopTimer); loopTimer = null;
     if (!CFG.enabled) { nextAt = 0; armTicker(0); renderStatus(); return; }
-    const ms = Math.max(CFG.interval * 1000, net.coolUntil - Date.now(), 500);
+    const ms = Math.max(moreSoon ? 500 : CFG.interval * 1000, net.coolUntil - Date.now(), 500);
+    moreSoon = false;
     nextAt = Date.now() + ms;
     loopTimer = setTimeout(loop, ms);
     startTicker(); armTicker(ms);
@@ -1023,7 +1058,8 @@
         preview = `⚠️ 暂时读不到会话列表（${net.lastErr || '接口异常'}）：启动后读到列表才会动手。\n`;
       }
       const ok = confirm('启动会话守护？\n\n' + preview +
-        `\n安全措施：每轮最多踢 ${CFG.maxPerRound} 条；认不出本机就不动手；每踢一条都会自检，发现本机不见了立刻停止。` +
+        `\n安全措施：每轮最多踢 ${CFG.maxPerRound} 条${CFG.autoBurst && CFG.maxPerRound < AUTO_BURST ? `（待踢多时，确认踢掉过一条后自动加快到 ${AUTO_BURST} 条，新登录的先踢）` : ''}；` +
+        '认不出本机就不动手；每踢一条都会自检，发现本机不见了立刻停止。' +
         (CFG.dryRun ? '\n\n当前是【预演】：只写日志，不会真的踢。' : ''));
       if (!ok || CFG.enabled) return;
       CFG.enabled = true;
@@ -1229,6 +1265,7 @@
         <label class="switch"><input type="checkbox" id="csg-dry"><i></i><span>预演：只写日志，不真踢<small style="color:var(--warn)">（建议先开一轮）</small></span></label>
         <label class="switch"><input type="checkbox" id="csg-learn"><i></i><span>学习网页自己的「终止」请求<small style="color:var(--muted)">（只观察；改了刷新页面生效）</small></span></label>
         <div class="hint">某条会话一直踢不掉时：在 设置 → 账户 的会话列表里手动点一次它的「终止」，脚本会记下网页用的请求，之后同类会话自动照着踢。</div>
+        <label class="switch"><input type="checkbox" id="csg-burst"><i></i><span>待踢多时自动加快<small style="color:var(--muted)">（每轮最多 ${AUTO_BURST} 条，新登录的先踢）</small></span></label>
         <div class="row"><span class="hint">每轮最多踢</span><input type="number" id="csg-max" min="1" max="${MAX_PER_ROUND}" step="1" style="width:56px" aria-label="每轮最多踢几条"><span class="hint">条</span></div>
       </div>
       <details>
@@ -1261,6 +1298,11 @@
     $('#csg-learn').addEventListener('change', (e) => {
       CFG.learnNative = e.target.checked;
       log(`学习网页自己的「终止」请求：${e.target.checked ? '开' : '关'}（刷新页面后生效）`);
+      renderAll(false);
+    });
+    $('#csg-burst').addEventListener('change', (e) => {
+      CFG.autoBurst = e.target.checked;
+      log(`待踢多时自动加快：${e.target.checked ? '开' : '关'}`);
       renderAll(false);
     });
     $('#csg-max').addEventListener('change', (e) => {
@@ -1370,6 +1412,8 @@
     if (dry.checked !== CFG.dryRun) dry.checked = CFG.dryRun;
     const learn = $('#csg-learn');
     if (learn.checked !== CFG.learnNative) learn.checked = CFG.learnNative;
+    const burst = $('#csg-burst');
+    if (burst.checked !== CFG.autoBurst) burst.checked = CFG.autoBurst;
     const mx = $('#csg-max');
     const mxs = String(CFG.maxPerRound);
     if (document.activeElement !== mx && mx.value !== mxs) mx.value = mxs;
@@ -1435,7 +1479,7 @@
       `踢人请求格式：${Object.keys(shapeBySlug).length ? Object.entries(shapeBySlug).map(([k, v]) => `${k} → ${v}`).join('，') + '（已确认）' : '未确认（第一次踢掉会话时自动确认）'}`,
       `上次读取：${mode === 'other' ? '由另一个标签页读取' : net.lastErr ? '失败 · ' + net.lastErr : net.lastOkAt ? `成功 · ${sessions.length} 条` : '本页还没读过'}`,
       `保留名单：${ids.length} 条${stale ? `（其中 ${stale} 条已不在当前列表，可能已过期）` : ''}${legacyN ? ` · 旧版名单 ${legacyN} 条待迁移（读到列表后自动完成）` : ''}`,
-      `检测间隔 ${CFG.interval} 秒 · 每轮最多踢 ${CFG.maxPerRound} 条 · 预演${CFG.dryRun ? '开' : '关'}`,
+      `检测间隔 ${CFG.interval} 秒 · 每轮最多踢 ${CFG.maxPerRound} 条${CFG.autoBurst ? `（待踢多时自动加快到 ${Math.max(CFG.maxPerRound, AUTO_BURST)} 条）` : ''} · 预演${CFG.dryRun ? '开' : '关'}`,
       `本标签页：${!CFG.enabled ? '守护未运行' : mode === 'other' ? '待命（另一个标签页在检测）' : '负责检测'}`,
     ];
     const text = lines.join('\n');

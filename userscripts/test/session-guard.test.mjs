@@ -48,7 +48,8 @@ await scenario('返回成功但还在 → 立即换下一种格式', {
 }, ({ state, gm }) => first(
   expect(ids(state) === 'web-self', '残留：' + ids(state)),
   expect(gm.nativeShapes && /created/.test(gm.nativeShapes['claude-ai'] || ''), '应记住带 created_at 的格式：' + JSON.stringify(gm.nativeShapes)),
-  expect(state.revokes.filter((r) => r.body.session_uuid === 'web-b').length === 1, 'web-b 应直接用学到的格式一次踢掉'),
+  // 先踢的那条要轮换格式；后踢的那条应直接用学到的格式一次踢掉（踢的顺序是新会话优先，不依赖具体是哪条）
+  expect(state.revokes.filter((r) => r.body.session_uuid === state.revokes[state.revokes.length - 1].body.session_uuid).length === 1, '后踢的那条应一次踢掉'),
 ));
 
 // 4. 服务端晚 1 秒才从列表里删掉：不能误判为“没踢掉”而多发别的格式
@@ -287,6 +288,70 @@ await scenario('网页不允许建 Worker 时退回普通定时器照常工作',
 }, ({ state, logs }) => first(
   expect(ids(state) === 'web-self', '残留：' + ids(state)),
   expect(!logs.some((l) => l.includes('PAGEERROR')), '不该报错'),
+));
+
+// ---- 一次进来好几个人：新登录的先踢；待踢多时自动加快（确认踢掉过一条之后），每条照样自检 ----
+// seq：L = 读列表，R = 踢人请求。每轮 = 一次读列表 + 若干个（R + 确认读取）。同一轮连踢两条会出现 “RLR”
+const order = (st) => st.revokes.map((r) => r.body.session_uuid).join(',');
+
+await scenario('新登录的先踢（同时出现的按创建时间从新到旧）', {
+  sessions: [self(), web('old-a', 300), web('old-b', 200)], seconds: 9,
+  gm: { dryRun: true, autoBurst: false },
+  onTick: async (st, page) => {
+    const t = Date.now() - st.t0;
+    if (t > 1500 && !st.a) { st.a = 1; st.sessions.push(code('cc-new'), web('web-new', 0)); }
+    if (t > 2800 && !st.b) { st.b = 1; await page.evaluate(() => { window.__gm.dryRun = false; }); }
+  },
+}, ({ state }) => expect(order(state) === 'web-new,cc-new,old-b,old-a', '顺序：' + order(state)));
+
+const crowd = (n) => Array.from({ length: n }, (_, i) => web('in-' + i, 50 - i * 5));
+await scenario('一次进来 6 个人：确认踢掉一条后自动加快，几秒内清完', {
+  sessions: [self()], seconds: 8,
+  onTick: async (st) => {
+    const t = Date.now() - st.t0;
+    if (t > 2000 && !st.a) { st.a = Date.now(); st.sessions.push(...crowd(6)); }
+    if (st.a && !st.clear && st.sessions.length === 1) st.clear = Date.now() - st.a;
+  },
+}, ({ state, logs }) => {
+  console.log(`      自动加快：6 个人 ${state.clear} ms 清完；请求顺序 ${state.seq.replace(/^L+/, '')}`);
+  return first(
+    expect(ids(state) === 'web-self', '残留：' + ids(state)),
+    expect(state.clear && state.clear < 3500, '应几秒内清完：' + state.clear),
+    expect(order(state) === 'in-5,in-4,in-3,in-2,in-1,in-0', '应从新到旧：' + order(state)),
+    expect(!/^L*LRLR/.test(state.seq), '第一轮还没确认踢掉过，不该连踢：' + state.seq),
+    expect(/RLR/.test(state.seq), '之后应在同一轮连踢：' + state.seq),
+    expect(logs.some((l) => l.includes('⚡')), '应记下自动加快'),
+  );
+});
+
+await scenario('关掉自动加快：严格按每轮 1 条', {
+  sessions: [self()], seconds: 9, gm: { autoBurst: false },
+  onTick: async (st) => {
+    const t = Date.now() - st.t0;
+    if (t > 2000 && !st.a) { st.a = Date.now(); st.sessions.push(...crowd(4)); }
+    if (st.a && !st.clear && st.sessions.length === 1) st.clear = Date.now() - st.a;
+  },
+}, ({ state }) => {
+  console.log(`      不加快：4 个人 ${state.clear} ms 清完`);
+  return first(
+    expect(ids(state) === 'web-self', '残留：' + ids(state)),
+    expect(!/RLR/.test(state.seq), '不该同一轮连踢：' + state.seq),
+  );
+});
+
+await scenario('自动加快时踢到自己也只发 1 条就停', {
+  sessions: [self(), ...crowd(5)], seconds: 7, gm: { kickedRun: 0 },
+  onTick: async (st) => {
+    // 先正常踢掉一条，让自动加快生效；之后服务端开始把“当前会话”一起踢掉
+    if (st.revokes.length >= 1 && !st.evil) st.evil = true;
+  },
+  revoke: (body, st) => {
+    if (st.evil) { st.selfLoggedOut = true; st.sessions = st.sessions.filter((x) => !x.is_current); return { status: 200, json: {} }; }
+    return defaultRevoke(body, st);
+  },
+}, ({ state, gm }) => first(
+  expect(gm.enabled === false, '应已停止'),
+  expect(state.revokes.length === 2, '出事后应只多发 1 条：' + state.revokes.length),
 ));
 
 const bad = results.filter((r) => !r.ok).length;

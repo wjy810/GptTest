@@ -32,7 +32,7 @@ export function defaultRevoke(body, state) {
 }
 
 export async function run({ sessions, revoke = defaultRevoke, gm = {}, seconds = 8, nativeScript = null, preScript = '', onTick = null, extraApi = null }) {
-  const state = { sessions: JSON.parse(JSON.stringify(sessions)), revokes: [], extra: [], selfLoggedOut: false, listReads: 0, extraApi, t0: Date.now() };
+  const state = { sessions: JSON.parse(JSON.stringify(sessions)), revokes: [], extra: [], selfLoggedOut: false, listReads: 0, extraApi, t0: Date.now(), seq: '' };
   const browser = await chromium.launch();
   const page = await browser.newPage();
   const logs = [];
@@ -42,14 +42,14 @@ export async function run({ sessions, revoke = defaultRevoke, gm = {}, seconds =
     const req = route.request();
     const u = new URL(req.url());
     if (u.pathname === '/api/auth/sessions/list-active') {
-      state.listReads++;
+      state.listReads++; state.seq += 'L';
       if (state.selfLoggedOut) return route.fulfill({ status: 401, contentType: 'application/json', body: '{}' });
       return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(state.sessions) });
     }
     if (u.pathname === '/api/auth/logout/session' && req.method() === 'POST') {
       let body = null; try { body = JSON.parse(req.postData() || 'null'); } catch (e) {}
       const r = revoke(body, state);
-      state.revokes.push({ body, status: r.status });
+      state.revokes.push({ body, status: r.status }); state.seq += 'R';
       return route.fulfill({ status: r.status, contentType: 'application/json', body: JSON.stringify(r.json || {}) });
     }
     if (u.pathname.startsWith('/api/')) {
