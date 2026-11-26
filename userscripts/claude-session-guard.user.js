@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Claude 会话守护（精简版）
 // @namespace    https://claude.ai/
-// @version      4.0.0
+// @version      4.0.1
 // @description  只保留本浏览器当前会话 + 你勾选的，其余自动踢掉；只走网页原生活动会话接口，默认每轮只踢 1 条并自检防误踢
 // @match        https://claude.ai/*
 // @grant        GM_getValue
@@ -13,6 +13,14 @@
 // ==/UserScript==
 
 /*
+ * v4.0.1（修复：踢完之后 Claude Code 等非网页端会话残留）
+ * - 原因：不带应用的 {session_uuid} 排在第一个；接口一返回 200 就把它记成“确认格式”，没等列表确认会话真的消失。
+ *   踢 Claude Code / 桌面端 / iOS 会话时服务端按网页端处理 → “返回成功但还在”，之后只会隔一段时间重复同一种格式，永远踢不掉。
+ * - 现在：带 application_slug 的格式优先；每次返回成功都重读列表，会话真的消失才记住格式；
+ *   “返回成功但还在”立即在同一轮换下一种格式；格式按应用分别记（网页 / Claude Code / 桌面端互不影响）。
+ * - 旧版存下的 uuid 格式作废；application 字段是对象时正确取出 slug（v4.0.0 会当成 "[object Object]"）。
+ * - 会话接口字段按应用分别记日志（v4.0.0 只记第一条），方便看清 Claude Code 会话长什么样。
+ *
  * v4.0.0（相对 v3.9.1）
  * - 只走网页原生活动会话接口：GET /api/auth/sessions/list-active 读列表，POST /api/auth/logout/session 踢人。
  * - 删除：页面点击踢人、自动刷新设置页 / 自动点侧栏 / 自动按 Esc、接口自学与地址探测、手填踢人接口、
@@ -35,7 +43,7 @@
   const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
   try { if (W.top !== W.self) return; } catch (e) { return; }
 
-  const VERSION = '4.0.0';
+  const VERSION = '4.0.1';
   try { console.info('[会话守护] 已注入 v' + VERSION + '：', location.href); } catch (e) {}
 
   /* ================= 常量 ================= */
@@ -56,10 +64,10 @@
     enabled: 'enabled', interval: 'interval', dryRun: 'dryRun', maxPerRound: 'maxPerRound',
     keepIds: 'keepIds', keepMigrated: 'keepMigrated', legacyKeep: 'keepKeys',
     sessions: 'sessions4', leader: 'leader4', issue: 'issue4',
-    logs: 'logs', kicked: 'kickedRun', shape: 'nativeShape', fields: 'nativeFields', ver: 'lastVer',
+    logs: 'logs', kicked: 'kickedRun', shape: 'nativeShape', shapes: 'nativeShapes', fields: 'nativeFields2', ver: 'lastVer',
   };
   // 旧版留下、v4 已不用的键（升级时清掉）
-  const OBSOLETE_KEYS = ['api', 'apiCands', 'apiItems', 'apiCurrentId', 'cleanTrusted', 'allowWeak', 'lastSessions', 'leader'];
+  const OBSOLETE_KEYS = ['api', 'apiCands', 'apiItems', 'apiCurrentId', 'cleanTrusted', 'allowWeak', 'lastSessions', 'leader', 'nativeFields', 'nativeShape'];
 
   // 在页面脚本加载前拿到网页原始 fetch（只拿来用，不改写）
   const pageFetch = typeof W.fetch === 'function' ? W.fetch : null;
@@ -97,9 +105,18 @@
   let mode = '';                          // '' 待机 / 'lead' 本页负责检测 / 'other' 另一个标签页负责
   let runGen = 0, runStartedAt = 0, starting = false, refreshing = false, lastRefreshAt = 0;
   let sessions = [], listSig = '', issue = null, dirty = true, connectedLogged = false;
-  let authFails = 0, authFailAt = 0, revokeDiagN = 0, kickSoonAt = 0;
+  let authFails = 0, authFailAt = 0, kickSoonAt = 0;
   let listRenderSig = '', diagText = '', logText = '';
-  let nativeShape = String(get(K.shape, '') || '');   // 上次成功的踢人请求格式
+  // 每个应用（application_slug）各自“确认踢掉过”的请求格式。
+  // v4.0.0 只记一种、而且收到 200 就记，没确认会话是否真的消失：网页端学到的格式拿去踢 Claude Code，会一直“成功但没踢掉”
+  let shapeBySlug = (() => {
+    const m = get(K.shapes, null);
+    if (m && typeof m === 'object' && !Array.isArray(m)) return m;
+    const old = String(get(K.shape, '') || '');
+    const migrated = old && old !== 'uuid' ? { [API.app]: old } : {};
+    if (old) set(K.shapes, migrated);
+    return migrated;
+  })();
   const net = { failN: 0, coolUntil: 0, lastOkAt: 0, lastErr: '' };
   const fails = new Map();                // 会话 id → { n, until }：踢不掉的会话按条退避
   const dryLogged = new Set();            // 预演：同一会话只记一次
@@ -220,6 +237,18 @@
   }
 
   // 接口字段 → 统一结构
+  // 应用标识：可能是字符串，也可能是 { slug, name } 这样的对象
+  function slugOf(o) {
+    let v = firstDef(o, ['application_slug', 'applicationSlug', 'app_slug', 'application', 'app']);
+    if (v && typeof v === 'object') v = firstDef(v, ['slug', 'application_slug', 'applicationSlug']);
+    return typeof v === 'string' || typeof v === 'number' ? String(v) : '';
+  }
+  function appNameOf(o) {
+    let v = firstDef(o, ['application_name', 'applicationName', 'app_name']);
+    if (!v) { const a = o.application || o.app; if (a && typeof a === 'object') v = firstDef(a, ['name', 'display_name', 'displayName']); }
+    return typeof v === 'string' ? v : '';
+  }
+
   function normSession(o, i) {
     o = o && typeof o === 'object' ? o : {};
     const ua = o.user_agent || o.userAgent || o.ua || {};
@@ -231,7 +260,7 @@
     const updRaw = firstDef(o, ['last_active_at', 'lastActiveAt', 'updated_at', 'updatedAt', 'last_seen_at', 'last_used_at']);
     const cMs = toMs(createdRaw), uMs = toMs(updRaw);
     const uuid = String(firstDef(o, ['session_uuid', 'sessionUuid', 'session_id', 'sessionId', 'uuid', 'id']) || '');
-    const appSlug = String(firstDef(o, ['application_slug', 'applicationSlug', 'app_slug', 'application', 'app']) || '');
+    const appSlug = slugOf(o);
     const name = [uaObj.browser_family || uaObj.browser, uaObj.browser_version || uaObj.browserVersion,
       uaObj.os_family || uaObj.os, uaObj.os_version || uaObj.osVersion].filter(Boolean).join(' / ').slice(0, 90);
     // 有 session_uuid 用它；没有就用原始 created_at（踢人请求本来也靠它定位）；两样都没有 = 无法识别，不处理
@@ -243,7 +272,7 @@
       createdRaw,
       appSlug,
       key: Number.isFinite(cMs) ? String(Math.floor(cMs / 60000)) : '',   // 只用于迁移旧版保留名单
-      device: name || String(o.device_name || '').slice(0, 90) || uaStr.slice(0, 90) || appSlug || '(未知设备)',
+      device: name || String(o.device_name || '').slice(0, 90) || appNameOf(o).slice(0, 90) || uaStr.slice(0, 90) || appSlug || '(未知设备)',
       location: [loc.city, loc.region, loc.country || loc.country_code].filter(Boolean).join(', '),
       created: Number.isFinite(cMs) ? fmtTime(cMs) : String(createdRaw || ''),
       updated: Number.isFinite(uMs) ? fmtTime(uMs) : '',
@@ -251,13 +280,20 @@
     };
   }
 
+  // 按应用分别记字段：网页端和 Claude Code 等其它应用的会话字段可能不一样（v4.0.0 只看第一条）
   function noteFields(arr) {
-    const r0 = arr[0];
-    if (!r0 || typeof r0 !== 'object') return;
-    const sig = Object.keys(r0).sort().join(',');
-    if (sig === get(K.fields, '')) return;
-    set(K.fields, sig);
-    log(`🔍 会话接口字段：${sig}`);
+    const saved = get(K.fields, {});
+    const map = saved && typeof saved === 'object' && !Array.isArray(saved) ? Object.assign({}, saved) : {};
+    let changed = false;
+    for (const o of arr) {
+      if (!o || typeof o !== 'object') continue;
+      const slug = slugOf(o) || '未标应用';
+      const sig = Object.keys(o).sort().join(',');
+      if (map[slug] === sig) continue;
+      map[slug] = sig; changed = true;
+      log(`🔍 会话接口字段（${slug}）：${sig}`);
+    }
+    if (changed) set(K.fields, map);
   }
 
   // 返回 { status: 'ok', list } / 'cool'（退避中，没发请求）/ 'auth'（401）/ 'err'
@@ -283,39 +319,89 @@
     return { status: 'ok', list: arr.map(normSession) };
   }
 
-  // 踢人请求：application_slug 必须和这条会话自己的一致（iOS / 桌面端 / 网页端不同）。
-  // 按“上次成功的格式”优先，被拒（400 类）才换下一种；网络 / 登录 / 限流错误不换格式。
+  // 踢人请求：application_slug 必须和这条会话自己的一致（iOS / 桌面端 / 网页端 / Claude Code 不同）。
+  // 不带应用的 {session_uuid} 会被服务端按网页端处理：踢别的应用的会话时常常“返回成功、其实没踢掉”，所以排到最后。
+  // 每个应用各自记住“确认踢掉过”的格式并优先使用。
   function revokeBodies(s) {
     const slug = s.appSlug || API.app;
     const out = [];
     if (s.uuid) {
-      out.push({ name: 'uuid', body: { session_uuid: s.uuid } });
       out.push({ name: 'uuid+slug', body: { session_uuid: s.uuid, application_slug: slug } });
       if (s.createdRaw !== '') out.push({ name: 'uuid+created+slug', body: { session_uuid: s.uuid, created_at: s.createdRaw, application_slug: slug } });
     }
     if (s.createdRaw !== '') out.push({ name: 'raw+slug', body: { created_at: s.createdRaw, application_slug: slug } });
-    const i = out.findIndex((x) => x.name === nativeShape);
+    if (s.uuid) out.push({ name: 'uuid', body: { session_uuid: s.uuid } });
+    const i = out.findIndex((x) => x.name === shapeBySlug[slug]);
     if (i > 0) out.unshift(out.splice(i, 1)[0]);
     return out;
   }
 
-  async function revoke(s) {
-    let last = { ok: false, status: 0, text: null };
-    for (const { name, body } of revokeBodies(s)) {
-      const r = await request(API.revoke, { method: 'POST', headers: API.headers, body: JSON.stringify(body) });
-      last = r;
-      if (r.ok) {
-        if (nativeShape !== name) { nativeShape = name; set(K.shape, name); log(`🧠 踢人请求格式确认：${name}`); }
-        return r;
+  function learnShape(s, name) {
+    const slug = s.appSlug || API.app;
+    if (shapeBySlug[slug] === name) return;
+    shapeBySlug = Object.assign({}, shapeBySlug, { [slug]: name });
+    set(K.shapes, shapeBySlug);
+    log(`🧠 踢人请求格式确认（${slug}）：${name}`);
+  }
+
+  // 踢完重读列表：既确认本机还在，也确认目标真的消失了（服务端可能晚一点才从列表里删掉）。
+  // self: true = 本机还在；false = 读到了列表但都没有本机；null = 一直没读到 / 被中止，无法判断
+  async function verifyGone(target, alive) {
+    let sawList = false, sawSelf = false, last = null;
+    const waits = [0, 600, 1200, 2000];
+    for (let i = 0; i < waits.length; i++) {
+      if (waits[i]) await sleep(waits[i]);
+      if (!alive() || !CFG.enabled) return { self: null, gone: false, list: last };
+      const r = await readList(true);
+      if (r.status === 'ok') {
+        sawList = true; last = r.list;
+        if (r.list.some((x) => x.isCurrent)) {
+          sawSelf = true;
+          if (!r.list.some((x) => x.id === target.id)) return { self: true, gone: true, list: r.list };
+        }
       }
-      if (!r.status || r.status === 401 || r.status === 403 || r.status === 429) return r;
-      if (revokeDiagN < 6) {
-        revokeDiagN++;
-        const t = String(r.text || '').replace(/\s+/g, ' ').slice(0, 160);
-        log(`🔍 诊断：踢人请求格式「${name}」被拒（${r.status}）${t ? '：' + t : ''}`);
-      }
+      if (!CFG.enabled) return { self: null, gone: false, list: last };   // 比如连续 401 已经停了
     }
-    return last;
+    return { self: sawSelf ? true : sawList ? false : null, gone: false, list: last };
+  }
+
+  // 对一条会话依次尝试各种请求格式。接口每次返回成功都重读列表确认：
+  // 真的消失了才算踢掉并记住格式；“返回成功但还在”就立刻换下一种，而不是隔一段时间重复同一种。
+  // done: 'gone' 踢掉了 / 'fail' 这一条暂时踢不掉 / 'abort' 这一轮停手（登录、限流、自检、被中止）
+  async function kickOne(s, alive) {
+    const tried = [];
+    for (const { name, body } of revokeBodies(s)) {
+      if (!alive() || !CFG.enabled || !stillLead()) return { done: 'abort', tried };
+      if (keepSet().has(s.id)) return { done: 'abort', tried };               // 刚被勾上保留
+      const r = await request(API.revoke, { method: 'POST', headers: API.headers, body: JSON.stringify(body) });
+      if (!alive()) return { done: 'abort', tried };
+      if (r.status === 401) { on401('踢人接口'); return { done: 'abort', tried }; }
+      if (r.status === 429) { backoff('踢人接口被限流（429）'); return { done: 'abort', tried }; }
+      if (!r.ok) {
+        tried.push(`${name} → ${r.status || '网络错误或超时'}`);
+        if (!r.status || r.status === 403 || r.status >= 500) return { done: 'fail', tried };   // 不是格式问题，换格式也没用
+        const t = String(r.text || '').replace(/\s+/g, ' ').slice(0, 160);
+        logEvery(`rej:${s.appSlug}:${name}:${r.status}`, 10 * 60000,
+          `🔍 诊断：踢人请求格式「${name}」被拒（${r.status}，应用 ${s.appSlug || '未标'}）${t ? '：' + t : ''}`);
+        continue;
+      }
+      const chk = await verifyGone(s, alive);
+      if (!alive()) return { done: 'abort', tried };
+      if (chk.list) updateList(chk.list);
+      if (chk.self === false) {
+        if (CFG.enabled) { log('🛑 踢完之后多次确认都找不到本机会话（可能踢到了自己），已立刻停止守护'); stopGuard('自检失败'); }
+        return { done: 'abort', tried };
+      }
+      if (chk.self === null) {
+        if (CFG.enabled) log(`⚠️ 已发出踢出「${desc(s)}」的请求，但暂时读不到会话列表确认结果，这一轮先停手`);
+        return { done: 'abort', tried };
+      }
+      if (chk.gone) { learnShape(s, name); return { done: 'gone', tried, list: chk.list }; }
+      tried.push(`${name} → 返回成功但还在列表里`);
+      logEvery(`noeff:${s.appSlug}:${name}`, 10 * 60000,
+        `🔍 诊断：格式「${name}」返回成功，但「${desc(s)}」还在列表里（应用 ${s.appSlug || '未标'}），换下一种格式`);
+    }
+    return { done: 'fail', tried };
   }
 
   /* ================= 名单 ================= */
@@ -394,23 +480,6 @@
   }
   const stillLead = () => { const l = get(K.leader, null); return !l || l.tab === TAB_ID; };
 
-  // 踢完确认“本机”还在。第一次读取不等待，结果同时用来确认目标有没有消失。
-  // self: true = 本机还在；false = 读到了列表但多次确认都没有本机；null = 一直没读到 / 被中止，无法判断
-  async function readSelf(alive, tries) {
-    let sawList = false, last = null;
-    for (let i = 0; i < (tries || 5); i++) {
-      if (i) await sleep(i < 3 ? 600 : 1500);
-      if (!alive() || !CFG.enabled) return { self: null, list: last };
-      const r = await readList(true);
-      if (r.status === 'ok') {
-        sawList = true; last = r.list;
-        if (r.list.some((s) => s.isCurrent)) return { self: true, list: r.list };
-      }
-      if (!CFG.enabled) return { self: null, list: last };   // 比如连续 401 已经停了
-    }
-    return { self: sawList ? false : null, list: last };
-  }
-
   async function kickRound(list, alive) {
     const first = planOf(list);
     const cur = first.cur[0];
@@ -431,41 +500,19 @@
       if (CFG.dryRun) { logDryRun(s); continue; }                 // 这一轮中途打开了预演
 
       const t0 = Date.now();
-      const r = await revoke(s);
+      const res = await kickOne(s, alive);
       const sec = ((Date.now() - t0) / 1000).toFixed(2);
-      if (!alive()) return;
-      if (r.status === 401) { on401('踢人接口'); return; }
-      if (r.status === 429) { backoff('踢人接口被限流（429）'); return; }
-      if (!r.ok) {
-        const wait = markFail(s);
-        log(`❌ 踢「${desc(s)}」失败（${r.status || '网络错误或超时'}，${sec}s），${Math.round(wait / 1000)} 秒内先跳过这一条`);
+      if (res.list) latest = res.list;
+      if (res.done === 'abort') return;
+      if (res.done === 'gone') {
+        fails.delete(s.id);
+        kicked();
+        log(`🦶 已踢：${desc(s)} · ${sec}s`);
         continue;
       }
-
-      const chk = await readSelf(alive);
-      if (!alive()) return;
-      if (chk.list) {
-        latest = chk.list;
-        updateList(latest);
-        if (!latest.some((x) => x.id === s.id)) {
-          fails.delete(s.id);
-          kicked();
-          log(`🦶 已踢：${desc(s)} · ${sec}s`);
-        } else {
-          const wait = markFail(s);
-          log(`❓ 接口返回成功，但列表里还有「${desc(s)}」，${Math.round(wait / 1000)} 秒内先不重试这一条`);
-        }
-      } else if (CFG.enabled) {
-        log(`❓ 已发出踢出「${desc(s)}」的请求，但暂时读不到列表确认结果`);
-      }
-      if (chk.self === true) continue;
-      if (chk.self === false && CFG.enabled) {
-        log('🛑 踢完之后多次确认都找不到本机会话（可能踢到了自己），已立刻停止守护');
-        stopGuard('自检失败');
-      } else if (chk.self === null && CFG.enabled) {
-        log('⚠️ 踢完后暂时读不到会话列表，这一轮先停手，下一轮再确认');
-      }
-      return;
+      const wait = markFail(s);
+      log(`❌ 踢不掉「${desc(s)}」（${res.tried.join('；') || '没有可用的请求格式'}），${Math.round(wait / 1000)} 秒后再试`);
+      renderList();
     }
   }
 
@@ -526,8 +573,8 @@
     if (l && l.tab === TAB_ID) set(K.leader, null);
   }
 
-  // 一轮最长允许多久：每条最坏 = 4 种格式 × 12 秒 + 自检 5 次读取，按“每轮上限”放宽
-  const stuckLimit = () => Math.max(120000, CFG.maxPerRound * 130000 + 20000);
+  // 每条最坏 = 4 种格式 ×（12 秒请求 + 4 次确认读取 × 12 秒 + 3.8 秒等待），按“每轮上限”放宽
+  const stuckLimit = () => Math.max(120000, CFG.maxPerRound * 4 * 65000 + 20000);
 
   async function runTick() {
     const gen = ++runGen;
@@ -1033,7 +1080,7 @@
     const legacyN = !get(K.keepMigrated, false) && Array.isArray(legacy) ? legacy.length : 0;
     const lines = [
       `本机判定：${!list.length ? '— 还没读到列表' : curN === 1 ? '✅ 接口标出了当前会话' : curN ? `⚠️ 接口标出了 ${curN} 条当前会话（不动手）` : '⚠️ 接口没标出当前会话（不动手）'}`,
-      `踢人请求格式：${nativeShape ? nativeShape + '（已确认）' : '未确认（第一次踢人时自动确认）'}`,
+      `踢人请求格式：${Object.keys(shapeBySlug).length ? Object.entries(shapeBySlug).map(([k, v]) => `${k} → ${v}`).join('，') + '（已确认）' : '未确认（第一次踢掉会话时自动确认）'}`,
       `上次读取：${mode === 'other' ? '由另一个标签页读取' : net.lastErr ? '失败 · ' + net.lastErr : net.lastOkAt ? `成功 · ${sessions.length} 条` : '本页还没读过'}`,
       `保留名单：${ids.length} 条${stale ? `（其中 ${stale} 条已不在当前列表，可能已过期）` : ''}${legacyN ? ` · 旧版名单 ${legacyN} 条待迁移（读到列表后自动完成）` : ''}`,
       `检测间隔 ${CFG.interval} 秒 · 每轮最多踢 ${CFG.maxPerRound} 条 · 预演${CFG.dryRun ? '开' : '关'}`,
