@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Claude 会话守护（精简版）
 // @namespace    https://claude.ai/
-// @version      4.1.2
+// @version      4.1.3
 // @description  只保留本浏览器当前会话 + 你勾选的，其余自动踢掉（含 Claude Code 等非网页端会话）；走网页原生活动会话接口，默认每轮只踢 1 条并自检防误踢
 // @match        https://claude.ai/*
 // @grant        GM_getValue
@@ -13,6 +13,11 @@
 // ==/UserScript==
 
 /*
+ * v4.1.3（后台标签检测不变慢）
+ * - 标签放在后台久了，Chrome 会把页面定时器压到约 1 分钟一次，检测跟着变慢。
+ *   现在用一个极小的 Worker 负责“到点叫醒”（Worker 的定时器不受这个限制），检测仍在页面里做；
+ *   网页不允许建 Worker 时自动退回普通定时器。
+ *
  * v4.1.2（自查修正）
  * - 学习只看“终止 / 撤销”类请求（DELETE 会话 / 授权路径，或 logout / revoke / terminate 提交），
  *   不再观察 count_tokens、刷新登录之类的普通请求，避免把无关请求学成踢人格式；观察日志限频。
@@ -73,7 +78,7 @@
   const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
   try { if (W.top !== W.self) return; } catch (e) { return; }
 
-  const VERSION = '4.1.2';
+  const VERSION = '4.1.3';
   try { console.info('[会话守护] 已注入 v' + VERSION + '：', location.href); } catch (e) {}
 
   /* ================= 常量 ================= */
@@ -141,6 +146,7 @@
   let sessions = [], listSig = '', issue = null, dirty = true, connectedLogged = false;
   let authFails = 0, authFailAt = 0, kickSoonAt = 0;
   let kickedHere = 0, synthVis = false, nudgeTimer = null;   // 本页打开后踢掉几个；设置页表格刷新提示
+  let ticker = null;                      // 后台计时用的 Worker（null 还没建 / false 建不了，退回普通定时器）
   let listRenderSig = '', diagText = '', logText = '';
   // 每个应用（application_slug）各自“确认踢掉过”的请求格式。
   // v4.0.0 只记一种、而且收到 200 就记，没确认会话是否真的消失：网页端学到的格式拿去踢 Claude Code，会一直“成功但没踢掉”
@@ -893,17 +899,40 @@
     return true;
   }
 
+  // 标签放在后台久了，Chrome 会把页面里的定时器压到大约 1 分钟一次，检测就跟着变慢；Worker 里的定时器不受这个限制。
+  // 这里用一个极小的 Worker 只负责“到点叫醒”和每 5 秒叫一次看门狗；真正的检测仍在页面里做。
+  // 网页的安全策略不允许建 Worker 时自动退回普通定时器（看门狗照常兜底）。
+  function startTicker() {
+    if (ticker !== null) return;
+    try {
+      const src = 'var t=null;onmessage=function(e){clearTimeout(t);t=null;if(e.data>0)t=setTimeout(function(){postMessage("due")},e.data)};' +
+        'setInterval(function(){postMessage("hb")},5000);';
+      const Wk = W.Worker || (typeof Worker !== 'undefined' ? Worker : null);
+      if (!Wk) { ticker = false; return; }
+      const url = URL.createObjectURL(new Blob([src], { type: 'text/javascript' }));
+      const w = new Wk(url);
+      w.onmessage = (e) => {
+        if (e.data === 'hb') { watchdog(); return; }
+        if (CFG.enabled && !running && loopTimer && nextAt && Date.now() >= nextAt - 100) loop();
+      };
+      w.onerror = () => { ticker = false; try { w.terminate(); } catch (e) {} };
+      ticker = w;
+    } catch (e) { ticker = false; }
+  }
+  const armTicker = (ms) => { if (ticker) { try { ticker.postMessage(ms); } catch (e) {} } };
+
   function schedule() {
     clearTimeout(loopTimer); loopTimer = null;
-    if (!CFG.enabled) { nextAt = 0; renderStatus(); return; }
+    if (!CFG.enabled) { nextAt = 0; armTicker(0); renderStatus(); return; }
     const ms = Math.max(CFG.interval * 1000, net.coolUntil - Date.now(), 500);
     nextAt = Date.now() + ms;
     loopTimer = setTimeout(loop, ms);
+    startTicker(); armTicker(ms);
     try { renderStatus(); } catch (e) {}  // 渲染出错不能连带把定时器弄丢
   }
 
   async function loop() {
-    clearTimeout(loopTimer); loopTimer = null;
+    clearTimeout(loopTimer); loopTimer = null; armTicker(0);
     if (!CFG.enabled) { nextAt = 0; mode = ''; renderStatus(); return; }
     if (running) { schedule(); return; }
     if (!takeLead()) { mode = 'other'; schedule(); return; }
@@ -1017,6 +1046,7 @@
     CFG.enabled = false;
     clearTimeout(loopTimer);
     loopTimer = null; nextAt = 0; mode = '';
+    armTicker(0);
     releaseLead();
     log(`⏹ 守护停止${why} · 本次踢掉 ${Number(get(K.kicked, 0)) || 0} 个`);
     renderAll(false);

@@ -31,7 +31,7 @@ export function defaultRevoke(body, state) {
   return { status: 200, json: {} };
 }
 
-export async function run({ sessions, revoke = defaultRevoke, gm = {}, seconds = 8, nativeScript = null, onTick = null, extraApi = null }) {
+export async function run({ sessions, revoke = defaultRevoke, gm = {}, seconds = 8, nativeScript = null, preScript = '', onTick = null, extraApi = null }) {
   const state = { sessions: JSON.parse(JSON.stringify(sessions)), revokes: [], extra: [], selfLoggedOut: false, listReads: 0, extraApi, t0: Date.now() };
   const browser = await chromium.launch();
   const page = await browser.newPage();
@@ -72,7 +72,7 @@ export async function run({ sessions, revoke = defaultRevoke, gm = {}, seconds =
       window.confirm = () => true;
     })();`;
   const src = readFileSync(SCRIPT_PATH, 'utf8');
-  await page.addInitScript({ content: shim + '\n' + src });
+  await page.addInitScript({ content: preScript + '\n' + shim + '\n' + src });
   if (nativeScript) await page.addInitScript({ content: nativeScript });
   state.page = page;
   await page.goto('https://claude.ai/settings/account');

@@ -265,6 +265,30 @@ await scenario('运行中途新登录的会话会被发现并踢掉', {
   );
 });
 
+// ---- 后台标签：Chrome 放久了会把页面定时器压到约 1 分钟一次。这里把页面里 ≥0.9 秒的定时器都压到 30 秒来模拟 ----
+const throttle = `(function(){var st=window.setTimeout,si=window.setInterval;
+  window.setTimeout=function(f,ms){var a=[].slice.call(arguments,2);return st.apply(window,[f,(ms|0)>=900?30000:ms].concat(a));};
+  window.setInterval=function(f,ms){var a=[].slice.call(arguments,2);return si.apply(window,[f,Math.max(ms|0,30000)].concat(a));};})();`;
+await scenario('后台定时器被压慢时仍按间隔检测（Worker 计时）', {
+  sessions: [self()], seconds: 9, preScript: throttle,
+  onTick: async (st) => {
+    const t = Date.now() - st.t0;
+    if (t > 3000 && !st.a) { st.a = Date.now(); st.sessions.push(web('intruder', 0)); }
+    if (st.a && !st.gone && !st.sessions.some((x) => x.session_uuid === 'intruder')) st.gone = Date.now() - st.a;
+  },
+}, ({ state }) => {
+  console.log(`      页面定时器被压到 30 秒时：新会话 ${state.gone} ms 后被踢（检测间隔 1 秒）`);
+  return expect(state.gone && state.gone < 3000, '应在几秒内踢掉，实际：' + state.gone);
+});
+
+await scenario('网页不允许建 Worker 时退回普通定时器照常工作', {
+  sessions: [self()], seconds: 6, preScript: 'window.Worker = undefined;',
+  onTick: async (st) => { if (Date.now() - st.t0 > 2500 && !st.a) { st.a = 1; st.sessions.push(web('intruder', 0)); } },
+}, ({ state, logs }) => first(
+  expect(ids(state) === 'web-self', '残留：' + ids(state)),
+  expect(!logs.some((l) => l.includes('PAGEERROR')), '不该报错'),
+));
+
 const bad = results.filter((r) => !r.ok).length;
 console.log(`\n${results.length - bad}/${results.length} 通过`);
 process.exit(bad ? 1 : 0);
