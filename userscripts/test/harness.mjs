@@ -31,8 +31,8 @@ export function defaultRevoke(body, state) {
   return { status: 200, json: {} };
 }
 
-export async function run({ sessions, revoke = defaultRevoke, gm = {}, seconds = 8, nativeScript = null, onTick = null }) {
-  const state = { sessions: JSON.parse(JSON.stringify(sessions)), revokes: [], selfLoggedOut: false, listReads: 0 };
+export async function run({ sessions, revoke = defaultRevoke, gm = {}, seconds = 8, nativeScript = null, onTick = null, extraApi = null }) {
+  const state = { sessions: JSON.parse(JSON.stringify(sessions)), revokes: [], extra: [], selfLoggedOut: false, listReads: 0, extraApi, t0: Date.now() };
   const browser = await chromium.launch();
   const page = await browser.newPage();
   const logs = [];
@@ -54,6 +54,7 @@ export async function run({ sessions, revoke = defaultRevoke, gm = {}, seconds =
     }
     if (u.pathname.startsWith('/api/')) {
       const r = state.extraApi ? state.extraApi(req, state) : null;
+      state.extra.push({ method: req.method(), path: u.pathname, body: req.postData() || null, headers: req.headers(), status: r ? r.status : 404 });
       if (r) return route.fulfill({ status: r.status, contentType: 'application/json', body: JSON.stringify(r.json || {}) });
       return route.fulfill({ status: 404, contentType: 'application/json', body: '{}' });
     }
@@ -78,6 +79,7 @@ export async function run({ sessions, revoke = defaultRevoke, gm = {}, seconds =
   await page.waitForTimeout(500);
   await page.evaluate(() => { const k = Object.keys(window.__menu).find((n) => n.includes('启动')); return window.__menu[k](); });
   const t0 = Date.now();
+  state.t0 = t0;
   while (Date.now() - t0 < seconds * 1000) {
     await page.waitForTimeout(250);
     if (onTick) await onTick(state, page);

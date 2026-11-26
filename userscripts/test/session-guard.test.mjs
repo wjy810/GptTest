@@ -124,6 +124,67 @@ await scenario('同组两条 Claude Code 会话，每次只删一条也能删光
   },
 }, ({ state }) => expect(left(state) === 'claude-ai@t', '残留：' + left(state)));
 
+// ---- 学习网页原生的「终止」请求 ----
+// Claude Code 会话只能用另一个接口删（像「设置 → Claude Code」里删授权）：脚本自带的格式全都无效
+const tokenRow = (tok) => noid(row({ token_uuid: tok, application_slug: 'claude-code', created_at: null, last_active_at: iso(1), location_info: null, user_agent: 'claude-cli/2.1.0 (external, cli)' }));
+const tokenApi = (req, st) => {
+  const m = new URL(req.url()).pathname.match(/^\/api\/oauth\/tokens\/([^/]+)$/);
+  if (!m || req.method() !== 'DELETE') return null;
+  const i = st.sessions.findIndex((x) => x.token_uuid === decodeURIComponent(m[1]));
+  if (i >= 0) st.sessions.splice(i, 1);
+  return { status: 200, json: {} };
+};
+const onlyTokenRevoke = (body, st) => {
+  if (body && body.application_slug === 'claude-code') return { status: 400, json: { error: 'use oauth token endpoint' } };
+  return defaultRevoke(body, st);
+};
+
+await scenario('手动终止一次后学会网页的请求，新冒出的 Claude Code 会话自动踢掉', {
+  sessions: [selfN(), tokenRow('tok-aaaa-1111')], seconds: 12, revoke: onlyTokenRevoke, extraApi: tokenApi,
+  onTick: async (st, page) => {
+    const t = Date.now() - st.t0;
+    if (t > 3000 && !st.didNative) {
+      st.didNative = true;
+      // 网页自己：先读一次列表（检查观察器原样把返回交给网页），再用 Request 对象发 DELETE
+      st.pageListOk = await page.evaluate(async () => {
+        const r = await fetch('/api/auth/sessions/list-active', { headers: { accept: '*/*' } });
+        const j = await r.json();
+        return Array.isArray(j) && j.length === 2;
+      });
+      await page.evaluate(() => fetch(new Request('/api/oauth/tokens/tok-aaaa-1111', { method: 'DELETE', headers: { 'anthropic-client-platform': 'web_claude_ai' } })));
+    }
+    if (t > 4500 && !st.added) { st.added = true; st.sessions.push(tokenRow('tok-bbbb-2222')); }
+  },
+}, ({ state, gm, logs }) => first(
+  expect(state.pageListOk === true, '观察器不该改动网页拿到的返回'),
+  expect(gm.nativeRecipes && gm.nativeRecipes['claude-code'], '应学到 claude-code 的配方：\n' + logs.join('\n')),
+  expect(left(state) === 'claude-ai@t', '残留：' + left(state) + '\n' + logs.join('\n')),
+  expect(state.extra.some((x) => x.method === 'DELETE' && x.path.endsWith('tok-bbbb-2222') && x.headers['anthropic-client-platform'] === 'web_claude_ai'), '应照学到的格式（含 anthropic 头）踢 tok-bbbb：' + JSON.stringify(state.extra)),
+  expect(!logs.some((l) => l.includes('停止守护')), '不该停止守护'),
+));
+
+await scenario('网页「退出本机」不会被学成踢人格式', {
+  sessions: [self(), web('web-a', 200)], seconds: 4, gm: { dryRun: true },
+  onTick: async (st, page) => {
+    if (Date.now() - st.t0 > 1500 && !st.done) {
+      st.done = true;
+      const me = st.sessions.find((x) => x.is_current);
+      await page.evaluate((m) => fetch('/api/auth/logout/session', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ session_uuid: m.session_uuid, application_slug: 'claude-ai' }) }), me);
+    }
+  },
+  revoke: (body) => ({ status: 200, json: {} }),
+}, ({ gm }) => expect(!gm.nativeRecipes || !Object.keys(gm.nativeRecipes).length, '不该学：' + JSON.stringify(gm.nativeRecipes)));
+
+await scenario('学到的 created_at:null 配方同样遵守保留规则', {
+  sessions: [selfN(), codeN('claude-cli/2.1.0 (external, cli)'), codeN('claude-desktop-code/1.0')],
+  gm: { keepMigrated: true, keepIds: ['z:claude-code|claude-desktop-code/#'],
+        nativeRecipes: { 'claude-code': { method: 'POST', path: [{ c: '' }, { c: 'api' }, { c: 'auth' }, { c: 'logout' }, { c: 'session' }], body: { created_at: { f: 'created_at' }, application_slug: { f: 'application_slug' } }, headers: {} } } },
+  seconds: 5,
+}, ({ state }) => first(
+  expect(!state.revokes.some((r) => r.body && r.body.created_at === null), '不该发 null 请求：' + JSON.stringify(state.revokes)),
+  expect(state.sessions.length === 3, '一条都不该少'),
+));
+
 const bad = results.filter((r) => !r.ok).length;
 console.log(`\n${results.length - bad}/${results.length} 通过`);
 process.exit(bad ? 1 : 0);

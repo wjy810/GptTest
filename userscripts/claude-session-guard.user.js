@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Claude 会话守护（精简版）
 // @namespace    https://claude.ai/
-// @version      4.0.2
-// @description  只保留本浏览器当前会话 + 你勾选的，其余自动踢掉；只走网页原生活动会话接口，默认每轮只踢 1 条并自检防误踢
+// @version      4.1.0
+// @description  只保留本浏览器当前会话 + 你勾选的，其余自动踢掉（含 Claude Code 等非网页端会话）；走网页原生活动会话接口，默认每轮只踢 1 条并自检防误踢
 // @match        https://claude.ai/*
 // @grant        GM_getValue
 // @grant        GM_setValue
@@ -13,6 +13,14 @@
 // ==/UserScript==
 
 /*
+ * v4.1.0（踢不掉时照网页自己的「终止」学）
+ * - 不同应用的会话，服务端要的踢人请求可能完全不同（甚至是另一个接口）。脚本猜不到时，
+ *   在 设置 → 账户 的会话列表里手动点一次那条会话的「终止」：脚本只观察网页自己发出的请求
+ *   （方法、路径、body 里每个值对应会话的哪个字段），之后同一应用的会话照这个样子踢，照样重读列表确认真的消失。
+ * - 只观察不改动：请求和返回原样交给网页；脚本自己的请求不经过这里；网页「退出本机」不会被学成踢人格式；
+ *   学到的配方里有 null 值时同样遵守“不波及本机和保留会话”的规则。可以在面板「安全」里关掉（刷新页面生效）。
+ * - 踢不掉时日志提示可以这样做；诊断里显示学到的配方。
+ *
  * v4.0.2（修复：创建时间为空的 Claude Code 会话被当成“无法识别”留着不踢，日志还说“干净了”）
  * - 截图里那行「Claude Code · 未知 · 未知」：接口给的 created_at 是 null。v4.0.0 定位会话只认 session_uuid / created_at，
  *   两样都没有就标成“无法识别 · 不处理”，永远不踢，而且不算进“待踢”，于是日志照样写“✅ 干净了”。
@@ -53,7 +61,7 @@
   const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
   try { if (W.top !== W.self) return; } catch (e) { return; }
 
-  const VERSION = '4.0.2';
+  const VERSION = '4.1.0';
   try { console.info('[会话守护] 已注入 v' + VERSION + '：', location.href); } catch (e) {}
 
   /* ================= 常量 ================= */
@@ -75,6 +83,7 @@
     keepIds: 'keepIds', keepMigrated: 'keepMigrated', legacyKeep: 'keepKeys',
     sessions: 'sessions4', leader: 'leader4', issue: 'issue4',
     logs: 'logs', kicked: 'kickedRun', shape: 'nativeShape', shapes: 'nativeShapes', fields: 'nativeFields2', ver: 'lastVer',
+    recipes: 'nativeRecipes', learnNative: 'learnNative',
   };
   // 旧版留下、v4 已不用的键（升级时清掉）
   const OBSOLETE_KEYS = ['api', 'apiCands', 'apiItems', 'apiCurrentId', 'cleanTrusted', 'allowWeak', 'lastSessions', 'leader', 'nativeFields', 'nativeShape'];
@@ -99,6 +108,9 @@
     get interval() { return clampInt(get(K.interval, 5), MIN_INTERVAL, MAX_INTERVAL, 5); },
     set interval(v) { set(K.interval, clampInt(v, MIN_INTERVAL, MAX_INTERVAL, 5)); },
     // 预演：只写日志不真踢
+    // 观察网页自己的「终止」请求并照着学（只看不改）；改了要刷新页面才生效
+    get learnNative() { return get(K.learnNative, true) !== false; },
+    set learnNative(v) { set(K.learnNative, !!v); },
     get dryRun() { return !!get(K.dryRun, false); },
     set dryRun(v) { set(K.dryRun, !!v); },
     // 每轮最多踢几条：默认 1，出问题时损失最小
@@ -130,6 +142,7 @@
   const net = { failN: 0, coolUntil: 0, lastOkAt: 0, lastErr: '' };
   const fails = new Map();                // 会话 id → { n, until }：踢不掉的会话按条退避
   const dryLogged = new Set();            // 预演：同一会话只记一次
+  const learnHinted = new Set();          // “手动终止一次让脚本学”的提示：每个应用只提示一次
   const throttleAt = new Map();           // 限频日志
 
   /* ================= 工具 ================= */
@@ -352,6 +365,7 @@
     if (issue && CFG.enabled) log('✅ 会话接口恢复正常');
     clearIssue();
     noteFields(arr);
+    nativeRows = arr;
     return { status: 'ok', list: arr.map(normSession) };
   }
 
@@ -372,6 +386,8 @@
   function revokeBodies(s, list) {
     const slug = s.appSlug || API.app;
     const out = [];
+    const nb = nativeBody(s, list);
+    if (nb) out.push(nb);
     if (s.uuid) {
       out.push({ name: 'uuid+slug', body: { session_uuid: s.uuid, application_slug: slug } });
       if (s.createdRaw !== '') out.push({ name: 'uuid+created+slug', body: { session_uuid: s.uuid, created_at: s.createdRaw, application_slug: slug } });
@@ -425,10 +441,14 @@
     if (!bodies.length && s.createdNull && s.appSlug) {
       tried.push('这条只能按「应用 + 创建时间为空」整组踢，会连带本机或保留的同类会话，为了安全没有动手');
     }
-    for (const { name, body } of bodies) {
+    for (const { name, body, url, method, headers } of bodies) {
       if (!alive() || !CFG.enabled || !stillLead()) return { done: 'abort', tried };
       if (keepSet().has(s.id)) return { done: 'abort', tried };               // 刚被勾上保留
-      const r = await request(API.revoke, { method: 'POST', headers: API.headers, body: JSON.stringify(body) });
+      const r = await request(url || API.revoke, {
+        method: method || 'POST',
+        headers: Object.assign({}, API.headers, headers || {}),
+        body: body === undefined || body === null ? undefined : JSON.stringify(body),
+      });
       if (!alive()) return { done: 'abort', tried };
       if (r.status === 401) { on401('踢人接口'); return { done: 'abort', tried }; }
       if (r.status === 429) { backoff('踢人接口被限流（429）'); return { done: 'abort', tried }; }
@@ -457,6 +477,165 @@
         `🔍 诊断：格式「${name}」返回成功，但「${desc(s)}」还在列表里（应用 ${s.appSlug || '未标'}），换下一种格式`);
     }
     return { done: 'fail', tried };
+  }
+
+  /* ================= 学习网页原生的「终止」请求（只观察，不改动） ================= */
+  // 在 claude.ai 设置页手动点某条会话的「终止」时，记下网页自己发的请求：方法、路径、body 里每个值对应会话的哪个字段。
+  // 之后同一应用的会话照这个样子踢（同样重读列表确认真的消失了）。请求和返回原样交给网页，脚本自己的请求不经过这里。
+  let recipes = (() => { const m = get(K.recipes, null); return m && typeof m === 'object' && !Array.isArray(m) ? m : {}; })();
+  let nativeRows = [];                    // 最近一次（脚本或网页自己）读到的原始会话列表
+  const NATIVE_PATH_RE = /logout|revoke|terminate|session|token|oauth|grant/i;
+  const isIdField = (f) => !/slug|application|^app/i.test(f);
+
+  function headersOf(h) {
+    const out = {};
+    const add = (k, v) => { if (/^anthropic-/i.test(k)) out[String(k).toLowerCase()] = String(v); };
+    try {
+      if (!h) return out;
+      if (Array.isArray(h)) h.forEach((kv) => add(kv[0], kv[1]));
+      else if (typeof h.forEach === 'function') h.forEach((v, k) => add(k, v));
+      else Object.keys(h).forEach((k) => add(k, h[k]));
+    } catch (e) {}
+    return out;
+  }
+
+  // 在原始会话里找值等于 v 的字段：null 只认同名字段；太短的值容易撞，也只认同名字段
+  function fieldFor(r, k, v) {
+    if (v === null) return k in r && r[k] === null ? k : '';
+    if (typeof v !== 'string' && typeof v !== 'number') return '';
+    if (k in r && r[k] === v) return k;
+    if (String(v).length < 8) return '';
+    return Object.keys(r).find((rk) => r[rk] === v) || '';
+  }
+
+  function buildRecipe(info, r) {
+    let idHits = 0, hits = 0;
+    let body = null;
+    if (info.body && typeof info.body === 'object' && !Array.isArray(info.body)) {
+      body = {};
+      for (const [k, v] of Object.entries(info.body)) {
+        const f = fieldFor(r, k, v);
+        if (f) { body[k] = { f }; hits++; if (isIdField(f)) idHits++; } else body[k] = { c: v };
+      }
+    }
+    const path = info.path.split('/').map((seg) => {
+      let d = seg; try { d = decodeURIComponent(seg); } catch (e) {}
+      const f = d.length >= 8 ? Object.keys(r).find((rk) => typeof r[rk] === 'string' && r[rk] === d) : '';
+      if (f) { hits++; if (isIdField(f)) idHits++; return { f }; }
+      return { c: seg };
+    });
+    return { idHits, hits, recipe: { method: info.method, path, search: info.search || '', body, headers: info.headers || {} } };
+  }
+
+  function recipeText(rc) {
+    if (!rc) return '';
+    const tpl = (t) => (t.f !== undefined ? `{${t.f}}` : JSON.stringify(t.c));
+    const path = (rc.path || []).map((t) => (t.f !== undefined ? `{${t.f}}` : t.c)).join('/');
+    const body = rc.body ? ' ' + '{' + Object.entries(rc.body).map(([k, t]) => `${k}: ${tpl(t)}`).join(', ') + '}' : '';
+    return `${rc.method} ${path}${rc.search || ''}${body}`;
+  }
+
+  function learnNative(info) {
+    const rows = (info.rows || []).filter((r) => r && typeof r === 'object');
+    const what = `${info.method} ${info.path}`;
+    if (!rows.length) { log(`👀 看到网页发出「${what}」并成功了，但手上还没有会话列表可以对照，这次没学到（先打开面板刷新一次列表再试）`); return; }
+    let best = null, bestScore = 0, tie = false;
+    for (const r of rows) {
+      const b = buildRecipe(info, r);
+      if (!b.idHits) continue;
+      const score = b.idHits * 10 + b.hits;
+      if (score > bestScore) { best = { r, b }; bestScore = score; tie = false; }
+      else if (score === bestScore && best && slugOf(best.r) !== slugOf(r)) tie = true;
+    }
+    const keys = info.body && typeof info.body === 'object' ? Object.keys(info.body).join(',') : '无';
+    if (!best) { log(`👀 网页发出「${what}」并成功了，但请求里没有能对上某条会话的值，没学（body 字段：${keys}）`); return; }
+    if (tie) { log(`👀 网页发出「${what}」并成功了，但同时对得上不同应用的会话，分不清是哪一条，没学（body 字段：${keys}）`); return; }
+    const n = normSession(best.r, 0);
+    if (n.isCurrent) return;                                   // 这是退出本机，不学
+    const slug = n.appSlug || API.app;
+    const rc = Object.assign(best.b.recipe, { at: Date.now() });
+    const changed = recipeText(recipes[slug]) !== recipeText(rc);
+    recipes = Object.assign({}, recipes, { [slug]: rc });
+    set(K.recipes, recipes);
+    if (changed) log(`🧠 学到网页自己的「终止」请求（${slug}）：${recipeText(rc)}。之后这类会话照这个格式踢`);
+    renderDiag();
+  }
+
+  // 用学到的配方给这条会话拼请求；缺字段就不用
+  function nativeBody(s, list) {
+    const rc = recipes[s.appSlug || API.app];
+    if (!rc || !s.raw) return null;
+    let hasNull = false;
+    const path = [];
+    for (const t of rc.path || []) {
+      if (t.f === undefined) { path.push(t.c); continue; }
+      const v = s.raw[t.f];
+      if (v == null || v === '') return null;
+      path.push(encodeURIComponent(String(v)));
+    }
+    let body = null;
+    if (rc.body) {
+      body = {};
+      for (const [k, t] of Object.entries(rc.body)) {
+        if (t.f === undefined) { body[k] = t.c; continue; }
+        if (!(t.f in s.raw)) return null;
+        const v = s.raw[t.f];
+        if (v === null) hasNull = true;
+        body[k] = v;
+      }
+    }
+    if (hasNull && !nullBodySafe(s, list)) return null;      // 同“created_at: null”的安全规则
+    return { name: 'native', url: path.join('/') + (rc.search || ''), method: rc.method || 'POST', body, headers: rc.headers };
+  }
+
+  function nativeInfo(input, init) {
+    const isReq = !!input && typeof input === 'object' && typeof input.url === 'string' && typeof input.clone === 'function';
+    const u = new URL(isReq ? input.url : String(input && input.href ? input.href : input), location.href);
+    if (u.origin !== location.origin) return null;
+    const method = String((init && init.method) || (isReq && input.method) || 'GET').toUpperCase();
+    const isList = method === 'GET' && u.pathname === API.list;
+    if (!isList && (method === 'GET' || method === 'HEAD' || !/^\/api\//.test(u.pathname) || !NATIVE_PATH_RE.test(u.pathname))) return null;
+    const info = { method, path: u.pathname, search: u.search, isList, rows: nativeRows.slice(),
+      headers: headersOf((init && init.headers) || (isReq && input.headers)) };
+    const b = init && init.body;
+    if (typeof b === 'string') { try { info.body = JSON.parse(b); } catch (e) {} }
+    else if (b == null && isReq && !isList) { try { info.bodyP = input.clone().text(); } catch (e) {} }
+    return info;
+  }
+
+  async function onNativeDone(info, res) {
+    if (!res) return;
+    if (info.isList) {
+      if (!res.ok) return;
+      try {
+        const data = JSON.parse(await res.clone().text());
+        const arr = Array.isArray(data) ? data : data && (data.sessions || data.data || data.items);
+        if (Array.isArray(arr)) nativeRows = arr;
+      } catch (e) {}
+      return;
+    }
+    if (info.bodyP) { try { info.body = JSON.parse(await info.bodyP); } catch (e) {} }
+    if (!res.ok) {
+      logEvery('nf:' + info.path + res.status, 60000, `👀 网页自己的「${info.method} ${info.path}」返回 ${res.status}，没学`);
+      return;
+    }
+    learnNative(info);
+  }
+
+  function installNativeWatch() {
+    if (!pageFetch || !CFG.learnNative) return;
+    const watched = function fetch(input, init) {
+      let info = null;
+      try { info = nativeInfo(input, init); } catch (e) { info = null; }
+      const p = pageFetch.apply(W, arguments);
+      if (info) { try { p.then((res) => { onNativeDone(info, res).catch(() => {}); }, () => {}); } catch (e) {} }
+      return p;
+    };
+    try { watched.toString = () => pageFetch.toString(); } catch (e) {}
+    try {
+      // Firefox 的隔离环境需要 exportFunction 才能把函数交给网页
+      W.fetch = typeof exportFunction === 'function' ? exportFunction(watched, W) : watched;
+    } catch (e) {}
   }
 
   const SHOW_VALUE_RE = /slug|application|app|kind|type|method|source|client|platform|name|agent|browser|os/i;
@@ -595,6 +774,11 @@
       const wait = markFail(s);
       log(`❌ 踢不掉「${desc(s)}」（${res.tried.join('；') || '没有可用的请求格式'}），${Math.round(wait / 1000)} 秒后再试`);
       logShapeOnce(s, '踢不掉');
+      const slug = s.appSlug || API.app;
+      if (CFG.learnNative && !recipes[slug] && !learnHinted.has(slug)) {
+        learnHinted.add(slug);
+        log(`💡 可以在 设置 → 账户 的会话列表里手动点一次这条会话的「终止」：脚本会记下网页用的请求，之后 ${slug} 的会话自动照着踢`);
+      }
       renderList();
     }
   }
@@ -656,8 +840,8 @@
     if (l && l.tab === TAB_ID) set(K.leader, null);
   }
 
-  // 每条最坏 = 4 种格式 ×（12 秒请求 + 4 次确认读取 × 12 秒 + 3.8 秒等待），按“每轮上限”放宽
-  const stuckLimit = () => Math.max(120000, CFG.maxPerRound * 4 * 65000 + 20000);
+  // 每条最坏 = 7 种格式 ×（12 秒请求 + 4 次确认读取 × 12 秒 + 3.8 秒等待），按“每轮上限”放宽
+  const stuckLimit = () => Math.max(120000, CFG.maxPerRound * 7 * 65000 + 20000);
 
   async function runTick() {
     const gen = ++runGen;
@@ -974,6 +1158,8 @@
       <div class="card">
         <div class="lbl">安全</div>
         <label class="switch"><input type="checkbox" id="csg-dry"><i></i><span>预演：只写日志，不真踢<small style="color:var(--warn)">（建议先开一轮）</small></span></label>
+        <label class="switch"><input type="checkbox" id="csg-learn"><i></i><span>学习网页自己的「终止」请求<small style="color:var(--muted)">（只观察；改了刷新页面生效）</small></span></label>
+        <div class="hint">某条会话一直踢不掉时：在 设置 → 账户 的会话列表里手动点一次它的「终止」，脚本会记下网页用的请求，之后同类会话自动照着踢。</div>
         <div class="row"><span class="hint">每轮最多踢</span><input type="number" id="csg-max" min="1" max="${MAX_PER_ROUND}" step="1" style="width:56px" aria-label="每轮最多踢几条"><span class="hint">条</span></div>
       </div>
       <details>
@@ -1000,6 +1186,11 @@
       CFG.dryRun = e.target.checked;
       dryLogged.clear();
       log(`预演模式：${e.target.checked ? '开（只记日志，不会真踢）' : '关（会真的踢）'}`);
+      renderAll(false);
+    });
+    $('#csg-learn').addEventListener('change', (e) => {
+      CFG.learnNative = e.target.checked;
+      log(`学习网页自己的「终止」请求：${e.target.checked ? '开' : '关'}（刷新页面后生效）`);
       renderAll(false);
     });
     $('#csg-max').addEventListener('change', (e) => {
@@ -1102,6 +1293,8 @@
     panel.querySelectorAll('.chip').forEach((c) => c.classList.toggle('active', Number(c.dataset.s) === CFG.interval));
     const dry = $('#csg-dry');
     if (dry.checked !== CFG.dryRun) dry.checked = CFG.dryRun;
+    const learn = $('#csg-learn');
+    if (learn.checked !== CFG.learnNative) learn.checked = CFG.learnNative;
     const mx = $('#csg-max');
     const mxs = String(CFG.maxPerRound);
     if (document.activeElement !== mx && mx.value !== mxs) mx.value = mxs;
@@ -1163,6 +1356,7 @@
     const legacyN = !get(K.keepMigrated, false) && Array.isArray(legacy) ? legacy.length : 0;
     const lines = [
       `本机判定：${!list.length ? '— 还没读到列表' : curN === 1 ? '✅ 接口标出了当前会话' : curN ? `⚠️ 接口标出了 ${curN} 条当前会话（不动手）` : '⚠️ 接口没标出当前会话（不动手）'}`,
+      `网页原生「终止」：${Object.keys(recipes).length ? Object.entries(recipes).map(([k, v]) => `${k} → ${recipeText(v)}`).join('；') : CFG.learnNative ? '还没学到（手动点一次「终止」就会学）' : '学习已关闭'}`,
       `踢人请求格式：${Object.keys(shapeBySlug).length ? Object.entries(shapeBySlug).map(([k, v]) => `${k} → ${v}`).join('，') + '（已确认）' : '未确认（第一次踢掉会话时自动确认）'}`,
       `上次读取：${mode === 'other' ? '由另一个标签页读取' : net.lastErr ? '失败 · ' + net.lastErr : net.lastOkAt ? `成功 · ${sessions.length} 条` : '本页还没读过'}`,
       `保留名单：${ids.length} 条${stale ? `（其中 ${stale} 条已不在当前列表，可能已过期）` : ''}${legacyN ? ` · 旧版名单 ${legacyN} 条待迁移（读到列表后自动完成）` : ''}`,
@@ -1200,6 +1394,7 @@
   GM_registerMenuCommand('⏹ 停止守护', () => stopGuard());
   GM_registerMenuCommand('🧹 清除已保存数据（退出 / 换账号后）', () => clearSaved());
 
+  installNativeWatch();
   W.addEventListener('pagehide', releaseLead);
   document.addEventListener('freeze', releaseLead);           // 浏览器冻结后台标签前让出领导权
   W.addEventListener('pageshow', (e) => { if (e && e.persisted) kickSoon(); });
